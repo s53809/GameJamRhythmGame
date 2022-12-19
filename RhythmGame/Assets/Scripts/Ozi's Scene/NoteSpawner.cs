@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(NoteReader))]
 public class NoteSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Note Reader")]
+    [ReadOnly] public NoteReader reader;
+    private Queue<NoteInfo> notes = new Queue<NoteInfo>();
+
+    void Awake()
+    {
+        reader = GetComponent<NoteReader>();
+        notes = reader.ReadLis("Assets/Scripts/Ozi's Scene/example");
+    }
+
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    [ContextMenu("Note Queue Clear")]
+    private void NoteClear()
     {
-        
+        notes.Clear();
     }
 }
