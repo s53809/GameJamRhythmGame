@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(NoteReader))]
@@ -8,6 +9,13 @@ public class NoteSpawner : MonoBehaviour
     [Header("Note Reader")]
     [ReadOnly] public NoteReader reader;
     [ReadOnly] public int NoteCount = 0;
+
+    [Header("Next Note Info")]
+    [ReadOnly] public int nextLine;
+    [ReadOnly] public int nextSpawnTiming;
+    [ReadOnly] public NoteType  nextNoteType;
+    [ReadOnly] public NoteTrans nextNoteTrans;
+
     private Queue<NoteInfo> notes = new Queue<NoteInfo>();
 
     void Awake()
@@ -18,7 +26,10 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        NoteCount = notes.Count;
+        nextNoteTrans = notes.First().noteTrans;
+        nextNoteType = notes.First().noteType;
+        nextSpawnTiming = notes.First().spanwnTiming;
+        nextLine = notes.First().line;
     }
 
     [ContextMenu("Note Queue Clear")]
