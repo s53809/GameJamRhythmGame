@@ -8,12 +8,14 @@ using UnityEngine;
 public class SoundTimer : MonoBehaviour
 {
     SoundManager soundManager;
-    private float StartPos = 0.0f;
-    private float offset = 0.0f;
-    private float pauseTime = 0.0f;
+    private double StartPos = 0.0f;
+    private double offset = 0.0f;
+    private double pauseTime = 0.0f;
 
     public int NowPos => Convert.ToInt32(nowPos * 1000.0f);
-    [SerializeField, ReadOnly] private float nowPos = 0.0f;
+    //                                  [    ms·Î º¯È¯    ]
+
+    [SerializeField, ReadOnly] private double nowPos = 0.0f;
     
     public bool IsPlaying => isPlaying;
     private bool isPlaying = false;
@@ -25,7 +27,7 @@ public class SoundTimer : MonoBehaviour
 
     void Update()
     {
-        if(isPlaying) { nowPos = (Time.time - StartPos) - offset; }
+        if(isPlaying) { nowPos = (AudioSettings.dspTime - StartPos) - offset; }
     }
 
     public void Play(string path, int offset)
@@ -33,7 +35,7 @@ public class SoundTimer : MonoBehaviour
         if(soundManager != null) { soundManager.PlayBGM(path); }
 
         isPlaying = true;
-        StartPos = Time.time;
+        StartPos = AudioSettings.dspTime;
         this.offset = (offset * 0.001f);
     }
 
@@ -41,14 +43,14 @@ public class SoundTimer : MonoBehaviour
     public void Play()
     {
         isPlaying = true;
-        StartPos += Time.time - pauseTime;
+        StartPos += AudioSettings.dspTime - pauseTime;
     }
 
     [ContextMenu("Note Time Pause")]
     public void Pause()
     {
         isPlaying = false;
-        pauseTime = Time.time;
+        pauseTime = AudioSettings.dspTime;
     }
 
     [ContextMenu("Note Time Stop")]

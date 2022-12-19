@@ -15,17 +15,18 @@ public enum NoteTrans
     LongEnd
 }
 
-public class NoteInfo
+public class NoteInfo : MonoBehaviour
 {
     public NoteType  noteType  = NoteType .Normal;
     public NoteTrans noteTrans = NoteTrans.Normal;
-    public int line         = NoteReader.errorNum;
-    public int spanwnTiming = NoteReader.errorNum;
+    public int line         = NoteReader.ERROR_NUM;
+    public int spanwnTiming = NoteReader.ERROR_NUM;
 
-    public bool Spawn()
+    public void Down(float bpm)
     {
-        Debug.Log("Spawn");
+        NoteDown down = gameObject.AddComponent<NoteDown>();
+        down.bpm = bpm;
 
-        return true;
+        Debug.Log("Note Down!");
     }
 }

@@ -30,22 +30,17 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        NoteCount = notes.Count;
-
-        if(NoteCount > 0)
+        while (notes.Count > 0 && timer.NowPos >= (notes.First().spanwnTiming - 1000/*(ms)*/))
         {
             NoteInfo info = notes.First();
 
-            nextLine        = info.line;
+            nextLine = info.line;
             nextSpawnTiming = info.spanwnTiming;
-            nextNoteType    = info.noteType;
-            nextNoteTrans   = info.noteTrans;
+            nextNoteType = info.noteType;
+            nextNoteTrans = info.noteTrans;
 
-            if(timer.NowPos >= info.spanwnTiming)
-            {
-                info.Spawn();
-                notes.Dequeue();
-            }
+            notes.First().Down(reader.bpm);
+            notes.Dequeue();
         }
     }
 

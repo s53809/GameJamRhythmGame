@@ -1,3 +1,4 @@
+using Shapes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,13 +6,15 @@ using System.IO;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static TreeEditor.TreeEditorHelper;
 
 [System.Serializable]
 public class NoteReader : MonoBehaviour
 {
-    public const char infoSeparator = ':';
-    public const char noteSeparator = ',';
-    public const int errorNum = -1;
+    public const float NOTE_DISTANCE = 1.0f;
+    public const char INFO_SEPARATOR = ':';
+    public const char NOTE_SEPARATOR = ',';
+    public const int ERROR_NUM = -1;
     
     [Header("Lis Info")]
     [ReadOnly] public string artistName = "ArtistName";
@@ -23,103 +26,133 @@ public class NoteReader : MonoBehaviour
     public Queue<NoteInfo> ReadLis(ref Queue<NoteInfo> notes, string path)
     {
         StreamReader reader = new(path + ".lis");
-        //
 
-        /* [ 기본적인 채보 Info 세팅 ] */ {
+        // lis 파일 작성 형식 
+        /* example.lis
+         * ArtistName : Plum
+         * SongName   : R
+         * SongPath   : None
+         * Bpm    : 120.0
+         * Offset : 0
+         * 
+         * [ NOTE ]
+         * 1, 1000, 0, 0
+         * 2, 2000, 1, 0
+         * 3, 3000, 0, 0
+         * 4, 4000, 0, 0
+         * 
+         * 
+         */
+
+        /* [ 기본적인 채보 Info 세팅 ] */
+        {
             // ArtistName (separator) (String)
             try {
-                artistName = reader.ReadLine().Split(infoSeparator)[1];
+                artistName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
                 /* [ 앞 공백 제거 ] */
                 while (artistName[0].Equals(' ')) { artistName = artistName.Substring(1); }
             }
             catch (Exception e)
             {
-                artistName = errorNum.ToString();
+                artistName = ERROR_NUM.ToString();
                 Debug.Log("ArtistName : " + e.Message);
             }
 
             // SongName (separator) (String)
             try {
-                songName = reader.ReadLine().Split(infoSeparator)[1];
+                songName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
                 while (songName[0].Equals(' ')) { songName = songName.Substring(1); }
             }
             catch (Exception e)
             {
-                songName = errorNum.ToString();
+                songName = ERROR_NUM.ToString();
                 Debug.Log("SongName : " + e.Message);
             }
 
             // SongPath (separator) (String)
             try {
-                songPath = reader.ReadLine().Split(infoSeparator)[1];
+                songPath = reader.ReadLine().Split(INFO_SEPARATOR)[1];
                 while (songPath[0].Equals(' ')) { songPath = songPath.Substring(1); }
             }
             catch (Exception e)
             {
-                songPath = errorNum.ToString();
+                songPath = ERROR_NUM.ToString();
                 Debug.Log("SongPath : " + e.Message);
             }
 
             // Bpm (separator) (Single)
-            try { bpm = Convert.ToSingle(reader.ReadLine().Split(infoSeparator)[1]); }
+            try { bpm = Convert.ToSingle(reader.ReadLine().Split(INFO_SEPARATOR)[1]); }
             catch (Exception e)
             {
-                bpm = errorNum;
+                bpm = ERROR_NUM;
                 Debug.Log("Bpm : " + e.Message);
             }
 
             // Offset (separator) (Int32)
-            try { offset = Convert.ToInt32(reader.ReadLine().Split(infoSeparator)[1]); }
+            try { offset = Convert.ToInt32(reader.ReadLine().Split(INFO_SEPARATOR)[1]); }
             catch (Exception e)
             {
-                offset = errorNum;
+                offset = ERROR_NUM;
                 Debug.Log("Offset : " + e.Message);
             }
         }
         /* [ 노트 불러오기 ] */ {
-            string text;
-            do { text = reader.ReadLine(); }
-            while (text != null && !text.ToUpper().Equals("[ NOTE ]"));
+            bool isStart = false;
+            string[] texts;
 
-            while(true) {
+            while(!isStart) {
+                texts = reader.ReadLine().Split(' ');
+
+                for(int i = 0; i < texts.Length; i++)
+                {
+                    if (texts[i].ToUpper().Equals("NOTE")) { isStart = true; break; }
+                }
+
+                if (reader.EndOfStream) { throw new Exception("\"NOTE\" Not Found In .lis File"); }
+            }
+
+            string text;
+            float delay = (bpm * NoteDown.SPEED * NoteDown.MULTIPLE) + offset;
+
+            while (true) {
                 text = reader.ReadLine();
                 if(text == null) { break; }
 
-                NoteInfo note = new();
-                string[] info = text.Split(',');
-                
+                GameObject note = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                note.transform.parent = transform;
+
+                NoteInfo info = note.AddComponent<NoteInfo>();
+                string[] splitText = text.Split(',');
+
                 // [ 라인 ]
-                try { note.line = Convert.ToInt32(info[0]); }
-                catch(Exception e) {
-                    note.line = errorNum;
-                    Debug.Log("Line Error : " + e.Message);
+                note.transform.position = new Vector3(NOTE_DISTANCE * -1.5f, 0, 0);
+                try
+                {
+                    switch (Convert.ToInt32(splitText[0]))
+                    {
+                        case 1: { note.transform.position = new Vector3(NOTE_DISTANCE * -1.5f, delay, 0); } break;
+                        case 2: { note.transform.position = new Vector3(NOTE_DISTANCE * -0.5f, delay, 0); } break;
+                        case 3: { note.transform.position = new Vector3(NOTE_DISTANCE *  0.5f, delay, 0); } break;
+                        case 4: { note.transform.position = new Vector3(NOTE_DISTANCE *  1.5f, delay, 0); } break;
+                        default: { throw new Exception(); }
+                    }
+                    info.line = Convert.ToInt32(splitText[0]);
                 }
+                catch(Exception e) { Debug.Log("Line Error : " + e.Message); }
 
                 // [ 타이밍 ]
-                try { note.spanwnTiming = Convert.ToInt32(info[1]); }
-                catch (Exception e)
-                {
-                    note.spanwnTiming = errorNum;
-                    Debug.Log("Line Error : " + e.Message);
-                }
+                try { info.spanwnTiming = Convert.ToInt32(splitText[1]); }
+                catch (Exception e) { Debug.Log("Timing Error : " + e.Message); }
 
                 // [ 노트 타입 ]
-                try { note.noteType = (NoteType)Convert.ToInt32(info[2]); }
-                catch (Exception e)
-                {
-                    note.noteType = (NoteType)errorNum;
-                    Debug.Log("Line Error : " + e.Message);
-                }
+                try { info.noteType = (NoteType)Convert.ToInt32(splitText[2]); }
+                catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
 
                 // [ 노트 트랜스 ]
-                try { note.noteTrans = (NoteTrans)Convert.ToInt32(info[3]); }
-                catch (Exception e)
-                {
-                    note.noteTrans = (NoteTrans)errorNum;
-                    Debug.Log("Line Error : " + e.Message);
-                }
+                try { info.noteTrans = (NoteTrans)Convert.ToInt32(splitText[3]); }
+                catch (Exception e) { Debug.Log("Trans Error : " + e.Message); }
 
-                notes.Enqueue(note);
+                notes.Enqueue(info);
             }
         }
 
