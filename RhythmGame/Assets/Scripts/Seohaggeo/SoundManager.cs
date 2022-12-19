@@ -27,6 +27,18 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> SFXSource = new List<AudioSource>(); // 효과음
     private AudioSource tempSFXSource;
 
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+    }
     private void OnEnable()
     {
         BGMSource = gameObject.AddComponent<AudioSource>();
