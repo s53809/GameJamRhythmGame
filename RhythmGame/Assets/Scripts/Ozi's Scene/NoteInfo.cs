@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum NoteType
+public enum NoteType
 {
     Normal,
     Special,
     Side
 }
-enum NoteTrans
+public enum NoteTrans
 {
     Normal,
     Long,
@@ -17,18 +17,14 @@ enum NoteTrans
 
 public class NoteInfo
 {
-    private NoteType  noteType = NoteType.Normal;
-    private NoteTrans noteTrans = NoteTrans.Normal;
-
-    NoteInfo(NoteType type, NoteTrans trans) {
-        noteType = type;
-        noteTrans = trans;
-    }
+    public NoteType  noteType  = NoteType .Normal;
+    public NoteTrans noteTrans = NoteTrans.Normal;
+    public int line         = NoteReader.errorNum;
+    public int spanwnTiming = NoteReader.errorNum;
 
     public bool Spawn()
     {
-        noteType = NoteType.Normal;
-        noteTrans = NoteTrans.Normal;
+        
 
         return true;
     }

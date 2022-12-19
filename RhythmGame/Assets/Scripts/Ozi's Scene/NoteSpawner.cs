@@ -7,6 +7,7 @@ public class NoteSpawner : MonoBehaviour
 {
     [Header("Note Reader")]
     [ReadOnly] public NoteReader reader;
+    [ReadOnly] public int NoteCount = 0;
     private Queue<NoteInfo> notes = new Queue<NoteInfo>();
 
     void Awake()
@@ -17,7 +18,7 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        
+        NoteCount = notes.Count;
     }
 
     [ContextMenu("Note Queue Clear")]

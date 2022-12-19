@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -19,12 +20,11 @@ public class NoteReader : MonoBehaviour
     [ReadOnly] public Single bpm = 0.0f;
     [ReadOnly] public Int32 offset = 0;
 
-    // 읽는다 파이노
     public Queue<NoteInfo> ReadLis(String path)
     {
-        Queue<NoteInfo> notes = new Queue<NoteInfo>();
+        Queue<NoteInfo> notes = new();
 
-        StreamReader reader = new StreamReader(path + ".lis");
+        StreamReader reader = new(path + ".lis");
         //
 
         /* [ 기본적인 채보 Info 세팅 ] */ {
@@ -79,10 +79,50 @@ public class NoteReader : MonoBehaviour
             }
         }
         /* [ 노트 불러오기 ] */ {
-            string isStart = "";
-            do { isStart = reader.ReadLine(); }
-            while (isStart != null && !isStart.ToUpper().Equals("[ NOTE ]"));
+            string text;
+            do { text = reader.ReadLine(); }
+            while (text != null && !text.ToUpper().Equals("[ NOTE ]"));
 
+            while(true) {
+                text = reader.ReadLine();
+                if(text == null) { break; }
+
+                NoteInfo note = new();
+                String[] info = text.Split(',');
+                
+                // [ 라인 ]
+                try { note.line = Convert.ToInt32(info[0]); }
+                catch(Exception e) {
+                    note.line = errorNum;
+                    Debug.Log("Line Error : " + e.Message);
+                }
+
+                // [ 타이밍 ]
+                try { note.spanwnTiming = Convert.ToInt32(info[1]); }
+                catch (Exception e)
+                {
+                    note.spanwnTiming = errorNum;
+                    Debug.Log("Line Error : " + e.Message);
+                }
+
+                // [ 노트 타입 ]
+                try { note.noteType = (NoteType)Convert.ToInt32(info[2]); }
+                catch (Exception e)
+                {
+                    note.noteType = (NoteType)errorNum;
+                    Debug.Log("Line Error : " + e.Message);
+                }
+
+                // [ 노트 트랜스 ]
+                try { note.noteTrans = (NoteTrans)Convert.ToInt32(info[3]); }
+                catch (Exception e)
+                {
+                    note.noteTrans = (NoteTrans)errorNum;
+                    Debug.Log("Line Error : " + e.Message);
+                }
+
+                notes.Enqueue(note);
+            }
         }
 
         //
