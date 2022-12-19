@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] SFX; // 효과음들
 
     private AudioSource BGMSource; // 배경음 재생할 오디오소스
-    private AudioSource SFXSource; // 효과음
+    private List<AudioSource> SFXSource = new List<AudioSource>(); // 효과음
+    private AudioSource tempSFXSource;
 
     private void OnEnable()
     {
@@ -32,30 +34,63 @@ public class SoundManager : MonoBehaviour
         BGMSource.loop = true;
     }
 
-    public void PlayBGM(string name)
+    private void Update()
     {
-        for (int i = 0; i < BGM.Length; i++)
+        for(int i = 0; i < SFXSource.Count; i++)
         {
-            if (BGM[i].name == name)
+            if (SFXSource[i] != null)
             {
-                BGMSource.clip = BGM[i];
-                BGMSource.Play();
+                if (!SFXSource[i].isPlaying)
+                {
+                    Destroy(SFXSource[i]);
+                    SFXSource.Remove(SFXSource[i]);
+                }
             }
         }
     }
 
-    public void PlaySFX(string name)
+    public void PlayBGM(string name)
     {
-        for(int i = 0; i < SFX.Length; i++)
+        foreach (AudioClip b in BGM)
         {
-            if (SFX[i].name == name)
+            if (b.name == name)
             {
-                SFXSource = gameObject.AddComponent<AudioSource>();
-                SFXSource.playOnAwake = false;
-                SFXSource.clip = SFX[i];
-                SFXSource.Play();
-                if(!SFXSource.isPlaying) Destroy(SFXSource);
+                BGMSource.clip = b;
+                BGMSource.Play();
+
+                return;
             }
         }
+        
+        BGM[BGM.Length] = Resources.Load<AudioClip>("Resources/AudioClips/" + name);
+        BGMSource.clip = BGM[BGM.Length];
+        BGMSource.Play();
+
+        return;
+    }
+
+    public void PlaySFX(string name)
+    {
+        foreach(AudioClip s in SFX)
+        {
+            if (s.name == name)
+            {
+                SFXSource.Add(gameObject.AddComponent<AudioSource>());
+                SFXSource.Last().playOnAwake = false;
+                SFXSource.Last().clip = s;
+                SFXSource.Last().Play();
+
+                return;
+            }
+        }
+
+        SFX[SFX.Length] = Resources.Load<AudioClip>("Resources/AudioClips/" + name);
+        tempSFXSource = gameObject.AddComponent<AudioSource>();
+        tempSFXSource.playOnAwake = false;
+        tempSFXSource.clip = SFX[SFX.Length];
+        tempSFXSource.Play();
+        SFXSource.Add(tempSFXSource);
+
+        return;
     }
 }

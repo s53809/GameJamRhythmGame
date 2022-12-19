@@ -13,16 +13,16 @@ public class TempScript : MonoBehaviour
         sm.PlayBGM("sampleBGM");
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    timer++;
+    // Update is called once per frame
+    void Update()
+    {
+        timer++;
 
-    //    if(timer > 1000)
-    //    {
-    //        timer = 0;
-    //        sm.PlaySFX("beeeeep");
-    //        sm.PlaySFX("pling");
-    //    }
-    //}
+        if (timer > 1000)
+        {
+            timer = 0;
+            sm.PlaySFX("beeeeep");
+            sm.PlaySFX("pling");
+        }
+    }
 }
