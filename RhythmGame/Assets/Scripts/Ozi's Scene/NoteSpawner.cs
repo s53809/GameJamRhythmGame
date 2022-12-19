@@ -4,10 +4,12 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(NoteReader))]
+[RequireComponent(typeof(SoundTimer))]
 public class NoteSpawner : MonoBehaviour
 {
     [Header("Note Reader")]
     [ReadOnly] public NoteReader reader;
+    [ReadOnly] public SoundTimer timer;
     [ReadOnly] public int NoteCount = 0;
 
     [Header("Next Note Info")]
@@ -21,15 +23,25 @@ public class NoteSpawner : MonoBehaviour
     void Awake()
     {
         reader = GetComponent<NoteReader>();
-        notes = reader.ReadLis("Assets/Scripts/Ozi's Scene/example");
+        timer = GetComponent<SoundTimer>();
     }
 
     void Update()
     {
-        nextNoteTrans = notes.First().noteTrans;
-        nextNoteType = notes.First().noteType;
-        nextSpawnTiming = notes.First().spanwnTiming;
-        nextLine = notes.First().line;
+        if(notes.Count > 0)
+        {
+            nextLine        = notes.First().line;
+            nextSpawnTiming = notes.First().spanwnTiming;
+            nextNoteType    = notes.First().noteType;
+            nextNoteTrans   = notes.First().noteTrans;
+        }
+    }
+
+    public bool LisRead(string path)
+    {
+        reader.ReadLis(ref notes, path);
+
+        return true;
     }
 
     [ContextMenu("Note Queue Clear")]
