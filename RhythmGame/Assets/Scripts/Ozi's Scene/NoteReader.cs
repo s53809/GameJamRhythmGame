@@ -1,20 +1,29 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+enum NoteTrans
+{
+    Normal,
+    Long,
+    LongEnd
+}
 enum NoteType
 {
     Normal,
     Special,
-    Long,
-    LongEnd,
-    Side,
-    SideEnd
+    Side
 }
 
 public class NoteReader : MonoBehaviour
 {
+    public String songName;
+    public String songPath;
+    public Single bpm;
+    public Int32 offset;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,15 +37,15 @@ public class NoteReader : MonoBehaviour
     }
 
     // 읽는다 파이노
-    public void ReadPaino(string path)
+    public void ReadPaino(String path)
     {
         StreamReader reader= new StreamReader(path);
         //
 
-        string songname = reader.ReadLine();
-        string songpath = reader.ReadLine();
-        float bpm = reader.ReadLine();
-        int offset = reader.ReadLine();
+        songName = reader.ReadLine();
+        songPath = reader.ReadLine();
+        bpm = Convert.ToSingle(reader.ReadLine());
+        offset = Convert.ToInt32(reader.ReadLine());
 
         //
         reader.Close();
