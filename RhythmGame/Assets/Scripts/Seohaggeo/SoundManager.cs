@@ -6,7 +6,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     //싱글톤
-    private static SoundManager instance;
+    private static SoundManager instance = null;
     public static SoundManager GetInstance()
     {
         if (!instance)
