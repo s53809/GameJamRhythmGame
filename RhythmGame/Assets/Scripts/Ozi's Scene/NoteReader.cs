@@ -9,21 +9,19 @@ using UnityEngine;
 [System.Serializable]
 public class NoteReader : MonoBehaviour
 {
-    public const Char infoSeparator = ':';
-    public const Char noteSeparator = ',';
-    public const Int32 errorNum = -1;
+    public const char infoSeparator = ':';
+    public const char noteSeparator = ',';
+    public const int errorNum = -1;
     
     [Header("Lis Info")]
-    [ReadOnly] public String artistName = "ArtistName";
-    [ReadOnly] public String songName = "SongName";
-    [ReadOnly] public String songPath = "SongPath";
-    [ReadOnly] public Single bpm = 0.0f;
-    [ReadOnly] public Int32 offset = 0;
+    [ReadOnly] public string artistName = "ArtistName";
+    [ReadOnly] public string songName = "SongName";
+    [ReadOnly] public string songPath = "SongPath";
+    [ReadOnly] public float bpm = 0.0f;
+    [ReadOnly] public int offset = 0;
 
-    public Queue<NoteInfo> ReadLis(String path)
+    public Queue<NoteInfo> ReadLis(ref Queue<NoteInfo> notes, string path)
     {
-        Queue<NoteInfo> notes = new();
-
         StreamReader reader = new(path + ".lis");
         //
 
@@ -88,7 +86,7 @@ public class NoteReader : MonoBehaviour
                 if(text == null) { break; }
 
                 NoteInfo note = new();
-                String[] info = text.Split(',');
+                string[] info = text.Split(',');
                 
                 // [ ∂Û¿Œ ]
                 try { note.line = Convert.ToInt32(info[0]); }
@@ -124,9 +122,6 @@ public class NoteReader : MonoBehaviour
                 notes.Enqueue(note);
             }
         }
-
-        //
-        reader.Close();
 
         return notes;
     }
