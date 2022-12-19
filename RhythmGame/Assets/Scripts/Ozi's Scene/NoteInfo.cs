@@ -24,7 +24,7 @@ public class NoteInfo
 
     public bool Spawn()
     {
-        
+        Debug.Log("Spawn");
 
         return true;
     }

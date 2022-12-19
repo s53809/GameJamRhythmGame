@@ -24,22 +24,35 @@ public class NoteSpawner : MonoBehaviour
     {
         reader = GetComponent<NoteReader>();
         timer = GetComponent<SoundTimer>();
+
+        LisRead("Assets/Scripts/Ozi's Scene/example");
     }
 
     void Update()
     {
-        if(notes.Count > 0)
+        NoteCount = notes.Count;
+
+        if(NoteCount > 0)
         {
-            nextLine        = notes.First().line;
-            nextSpawnTiming = notes.First().spanwnTiming;
-            nextNoteType    = notes.First().noteType;
-            nextNoteTrans   = notes.First().noteTrans;
+            NoteInfo info = notes.First();
+
+            nextLine        = info.line;
+            nextSpawnTiming = info.spanwnTiming;
+            nextNoteType    = info.noteType;
+            nextNoteTrans   = info.noteTrans;
+
+            if(timer.NowPos >= info.spanwnTiming)
+            {
+                info.Spawn();
+                notes.Dequeue();
+            }
         }
     }
 
     public bool LisRead(string path)
     {
         reader.ReadLis(ref notes, path);
+        timer.Play(path, reader.offset);
 
         return true;
     }

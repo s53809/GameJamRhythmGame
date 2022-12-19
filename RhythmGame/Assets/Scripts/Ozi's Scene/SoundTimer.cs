@@ -7,16 +7,21 @@ using UnityEngine;
 
 public class SoundTimer : MonoBehaviour
 {
-    SoundManager soundManager = SoundManager.GetInstance();
+    SoundManager soundManager;
     private float StartPos = 0.0f;
     private float offset = 0.0f;
     private float pauseTime = 0.0f;
 
     public int NowPos => Convert.ToInt32(nowPos * 1000.0f);
-    [ReadOnly, SerializeField] private float nowPos = 0.0f;
+    [SerializeField, ReadOnly] private float nowPos = 0.0f;
     
     public bool IsPlaying => isPlaying;
     private bool isPlaying = false;
+
+    private void Start()
+    {
+        soundManager = SoundManager.GetInstance();
+    }
 
     void Update()
     {
@@ -25,7 +30,7 @@ public class SoundTimer : MonoBehaviour
 
     public void Play(string path, int offset)
     {
-        soundManager.PlayBGM(path);
+        if(soundManager != null) { soundManager.PlayBGM(path); }
 
         isPlaying = true;
         StartPos = Time.time;
