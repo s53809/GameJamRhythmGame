@@ -8,7 +8,9 @@ enum NoteType
     Normal,
     Special,
     Long,
-    Side
+    LongEnd,
+    Side,
+    SideEnd
 }
 
 public class NoteReader : MonoBehaviour
@@ -31,7 +33,10 @@ public class NoteReader : MonoBehaviour
         StreamReader reader= new StreamReader(path);
         //
 
-        string line = reader.ReadLine();
+        string songname = reader.ReadLine();
+        string songpath = reader.ReadLine();
+        float bpm = reader.ReadLine();
+        int offset = reader.ReadLine();
 
         //
         reader.Close();
