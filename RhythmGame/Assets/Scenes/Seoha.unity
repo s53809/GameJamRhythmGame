@@ -455,6 +455,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee5276709e29e54ba1ba8b1df4294dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BGM: []
+  BGM:
+  - {fileID: 8300000, guid: 0a592cecd29dcc04fac5c24230845f33, type: 3}
   SFX:
   - {fileID: 8300000, guid: 29257427bc3836c46a81fdc1bada0529, type: 3}
+  - {fileID: 8300000, guid: c0e6a12b34dab4a428a196e58766b802, type: 3}

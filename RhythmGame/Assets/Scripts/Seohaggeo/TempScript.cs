@@ -10,17 +10,19 @@ public class TempScript : MonoBehaviour
     private void Start()
     {
         sm = SoundManager.GetInstance();
+        sm.PlayBGM("sampleBGM");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        timer++;
+    //// Update is called once per frame
+    //void Update()
+    //{
+    //    timer++;
 
-        if(timer > 1000)
-        {
-            timer = 0;
-            sm.PlaySFX("beeeeep");
-        }
-    }
+    //    if(timer > 1000)
+    //    {
+    //        timer = 0;
+    //        sm.PlaySFX("beeeeep");
+    //        sm.PlaySFX("pling");
+    //    }
+    //}
 }

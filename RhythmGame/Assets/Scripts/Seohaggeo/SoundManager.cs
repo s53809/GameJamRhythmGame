@@ -14,7 +14,6 @@ public class SoundManager : MonoBehaviour
             if (!instance)
                 Debug.Log("오류");
         }
-        Debug.Log("Fdsafdsa");
         return instance;
     }
 
@@ -25,7 +24,6 @@ public class SoundManager : MonoBehaviour
 
     private AudioSource BGMSource; // 배경음 재생할 오디오소스
     private AudioSource SFXSource; // 효과음
-    private int sfxCount = 0;   // 재생중인 효과음 개수
 
     private void OnEnable()
     {
@@ -34,11 +32,22 @@ public class SoundManager : MonoBehaviour
         BGMSource.loop = true;
     }
 
+    public void PlayBGM(string name)
+    {
+        for (int i = 0; i < BGM.Length; i++)
+        {
+            if (BGM[i].name == name)
+            {
+                BGMSource.clip = BGM[i];
+                BGMSource.Play();
+            }
+        }
+    }
+
     public void PlaySFX(string name)
     {
         for(int i = 0; i < SFX.Length; i++)
         {
-            Debug.Log(SFX[i].name);
             if (SFX[i].name == name)
             {
                 SFXSource = gameObject.AddComponent<AudioSource>();
