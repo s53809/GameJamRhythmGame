@@ -20,7 +20,7 @@ public class NoteInfo : MonoBehaviour
     public NoteType  noteType  = NoteType .Normal;
     public NoteTrans noteTrans = NoteTrans.Normal;
     public int line         = NoteReader.ERROR_NUM;
-    public int spanwnTiming = NoteReader.ERROR_NUM;
+    public int hitTiming = NoteReader.ERROR_NUM;
 
     public void Down(float bpm)
     {

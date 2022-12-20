@@ -31,12 +31,12 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        while (notes.Count > 0 && timer.NowPos >= (notes.First().spanwnTiming - 1000/*(ms)*/))
+        while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
             NoteInfo info = notes.First();
 
             nextLine = info.line;
-            nextSpawnTiming = info.spanwnTiming;
+            nextSpawnTiming = info.hitTiming;
             nextNoteType = info.noteType;
             nextNoteTrans = info.noteTrans;
 
