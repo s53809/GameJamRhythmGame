@@ -7,7 +7,7 @@ public class NoteDown : MonoBehaviour
     public const float SPEED = 5.0f;
     // SPPED 곱해주는 용도
     public const float MULTIPLE = 0.02f;
-    public const float JUD_LINE = -10.0f;
+    public const float DEL_LINE = -10.0f;
 
     [ReadOnly] public float bpm = 0.0f;
     [ReadOnly, SerializeField] private Vector3 beforePos;
@@ -18,7 +18,7 @@ public class NoteDown : MonoBehaviour
     private void Awake()
     {
         beforePos = transform.position;
-        afterPos = new Vector3(beforePos.x, JUD_LINE, 0);
+        afterPos = new Vector3(beforePos.x, DEL_LINE, 0);
     }
 
     void Update()
