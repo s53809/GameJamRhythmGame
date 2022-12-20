@@ -213,6 +213,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1235659129}
   - component: {fileID: 1235659130}
+  - component: {fileID: 1235659132}
+  - component: {fileID: 1235659131}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -248,6 +250,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowPos: 0
+--- !u!114 &1235659131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235659128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07bf9dc8289b0cb47b07e05d6e4ec232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reader: {fileID: 0}
+  timer: {fileID: 0}
+  NoteCount: 0
+  nextLine: 0
+  nextSpawnTiming: 0
+  nextNoteType: 0
+  nextNoteTrans: 0
+--- !u!114 &1235659132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235659128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a957a0e1e5ecd47bff6357f6066547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalNote: {fileID: 1704526688}
+  snowNote: {fileID: 0}
+  SideNote: {fileID: 0}
+  artistName: ArtistName
+  songName: SongName
+  songPath: SongPath
+  bpm: 0
+  offset: 0
 --- !u!1 &1704526688
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,80 +384,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1706633220
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1706633221}
-  - component: {fileID: 1706633224}
-  - component: {fileID: 1706633222}
-  m_Layer: 0
-  m_Name: Note Spwaner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1706633221
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706633220}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1706633222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706633220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07bf9dc8289b0cb47b07e05d6e4ec232, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reader: {fileID: 0}
-  timer: {fileID: 0}
-  NoteCount: 0
-  nextLine: 0
-  nextSpawnTiming: 0
-  nextNoteType: 0
-  nextNoteTrans: 0
---- !u!114 &1706633224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706633220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58a957a0e1e5ecd47bff6357f6066547, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  normalNote: {fileID: 1704526688}
-  snowNote: {fileID: 0}
-  SideNote: {fileID: 0}
-  artistName: ArtistName
-  songName: SongName
-  songPath: SongPath
-  bpm: 0
-  offset: 0
 --- !u!1 &1762538665
 GameObject:
   m_ObjectHideFlags: 0

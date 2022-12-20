@@ -12,7 +12,7 @@ public class NoteDown : MonoBehaviour
     [ReadOnly, SerializeField] private Vector3 beforePos;
     [ReadOnly, SerializeField] private Vector3 afterPos;
 
-    private float now = 0.0f;
+    private float now = 0.0f; 
 
     private void Awake()
     {

@@ -8,7 +8,6 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static TreeEditor.TreeEditorHelper;
 
-[System.Serializable]
 public class NoteReader : MonoBehaviour
 {
     public GameObject normalNote;
