@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum NoteLine
+{
+    One = 1,
+    Two,
+    Three,
+    Four,
+    LeftSide,
+    RightSide
+}
 public enum NoteType
 {
     Normal,
@@ -19,7 +28,7 @@ public class NoteInfo : MonoBehaviour
 {
     public NoteType  noteType  = NoteType .Normal;
     public NoteTrans noteTrans = NoteTrans.Normal;
-    public int line         = NoteReader.ERROR_NUM;
+    public NoteLine line       = NoteLine .One;
     public int hitTiming = NoteReader.ERROR_NUM;
 
     public void Down(float bpm)

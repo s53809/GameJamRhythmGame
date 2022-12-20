@@ -12,9 +12,9 @@ public class NoteReader : MonoBehaviour
 {
     public GameObject normalNote;
     public GameObject snowNote;
-    public GameObject SideNote;
+    public GameObject sideNote;
 
-    public const float NOTE_DISTANCE = 1.0f;
+    public const float NOTE_DISTANCE = 1.5f;
     public const char INFO_SEPARATOR = ':';
     public const char NOTE_SEPARATOR = ',';
     public const int ERROR_NUM = -1;
@@ -120,35 +120,64 @@ public class NoteReader : MonoBehaviour
                 text = reader.ReadLine();
                 if(text == null) { break; }
 
-                GameObject note = Instantiate(normalNote);
+                GameObject note = null;
+                
+                string[] splitText = text.Split(',');
+
+                // [ Note Visual ]
+                try
+                {
+                    switch ((NoteType)Convert.ToInt32(splitText[2]))
+                    {
+                        case NoteType.Normal: { note = Instantiate(normalNote); } break;
+                        case NoteType.Snow: { note = Instantiate(snowNote); } break;
+                        case NoteType.Side: { note = Instantiate(sideNote); } break;
+                    }
+                }
+                catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
+
                 note.transform.parent = transform;
 
                 NoteInfo info = note.AddComponent<NoteInfo>();
-                string[] splitText = text.Split(',');
+
+                // [ Note Type ]
+                try { 
+                    info.noteType = (NoteType)Convert.ToInt32(splitText[2]);
+                }
+                catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
 
                 // [ Line ]
                 note.transform.position = new Vector3(NOTE_DISTANCE * -1.5f, 0, 0);
                 try
                 {
-                    switch (Convert.ToInt32(splitText[0]))
+                    if(info.noteType == NoteType.Side)
                     {
-                        case 1: { note.transform.position = new Vector3(NOTE_DISTANCE * -1.5f, delay, 0); } break;
-                        case 2: { note.transform.position = new Vector3(NOTE_DISTANCE * -0.5f, delay, 0); } break;
-                        case 3: { note.transform.position = new Vector3(NOTE_DISTANCE *  0.5f, delay, 0); } break;
-                        case 4: { note.transform.position = new Vector3(NOTE_DISTANCE *  1.5f, delay, 0); } break;
-                        default: { throw new Exception(); }
+                        switch ((NoteLine)Convert.ToInt32(splitText[0]))
+                        {
+                            case NoteLine.One:
+                            case NoteLine.Two: { note.transform.position = new Vector3(NOTE_DISTANCE * -1.0f, delay, 0); info.line = NoteLine.LeftSide; } break;
+                            case NoteLine.Three:
+                            case NoteLine.Four: { note.transform.position = new Vector3(NOTE_DISTANCE * 1.0f, delay, 0); info.line = NoteLine.RightSide; } break;
+                            default: { throw new Exception(); }
+                        }
+                    } else
+                    {
+                        switch ((NoteLine)Convert.ToInt32(splitText[0]))
+                        {
+                            case NoteLine.One: { note.transform.position = new Vector3(NOTE_DISTANCE * -1.5f, delay, 0); } break;
+                            case NoteLine.Two: { note.transform.position = new Vector3(NOTE_DISTANCE * -0.5f, delay, 0); } break;
+                            case NoteLine.Three: { note.transform.position = new Vector3(NOTE_DISTANCE * 0.5f, delay, 0); } break;
+                            case NoteLine.Four: { note.transform.position = new Vector3(NOTE_DISTANCE * 1.5f, delay, 0); } break;
+                            default: { throw new Exception(); }
+                        }
+                        info.line = (NoteLine)Convert.ToInt32(splitText[0]);
                     }
-                    info.line = Convert.ToInt32(splitText[0]);
                 }
                 catch(Exception e) { Debug.Log("Line Error : " + e.Message); }
 
                 // [ Timing ]
                 try { info.hitTiming = Convert.ToInt32(splitText[1]); }
                 catch (Exception e) { Debug.Log("Timing Error : " + e.Message); }
-
-                // [ Note Type ]
-                try { info.noteType = (NoteType)Convert.ToInt32(splitText[2]); }
-                catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
 
                 // [ Note Trans ]
                 try { info.noteTrans = (NoteTrans)Convert.ToInt32(splitText[3]); }

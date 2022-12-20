@@ -16,7 +16,7 @@ public class NoteSpawner : MonoBehaviour
     [ReadOnly] public int NoteCount = 0;
 
     [Header("Next Note Info")]
-    [ReadOnly] public int nextLine;
+    [ReadOnly] public NoteLine nextLine;
     [ReadOnly] public int nextSpawnTiming;
     [ReadOnly] public NoteType  nextNoteType;
     [ReadOnly] public NoteTrans nextNoteTrans;
@@ -29,7 +29,6 @@ public class NoteSpawner : MonoBehaviour
         if (@object == null)
         {
             @object = new GameObject(NOTESPAWNER_NAME);
-            Debug.Log(@object.name);
 
             NoteSpawner spanwer = @object.AddComponent<NoteSpawner>();
 
@@ -40,7 +39,7 @@ public class NoteSpawner : MonoBehaviour
             // ³ë°¡´Ù
             spanwer.reader.normalNote = GetComponent<NoteReader>().normalNote;
             spanwer.reader.snowNote = GetComponent<NoteReader>().snowNote;
-            spanwer.reader.SideNote = GetComponent<NoteReader>().SideNote;
+            spanwer.reader.sideNote = GetComponent<NoteReader>().sideNote;
 
             Destroy(this);
             Destroy(GetComponent<NoteReader>());

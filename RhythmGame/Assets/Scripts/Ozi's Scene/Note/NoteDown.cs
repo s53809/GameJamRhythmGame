@@ -5,7 +5,7 @@ using UnityEngine;
 public class NoteDown : MonoBehaviour
 {
     public const float SPEED = 5.0f;        // Note Fall Speed
-    public const float MULTIPLE = 0.02f;    // SPEED Calibration
+    public const float MULTIPLE = 0.01f;    // SPEED Calibration
     public const float JDG_LINE = -10.0f;   // Note JDG Position Y
 
     [ReadOnly] public float bpm = 0.0f;
