@@ -284,6 +284,9 @@ MonoBehaviour:
   normalNote: {fileID: 8205754851597140542, guid: 5b80573a0a74ae94887f7fefb98a2b28, type: 3}
   snowNote: {fileID: 8205754851597140542, guid: adcd4bdd24215524fa116a51dc9b468b, type: 3}
   sideNote: {fileID: 8205754851597140542, guid: fb655b993f025534b875b937e2bc4269, type: 3}
+  normalLongNote: {fileID: 5918236542752499044, guid: 4b93e5fe6a555604e97012b20e3d080b, type: 3}
+  snowLongNote: {fileID: 5918236542752499044, guid: 5d80ed09e559ae8489f8002a86d6814b, type: 3}
+  sideLongNote: {fileID: 5918236542752499044, guid: 00ca1f9f29762f94ca05b05399be4f6c, type: 3}
   artistName: ArtistName
   songName: SongName
   songPath: SongPath

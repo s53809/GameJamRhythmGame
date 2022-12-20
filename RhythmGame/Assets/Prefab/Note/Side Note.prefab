@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8205754851597140482}
   - component: {fileID: 4215373474559979654}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Side Note
-  m_TagString: Untagged
+  m_TagString: Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
