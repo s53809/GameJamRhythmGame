@@ -688,7 +688,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706633220}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -739,9 +739,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a957a0e1e5ecd47bff6357f6066547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalNote: {fileID: 1822861808}
-  snowNote: {fileID: 0}
-  SideNote: {fileID: 0}
+  normalNote: {fileID: 8205754851597140542, guid: 5b80573a0a74ae94887f7fefb98a2b28, type: 3}
+  snowNote: {fileID: 8205754851597140542, guid: adcd4bdd24215524fa116a51dc9b468b, type: 3}
+  sideNote: {fileID: 8205754851597140542, guid: fb655b993f025534b875b937e2bc4269, type: 3}
+  normalLongNote: {fileID: 5918236542752499044, guid: 4b93e5fe6a555604e97012b20e3d080b, type: 3}
+  snowLongNote: {fileID: 5918236542752499044, guid: 5d80ed09e559ae8489f8002a86d6814b, type: 3}
+  sideLongNote: {fileID: 5918236542752499044, guid: 00ca1f9f29762f94ca05b05399be4f6c, type: 3}
   artistName: ArtistName
   songName: SongName
   songPath: SongPath

@@ -11,7 +11,7 @@ public class NoteHit : MonoBehaviour
     NoteReader reader = null;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
-    NoteInfo[] Downnotes = new NoteInfo[4] { new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo() };
+    NoteInfo[] Downnotes = new NoteInfo[6] { new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo() };
 
     string panjeong;
 
@@ -24,10 +24,12 @@ public class NoteHit : MonoBehaviour
 
     private int GetHit()
     {
-        if (Input.GetKeyDown(KeyCode.Z))        return 1;
-        if (Input.GetKeyDown(KeyCode.X))        return 2;
-        if (Input.GetKeyDown(KeyCode.Period))   return 3;
-        if (Input.GetKeyDown(KeyCode.Slash))    return 4;
+        if (Input.GetKeyDown(KeyCode.Z))          return 1;
+        if (Input.GetKeyDown(KeyCode.X))          return 2;
+        if (Input.GetKeyDown(KeyCode.Period))     return 3;
+        if (Input.GetKeyDown(KeyCode.Slash))      return 4;
+        if (Input.GetKeyDown(KeyCode.LeftShift))  return 5;
+        if (Input.GetKeyDown(KeyCode.RightShift)) return 6;
 
         return 0;
     }
