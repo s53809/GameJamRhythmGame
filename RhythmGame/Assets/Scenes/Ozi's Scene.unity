@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -282,49 +282,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalNote: {fileID: 8205754851597140542, guid: 5b80573a0a74ae94887f7fefb98a2b28, type: 3}
-  normalLongNote: {fileID: 5918236542752499044, guid: 4b93e5fe6a555604e97012b20e3d080b, type: 3}
-  sideNote: {fileID: 8205754851597140542, guid: adcd4bdd24215524fa116a51dc9b468b, type: 3}
-  sideLongNote: {fileID: 5918236542752499044, guid: ce9cd488448fe134c830d68786c29758, type: 3}
+  normalLongNote: {fileID: 6977479226495141336, guid: 01b1ee532bc2d0e4e85312befe58867a, type: 3}
+  sideNote: {fileID: 8205754851597140542, guid: fb655b993f025534b875b937e2bc4269, type: 3}
+  sideLongNote: {fileID: 4279995203058364555, guid: dd9a1244972292144b033236e9722e44, type: 3}
   snowNote: {fileID: 8205754851597140542, guid: adcd4bdd24215524fa116a51dc9b468b, type: 3}
-  snowLongNote: {fileID: 5918236542752499044, guid: ce9cd488448fe134c830d68786c29758, type: 3}
+  snowLongNote: {fileID: 9012542119731717678, guid: b08ce8890606a834e95be6237750be3d, type: 3}
   snowSideNote: {fileID: 8205754851597140542, guid: cff3164356f24e74da67a5556ab5b5d6, type: 3}
-  snowSideLongNote: {fileID: 5918236542752499044, guid: 8fe5c73a4a603d848a27d8b0f6ea3d4e, type: 3}
+  snowSideLongNote: {fileID: 6056180404621632404, guid: b1111c0916a381d46afe9a43c4037851, type: 3}
   artistName: ArtistName
   songName: SongName
   songPath: SongPath
   bpm: 0
   offset: 0
---- !u!1 &1260267489
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1260267490}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1260267490
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1260267489}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1762538665
 GameObject:
   m_ObjectHideFlags: 0

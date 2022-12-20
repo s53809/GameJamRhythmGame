@@ -47,11 +47,13 @@ public class SoundTimer : MonoBehaviour
 
     public void Play(string path, int offset)
     {
-        //if(soundManager != null) { soundManager.PlayMusic(path); }
-
-        isPlaying = true;
-        StartPos = AudioSettings.dspTime;
-        this.offset = (offset * 0.001f);
+        try { if(soundManager != null) { soundManager.PlayMusic(path); } }
+        catch(Exception e) { Debug.Log("SoundTimer.Play(string, int) : " + e.Message); }
+        finally {
+            isPlaying = true;
+            StartPos = AudioSettings.dspTime;
+            this.offset = (offset * 0.001f);
+        }
     }
 
     [ContextMenu("Note Time Play")]

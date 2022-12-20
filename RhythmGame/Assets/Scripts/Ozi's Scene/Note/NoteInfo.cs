@@ -15,8 +15,9 @@ public enum NoteLine
 public enum NoteType
 {
     Normal,
-    Snow,
-    Side
+    Normal_Snow,
+    Side,
+    Side_Snow
 }
 public enum NoteTrans
 {

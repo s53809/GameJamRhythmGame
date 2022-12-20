@@ -22,10 +22,15 @@ public class NoteDown : MonoBehaviour
 
     void Update()
     {
-        transform.position = Vector3.Lerp(beforePos, afterPos, now);
-        //if(now >= 1.0f) { Destroy(gameObject); }
+        transform.position = BezierCurve(now, beforePos, afterPos);
+        if(now >= 20.0f) { Destroy(gameObject); }
 
         // Fall For 1 Seconds
         now += Time.deltaTime;
+    }
+
+    Vector3 BezierCurve(float t, Vector3 start, Vector3 end)
+    {
+        return ((1 - t) * start) + (t * end);
     }
 }

@@ -15,17 +15,17 @@ public class NoteReader : MonoBehaviour
     public GameObject normalNote;
     public GameObject normalLongNote;
 
-    [Header("Side Note")]
-    public GameObject sideNote;
-    public GameObject sideLongNote;
-
     [Header("Snow Note")]
     public GameObject snowNote;
     public GameObject snowLongNote;
+
+    [Header("Side Note")]
+    public GameObject normalSideNote;
+    public GameObject normalSideLongNote;
     public GameObject snowSideNote;
     public GameObject snowSideLongNote;
 
-    public const float NOTE_DISTANCE = 1.8f;
+    public const float NOTE_DISTANCE = 2.5f;
     public const char INFO_SEPARATOR = ':';
     public const char NOTE_SEPARATOR = ',';
     public const int ERROR_NUM = -1;
@@ -40,7 +40,7 @@ public class NoteReader : MonoBehaviour
     private List<Tuple<NoteInfo, GameObject>> LongStart = new();
     private List<Tuple<NoteInfo, GameObject>> LongEnd = new();
 
-    public Queue<NoteInfo> ReadLis(ref Queue<NoteInfo> notes, string path)
+    public void ReadLis(ref Queue<NoteInfo> notes, string path)
     {
         StreamReader reader = new(path + ".lis");
 
@@ -144,8 +144,9 @@ public class NoteReader : MonoBehaviour
                     switch ((NoteType)Convert.ToInt32(splitText[2]))
                     {
                         case NoteType.Normal: { note = Instantiate(normalNote); } break;
-                        case NoteType.Snow: { note = Instantiate(snowNote); } break;
-                        case NoteType.Side: { note = Instantiate(sideNote); } break;
+                        case NoteType.Normal_Snow: { note = Instantiate(snowNote); } break;
+                        case NoteType.Side: { note = Instantiate(normalSideNote); } break;
+                        case NoteType.Side_Snow: { note = Instantiate(snowSideNote); } break;
                     }
                 }
                 catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
@@ -159,9 +160,9 @@ public class NoteReader : MonoBehaviour
                 catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
 
                 // [ Line ]
-                Vector3 pos = Vector3.zero;
                 try
                 {
+                    Vector3 pos = Vector3.zero;
                     if(info.noteType == NoteType.Side)
                     {
                         switch ((NoteLine)Convert.ToInt32(splitText[0]))
@@ -203,14 +204,15 @@ public class NoteReader : MonoBehaviour
 
                                 switch (info.noteType)
                                 {
-                                    case NoteType.Normal:   { @object = Instantiate(normalLongNote); } break;
-                                    case NoteType.Snow:     { @object = Instantiate(snowLongNote);  } break;
-                                    case NoteType.Side:     { @object = Instantiate(sideLongNote);  } break;
+                                    case NoteType.Normal:       { @object = Instantiate(normalLongNote); } break;
+                                    case NoteType.Normal_Snow:  { @object = Instantiate(snowLongNote);  } break;
+                                    case NoteType.Side:         { @object = Instantiate(normalSideLongNote);  } break;
+                                    case NoteType.Side_Snow:    { @object = Instantiate(snowSideLongNote);  } break;
                                 }
 
                                 if (@object != null) {
                                     @object.transform.parent = note.transform;
-                                    @object.transform.position = new Vector3(pos.x, delay, 0);
+                                    @object.transform.position = note.transform.position;
                                     LongStart.Add(new Tuple<NoteInfo, GameObject>(info, @object));
                                 }
                             }
@@ -240,8 +242,7 @@ public class NoteReader : MonoBehaviour
                         Transform trans = LongStart[0].Item2.transform;
 
                         float hit = (item.Item1.hitTiming - LongStart[0].Item1.hitTiming) * 0.01f;
-                        trans.localScale = new Vector3(trans.localScale.x, hit * 2 ,trans.localScale.z);
-                        trans.position += new Vector3(0, hit * 0.65f, 0);
+                        trans.localScale = new Vector3(trans.localScale.x, hit * 6.4f ,trans.localScale.z);
 
                         LongEnd.Remove(item);
                         LongStart.Remove(LongStart[0]);
@@ -255,8 +256,5 @@ public class NoteReader : MonoBehaviour
                 if (!isChange) { throw new Exception("해당 라인의 맞는 Long End를 찾지 못했습니다."); }
             }
         }
-
-        return notes;
     }
-
 }

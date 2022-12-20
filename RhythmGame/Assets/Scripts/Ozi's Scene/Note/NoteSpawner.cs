@@ -14,6 +14,7 @@ public class NoteSpawner : MonoBehaviour
     [ReadOnly] public NoteReader reader;
     [ReadOnly] public SoundTimer timer;
     [ReadOnly] public int NoteCount = 0;
+    [ReadOnly] public int Time = 0;
 
     [Header("Next Note Info")]
     [ReadOnly] public NoteLine nextLine;
@@ -39,10 +40,10 @@ public class NoteSpawner : MonoBehaviour
             NoteReader reader = GetComponent<NoteReader>();
             spanwer.reader.normalNote =     reader.normalNote;
             spanwer.reader.snowNote =       reader.snowNote;
-            spanwer.reader.sideNote =       reader.sideNote;
+            spanwer.reader.normalSideNote =       reader.normalSideNote;
             spanwer.reader.normalLongNote = reader.normalLongNote;
             spanwer.reader.snowLongNote =   reader.snowLongNote;
-            spanwer.reader.sideLongNote =   reader.sideLongNote;
+            spanwer.reader.normalSideLongNote =   reader.normalSideLongNote;
 
             Destroy(this);
             Destroy(GetComponent<NoteReader>());
@@ -51,10 +52,12 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
+        if(timer != null) { Time = timer.NowPos; }
         if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Scripts/Ozi's Scene/example"); }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
+            NoteCount = notes.Count - 1;
             NoteInfo info = notes.First();
 
             nextLine = info.line;
@@ -67,12 +70,11 @@ public class NoteSpawner : MonoBehaviour
         }
     }
 
-    public bool LisRead(string path)
+    public void LisRead(string path)
     {
-        reader.ReadLis(ref notes, path);
-        timer.Play(path, reader.offset);
-
-        return true;
+        try { reader.ReadLis(ref notes, path); }
+        catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message); } 
+        finally { timer.Play(reader.songPath, reader.offset); }
     }
 
     [ContextMenu("Note Queue Clear")]
