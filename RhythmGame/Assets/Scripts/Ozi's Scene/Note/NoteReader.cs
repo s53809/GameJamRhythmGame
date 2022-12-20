@@ -144,13 +144,13 @@ public class NoteReader : MonoBehaviour
                 NoteInfo info = note.AddComponent<NoteInfo>();
 
                 // [ Note Type ]
-                try { 
+                try {
+
                     info.noteType = (NoteType)Convert.ToInt32(splitText[2]);
                 }
                 catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
 
                 // [ Line ]
-                note.transform.position = new Vector3(NOTE_DISTANCE * -1.5f, 0, 0);
                 try
                 {
                     if(info.noteType == NoteType.Side)
@@ -163,7 +163,8 @@ public class NoteReader : MonoBehaviour
                             case NoteLine.Four: { note.transform.position = new Vector3(NOTE_DISTANCE * 1.0f, delay, 0); info.line = NoteLine.RightSide; } break;
                             default: { throw new Exception(); }
                         }
-                    } else
+                    }
+                    else
                     {
                         switch ((NoteLine)Convert.ToInt32(splitText[0]))
                         {
@@ -183,7 +184,25 @@ public class NoteReader : MonoBehaviour
                 catch (Exception e) { Debug.Log("Timing Error : " + e.Message); }
 
                 // [ Note Trans ]
-                try { info.noteTrans = (NoteTrans)Convert.ToInt32(splitText[3]); }
+                try
+                {
+                    
+                    switch(info.noteType)
+                    {
+                        case NoteType.Normal:   {  } break;
+                        case NoteType.Side:     {  } break;
+                        case NoteType.Snow:     {  } break;
+                    }
+
+                    switch ((NoteTrans)Convert.ToInt32(splitText[3]))
+                    {
+                        case NoteTrans.Normal:  {  } break;
+                        case NoteTrans.Long:    {  } break;
+                        case NoteTrans.LongEnd: {  } break;
+                    }
+
+                    info.noteTrans = (NoteTrans)Convert.ToInt32(splitText[3]);
+                }
                 catch (Exception e) { Debug.Log("Trans Error : " + e.Message); }
 
                 notes.Enqueue(info);
