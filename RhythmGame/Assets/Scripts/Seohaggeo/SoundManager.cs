@@ -86,6 +86,7 @@ public class SoundManager : MonoBehaviour
             {
                 SFXSource.Add(gameObject.AddComponent<AudioSource>());
                 SFXSource.Last().playOnAwake = false;
+                SFXSource.Last().volume = 0.5f;
                 SFXSource.Last().clip = s;
                 SFXSource.Last().Play();
 

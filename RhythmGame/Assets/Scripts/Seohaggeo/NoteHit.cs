@@ -9,6 +9,7 @@ public class NoteHit : MonoBehaviour
     NoteSpawner noteSpawner = null;
     SoundTimer timer = null;
     NoteReader reader = null;
+    SoundManager soundManager = null;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
     NoteInfo[] Downnotes = new NoteInfo[6] { new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo() };
@@ -20,16 +21,17 @@ public class NoteHit : MonoBehaviour
         noteSpawner = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteSpawner>();
         reader = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteReader>();
         timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
+        soundManager = SoundManager.GetInstance();
     }
 
     private void GetHit()
     {
-        if (Input.GetKeyDown(KeyCode.Z))          CheckHit(1);
-        if (Input.GetKeyDown(KeyCode.X))          CheckHit(2);
-        if (Input.GetKeyDown(KeyCode.Period))     CheckHit(3);
-        if (Input.GetKeyDown(KeyCode.Slash))      CheckHit(4);
-        if (Input.GetKeyDown(KeyCode.LeftShift))  CheckHit(5);
-        if (Input.GetKeyDown(KeyCode.RightShift)) CheckHit(6);
+        if (Input.GetKeyDown(KeyCode.Z))          { soundManager.PlaySFX("hitogg"); CheckHit(1); }
+        if (Input.GetKeyDown(KeyCode.X))          { soundManager.PlaySFX("hitogg"); CheckHit(2); }
+        if (Input.GetKeyDown(KeyCode.Period))     { soundManager.PlaySFX("hitogg"); CheckHit(3); }
+        if (Input.GetKeyDown(KeyCode.Slash))      { soundManager.PlaySFX("hitogg"); CheckHit(4); }
+        if (Input.GetKeyDown(KeyCode.LeftShift))  { soundManager.PlaySFX("hitogg"); CheckHit(5); }
+        if (Input.GetKeyDown(KeyCode.RightShift)) { soundManager.PlaySFX("hitogg"); CheckHit(6); }
 
         return;
     }
