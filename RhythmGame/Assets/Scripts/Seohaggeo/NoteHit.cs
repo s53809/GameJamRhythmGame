@@ -22,16 +22,37 @@ public class NoteHit : MonoBehaviour
         timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
     }
 
-    private int GetHit()
+    private void GetHit()
     {
-        if (Input.GetKeyDown(KeyCode.Z))          return 1;
-        if (Input.GetKeyDown(KeyCode.X))          return 2;
-        if (Input.GetKeyDown(KeyCode.Period))     return 3;
-        if (Input.GetKeyDown(KeyCode.Slash))      return 4;
-        if (Input.GetKeyDown(KeyCode.LeftShift))  return 5;
-        if (Input.GetKeyDown(KeyCode.RightShift)) return 6;
+        if (Input.GetKeyDown(KeyCode.Z))          CheckHit(1);
+        if (Input.GetKeyDown(KeyCode.X))          CheckHit(2);
+        if (Input.GetKeyDown(KeyCode.Period))     CheckHit(3);
+        if (Input.GetKeyDown(KeyCode.Slash))      CheckHit(4);
+        if (Input.GetKeyDown(KeyCode.LeftShift))  CheckHit(5);
+        if (Input.GetKeyDown(KeyCode.RightShift)) CheckHit(6);
 
-        return 0;
+        return;
+    }
+
+    private void CheckHit(int input)
+    {
+        if (input != 0 && timer.NowPos >= Downnotes[input - 1].hitTiming - 192)
+        {
+            if (timer.NowPos <= Downnotes[input - 1].hitTiming - 168) panjeong = "BAD";
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming - 100) panjeong = "GOOD";
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming - 48) panjeong = "GREAT";
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 48) panjeong = "PERFECT";
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 100) panjeong = "GREAT";
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 168) panjeong = "GOOD";
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 192) panjeong = "BAD";
+            else panjeong = "MISS";
+
+            Debug.Log(input);
+            Debug.Log(panjeong);
+            Downnotes[input - 1].line = NoteLine.None;
+        }
+
+        return;
     }
     
     private void Update()
@@ -43,31 +64,15 @@ public class NoteHit : MonoBehaviour
             Downnotes[(int)notes.First().line - 1] = notes.Dequeue();
         }
 
-        int input = GetHit();
-        if (input != 0 && timer.NowPos >= Downnotes[input - 1].hitTiming - 192)
-        {
-            if      (timer.NowPos <= Downnotes[input - 1].hitTiming - 168) panjeong = "BAD";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming - 100) panjeong = "GOOD";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming - 48) panjeong = "GREAT";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 48) panjeong = "PERFECT";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 100) panjeong = "GREAT";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 168) panjeong = "GOOD";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 192) panjeong = "BAD";
-            else panjeong = "MISS";
+        GetHit();
 
-            Debug.Log(panjeong);
-            Downnotes[input - 1].line = NoteLine.None;
-        }
-        if (input == 0)
+        foreach (NoteInfo n in Downnotes)
         {
-            foreach(NoteInfo n in Downnotes)
+            if (n.line != NoteLine.None && timer.NowPos >= n.hitTiming + 192)
             {
-                if(n.line != NoteLine.None && timer.NowPos >= n.hitTiming + 192)
-                {
-                    panjeong = "MISS";
-                    Debug.Log(panjeong);
-                    n.line = NoteLine.None;
-                }
+                panjeong = "MISS";
+                Debug.Log(panjeong);
+                n.line = NoteLine.None;
             }
         }
     }
