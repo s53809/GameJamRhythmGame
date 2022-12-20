@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayBGM(string name)
+    public void PlayBGM(string name) // 이미 저장된 브금들을 이름으로 불러옵니다
     {
         foreach (AudioClip b in BGM)
         {
@@ -61,9 +62,17 @@ public class SoundManager : MonoBehaviour
                 return;
             }
         }
+
+        return;
+    }
+
+    public void PlayMusic(string path) // 리듬게임 음악을 경로로 불러옵니다
+    {
+        AudioClip music = Resources.Load<AudioClip>(path);
+
+        if (music == null) throw new Exception("찾을 수 없음");
         
-        BGM[BGM.Length] = Resources.Load<AudioClip>("Resources/AudioClips/" + name);
-        BGMSource.clip = BGM[BGM.Length];
+        BGMSource.clip = music;
         BGMSource.Play();
 
         return;
