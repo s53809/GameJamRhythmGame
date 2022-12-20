@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum NoteLine
 {
-    One = 1,
+    None,
+    One,
     Two,
     Three,
     Four,
@@ -28,7 +29,7 @@ public class NoteInfo : MonoBehaviour
 {
     public NoteType  noteType  = NoteType .Normal;
     public NoteTrans noteTrans = NoteTrans.Normal;
-    public NoteLine line       = NoteLine .One;
+    public NoteLine line       = NoteLine .None;
     public int hitTiming = NoteReader.ERROR_NUM;
 
     public void Down(float bpm)

@@ -13,6 +13,8 @@ public class NoteReader : MonoBehaviour
     public GameObject normalNote;
     public GameObject snowNote;
     public GameObject sideNote;
+    public GameObject snowLongNote;
+    public GameObject sideLongNote;
 
     public const float NOTE_DISTANCE = 1.5f;
     public const char INFO_SEPARATOR = ':';
@@ -188,5 +190,10 @@ public class NoteReader : MonoBehaviour
         }
 
         return notes;
+    }
+
+    public void Copy(ref NoteReader _reader)
+    {
+        _reader = ;
     }
 }
