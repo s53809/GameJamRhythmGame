@@ -36,9 +36,9 @@ public class NoteHit : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A)) reader.ReadLis(ref notes, "Assets/Scripts/Ozi's Scene/example");
         
-        while (notes.Count > 0 && Downnotes[notes.First().line - 1].line == -1)
+        while (notes.Count > 0 && Downnotes[(int)notes.First().line - 1].line == NoteLine.None)
         {
-            Downnotes[notes.First().line - 1] = notes.Dequeue();
+            Downnotes[(int)notes.First().line - 1] = notes.Dequeue();
         }
 
         int input = GetHit();
@@ -54,17 +54,17 @@ public class NoteHit : MonoBehaviour
             else panjeong = "MISS";
 
             Debug.Log(panjeong);
-            Downnotes[input - 1].line = -1;
+            Downnotes[input - 1].line = NoteLine.None;
         }
         if (input == 0)
         {
             foreach(NoteInfo n in Downnotes)
             {
-                if(n.line != -1 && timer.NowPos >= n.hitTiming + 192)
+                if(n.line != NoteLine.None && timer.NowPos >= n.hitTiming + 192)
                 {
                     panjeong = "MISS";
                     Debug.Log(panjeong);
-                    n.line = -1;
+                    n.line = NoteLine.None;
                 }
             }
         }
