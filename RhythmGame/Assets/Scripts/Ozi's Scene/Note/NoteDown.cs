@@ -6,7 +6,7 @@ public class NoteDown : MonoBehaviour
 {
     public const float SPEED = 5.0f;        // Note Fall Speed
     public const float MULTIPLE = 0.02f;    // SPEED Calibration
-    public const float DEL_LINE = -10.0f;   // Note Delete Position Y
+    public const float JDG_LINE = -10.0f;   // Note JDG Position Y
 
     [ReadOnly] public float bpm = 0.0f;
     [ReadOnly, SerializeField] private Vector3 beforePos;
@@ -17,7 +17,7 @@ public class NoteDown : MonoBehaviour
     private void Awake()
     {
         beforePos = transform.position;
-        afterPos = new Vector3(beforePos.x, DEL_LINE, 0);
+        afterPos = new Vector3(beforePos.x, JDG_LINE, 0);
     }
 
     void Update()
