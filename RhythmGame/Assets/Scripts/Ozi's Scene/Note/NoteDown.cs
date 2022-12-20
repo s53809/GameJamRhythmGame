@@ -23,7 +23,7 @@ public class NoteDown : MonoBehaviour
     void Update()
     {
         transform.position = Vector3.Lerp(beforePos, afterPos, now);
-        if(now >= 1.0f) { Destroy(gameObject); }
+        //if(now >= 1.0f) { Destroy(gameObject); }
 
         // Fall For 1 Seconds
         now += Time.deltaTime;

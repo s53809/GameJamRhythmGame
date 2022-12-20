@@ -40,6 +40,9 @@ public class NoteSpawner : MonoBehaviour
             spanwer.reader.normalNote = GetComponent<NoteReader>().normalNote;
             spanwer.reader.snowNote = GetComponent<NoteReader>().snowNote;
             spanwer.reader.sideNote = GetComponent<NoteReader>().sideNote;
+            spanwer.reader.normalLongNote = GetComponent<NoteReader>().normalLongNote;
+            spanwer.reader.snowLongNote = GetComponent<NoteReader>().snowLongNote;
+            spanwer.reader.sideLongNote = GetComponent<NoteReader>().sideLongNote;
 
             Destroy(this);
             Destroy(GetComponent<NoteReader>());
