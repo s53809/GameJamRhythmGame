@@ -11,6 +11,10 @@ using static TreeEditor.TreeEditorHelper;
 [System.Serializable]
 public class NoteReader : MonoBehaviour
 {
+    public GameObject normalNote;
+    public GameObject snowNote;
+    public GameObject SideNote;
+
     public const float NOTE_DISTANCE = 1.0f;
     public const char INFO_SEPARATOR = ':';
     public const char NOTE_SEPARATOR = ',';
@@ -44,7 +48,7 @@ public class NoteReader : MonoBehaviour
          * 
          */
 
-        /* [ 기본적인 채보 Info 세팅 ] */ {
+        /* [ Info Setting ] */ {
             // ArtistName (separator) (String)
             try {
                 artistName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
@@ -95,7 +99,7 @@ public class NoteReader : MonoBehaviour
                 Debug.Log("Offset : " + e.Message);
             }
         }
-        /* [ 노트 불러오기 ] */ {
+        /* [ Loading Note ] */ {
             bool isStart = false;
             string[] texts;
 
@@ -117,13 +121,13 @@ public class NoteReader : MonoBehaviour
                 text = reader.ReadLine();
                 if(text == null) { break; }
 
-                GameObject note = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                GameObject note = Instantiate(normalNote);
                 note.transform.parent = transform;
 
                 NoteInfo info = note.AddComponent<NoteInfo>();
                 string[] splitText = text.Split(',');
 
-                // [ 라인 ]
+                // [ Line ]
                 note.transform.position = new Vector3(NOTE_DISTANCE * -1.5f, 0, 0);
                 try
                 {
@@ -139,15 +143,15 @@ public class NoteReader : MonoBehaviour
                 }
                 catch(Exception e) { Debug.Log("Line Error : " + e.Message); }
 
-                // [ 타이밍 ]
+                // [ Timing ]
                 try { info.hitTiming = Convert.ToInt32(splitText[1]); }
                 catch (Exception e) { Debug.Log("Timing Error : " + e.Message); }
 
-                // [ 노트 타입 ]
+                // [ Note Type ]
                 try { info.noteType = (NoteType)Convert.ToInt32(splitText[2]); }
                 catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
 
-                // [ 노트 트랜스 ]
+                // [ Note Trans ]
                 try { info.noteTrans = (NoteTrans)Convert.ToInt32(splitText[3]); }
                 catch (Exception e) { Debug.Log("Trans Error : " + e.Message); }
 

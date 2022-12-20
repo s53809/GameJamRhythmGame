@@ -13,7 +13,7 @@ public class SoundTimer : MonoBehaviour
     private double pauseTime = 0.0f;
 
     public int NowPos => Convert.ToInt32(nowPos * 1000.0f);
-    //                                  [    ms·Î º¯È¯    ]
+    //                                  [    Trans ms    ]
 
     [SerializeField, ReadOnly] private double nowPos = 0.0f;
     
@@ -32,7 +32,7 @@ public class SoundTimer : MonoBehaviour
 
     public void Play(string path, int offset)
     {
-        if(soundManager != null) { soundManager.PlayBGM(path); }
+        if(soundManager != null) { soundManager.PlayMusic(path); }
 
         isPlaying = true;
         StartPos = AudioSettings.dspTime;

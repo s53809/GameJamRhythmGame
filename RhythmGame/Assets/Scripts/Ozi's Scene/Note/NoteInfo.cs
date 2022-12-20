@@ -5,7 +5,7 @@ using UnityEngine;
 public enum NoteType
 {
     Normal,
-    Special,
+    Snow,
     Side
 }
 public enum NoteTrans

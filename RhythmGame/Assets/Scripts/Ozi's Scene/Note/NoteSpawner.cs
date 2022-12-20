@@ -19,7 +19,7 @@ public class NoteSpawner : MonoBehaviour
     [ReadOnly] public NoteType  nextNoteType;
     [ReadOnly] public NoteTrans nextNoteTrans;
 
-    private Queue<NoteInfo> notes = new Queue<NoteInfo>();
+    public Queue<NoteInfo> notes = new Queue<NoteInfo>();
 
     void Awake()
     {
