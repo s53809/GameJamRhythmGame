@@ -48,7 +48,7 @@ public class SoundTimer : MonoBehaviour
     public void Play(string path, int offset)
     {
         try { if(soundManager != null) { soundManager.PlayMusic(path); } }
-        catch(Exception e) { Debug.Log("SoundTimer.Play(string, int) : " + e.Message); }
+        catch(Exception e) { Debug.Log("SoundTimer.Play(string, int) : " + e.Message + " " + path); }
         finally {
             isPlaying = true;
             StartPos = AudioSettings.dspTime;

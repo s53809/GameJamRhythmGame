@@ -39,11 +39,13 @@ public class NoteSpawner : MonoBehaviour
 
             NoteReader reader = GetComponent<NoteReader>();
             spanwer.reader.normalNote =     reader.normalNote;
-            spanwer.reader.snowNote =       reader.snowNote;
             spanwer.reader.normalSideNote =       reader.normalSideNote;
             spanwer.reader.normalLongNote = reader.normalLongNote;
-            spanwer.reader.snowLongNote =   reader.snowLongNote;
             spanwer.reader.normalSideLongNote =   reader.normalSideLongNote;
+            spanwer.reader.snowNote =       reader.snowNote;
+            spanwer.reader.snowLongNote =   reader.snowLongNote;
+            spanwer.reader.snowSideNote =   reader.snowSideNote;
+            spanwer.reader.snowSideLongNote =   reader.snowSideLongNote;
 
             Destroy(this);
             Destroy(GetComponent<NoteReader>());
@@ -53,7 +55,7 @@ public class NoteSpawner : MonoBehaviour
     void Update()
     {
         if(timer != null) { Time = timer.NowPos; }
-        if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Scripts/Ozi's Scene/example"); }
+        if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Scripts/Ozi's Scene/PeriTune - Flap/PeriTurn - Flap.lis"); }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
