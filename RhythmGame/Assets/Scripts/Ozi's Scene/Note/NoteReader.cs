@@ -44,8 +44,7 @@ public class NoteReader : MonoBehaviour
          * 
          */
 
-        /* [ 기본적인 채보 Info 세팅 ] */
-        {
+        /* [ 기본적인 채보 Info 세팅 ] */ {
             // ArtistName (separator) (String)
             try {
                 artistName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
@@ -141,7 +140,7 @@ public class NoteReader : MonoBehaviour
                 catch(Exception e) { Debug.Log("Line Error : " + e.Message); }
 
                 // [ 타이밍 ]
-                try { info.spanwnTiming = Convert.ToInt32(splitText[1]); }
+                try { info.hitTiming = Convert.ToInt32(splitText[1]); }
                 catch (Exception e) { Debug.Log("Timing Error : " + e.Message); }
 
                 // [ 노트 타입 ]

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class NoteDown : MonoBehaviour
 {
-    public const float SPEED = 5.0f;
-    // SPPED 곱해주는 용도
-    public const float MULTIPLE = 0.02f;
-    public const float DEL_LINE = -10.0f;
+    public const float SPEED = 5.0f;        // 노트가 떨어지는 속도
+    public const float MULTIPLE = 0.02f;    // SPEED 보정 용도
+    public const float DEL_LINE = -10.0f;   // 노트가 사라지는 y좌표값
 
     [ReadOnly] public float bpm = 0.0f;
     [ReadOnly, SerializeField] private Vector3 beforePos;
