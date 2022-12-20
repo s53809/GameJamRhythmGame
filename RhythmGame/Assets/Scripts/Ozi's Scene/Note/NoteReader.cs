@@ -13,6 +13,7 @@ public class NoteReader : MonoBehaviour
     public GameObject normalNote;
     public GameObject snowNote;
     public GameObject sideNote;
+    public GameObject normalLongNote;
     public GameObject snowLongNote;
     public GameObject sideLongNote;
 
@@ -192,8 +193,4 @@ public class NoteReader : MonoBehaviour
         return notes;
     }
 
-    public void Copy(ref NoteReader _reader)
-    {
-        _reader = ;
-    }
 }
