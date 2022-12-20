@@ -42,7 +42,7 @@ public class NoteReader : MonoBehaviour
 
     public void ReadLis(ref Queue<NoteInfo> notes, string path)
     {
-        StreamReader reader = new(path + ".lis");
+        StreamReader reader = new(path);
 
         // lis 파일 작성 형식 
         /* example.lis
@@ -128,7 +128,7 @@ public class NoteReader : MonoBehaviour
             }
 
             string text;
-            float delay = (bpm * NoteDown.SPEED * NoteDown.MULTIPLE) + offset;
+            float delay = ((bpm * NoteDown.SPEED) + offset) * NoteDown.MULTIPLE;
             
             while (true) {
                 text = reader.ReadLine();
