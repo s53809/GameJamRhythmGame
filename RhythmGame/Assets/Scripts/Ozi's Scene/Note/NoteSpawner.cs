@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(NoteReader))]
 public class NoteSpawner : MonoBehaviour
 {
-    public const string NOTESPAWNER_NAME = "Note Spawner"; 
+    public const string NOTESPAWNER_NAME = "Note Spawner";
 
     [Header("Note Reader")]
     [ReadOnly] public NoteReader reader;
@@ -18,7 +18,7 @@ public class NoteSpawner : MonoBehaviour
     [Header("Next Note Info")]
     [ReadOnly] public NoteLine nextLine;
     [ReadOnly] public int nextSpawnTiming;
-    [ReadOnly] public NoteType  nextNoteType;
+    [ReadOnly] public NoteType nextNoteType;
     [ReadOnly] public NoteTrans nextNoteTrans;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
@@ -34,15 +34,15 @@ public class NoteSpawner : MonoBehaviour
 
             spanwer.reader = @object.GetComponent<NoteReader>();
             spanwer.timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
-            if(GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>() == null) { Debug.Log("Timer가 null"); }
+            if (GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>() == null) { Debug.Log("Timer가 null"); }
 
-            // 노가다
-            spanwer.reader.normalNote = GetComponent<NoteReader>().normalNote;
-            spanwer.reader.snowNote = GetComponent<NoteReader>().snowNote;
-            spanwer.reader.sideNote = GetComponent<NoteReader>().sideNote;
-            spanwer.reader.normalLongNote = GetComponent<NoteReader>().normalLongNote;
-            spanwer.reader.snowLongNote = GetComponent<NoteReader>().snowLongNote;
-            spanwer.reader.sideLongNote = GetComponent<NoteReader>().sideLongNote;
+            NoteReader reader = GetComponent<NoteReader>();
+            spanwer.reader.normalNote =     reader.normalNote;
+            spanwer.reader.snowNote =       reader.snowNote;
+            spanwer.reader.sideNote =       reader.sideNote;
+            spanwer.reader.normalLongNote = reader.normalLongNote;
+            spanwer.reader.snowLongNote =   reader.snowLongNote;
+            spanwer.reader.sideLongNote =   reader.sideLongNote;
 
             Destroy(this);
             Destroy(GetComponent<NoteReader>());
@@ -51,7 +51,7 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Scripts/Ozi's Scene/example"); }
+        if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Scripts/Ozi's Scene/example"); }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {

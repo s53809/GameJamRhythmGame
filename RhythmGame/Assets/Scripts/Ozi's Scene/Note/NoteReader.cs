@@ -1,4 +1,4 @@
-using Shapes;
+ using Shapes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -247,7 +247,7 @@ public class NoteReader : MonoBehaviour
                         LongStart.Remove(LongStart[0]);
                         
                         isChange = true;
-                            break;
+                        break;
                     }
                 }
 
