@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(NoteReader))]
-[RequireComponent(typeof(SoundTimer))]
 public class NoteSpawner : MonoBehaviour
 {
     [Header("Note Reader")]
@@ -21,10 +20,11 @@ public class NoteSpawner : MonoBehaviour
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
 
-    void Awake()
+    void Start()
     {
         reader = GetComponent<NoteReader>();
-        timer = GetComponent<SoundTimer>();
+
+        timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
 
         LisRead("Assets/Scripts/Ozi's Scene/example");
     }

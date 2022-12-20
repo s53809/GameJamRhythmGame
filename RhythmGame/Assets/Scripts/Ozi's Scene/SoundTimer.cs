@@ -7,22 +7,37 @@ using UnityEngine;
 
 public class SoundTimer : MonoBehaviour
 {
+    public const string SOUNDTIMER_NAME= "SoundTimer";
+
     SoundManager soundManager;
     private double StartPos = 0.0f;
     private double offset = 0.0f;
     private double pauseTime = 0.0f;
 
     public int NowPos => Convert.ToInt32(nowPos * 1000.0f);
-    //                                  [    Trans ms    ]
+    //                                  [    Trans ms     ]
 
     [SerializeField, ReadOnly] private double nowPos = 0.0f;
     
     public bool IsPlaying => isPlaying;
     private bool isPlaying = false;
 
-    private void Start()
+
+    private void Awake()
     {
-        soundManager = SoundManager.GetInstance();
+
+        GameObject @object = GameObject.Find(SOUNDTIMER_NAME);
+        
+        if(@object == null)
+        {
+            @object = new GameObject(SOUNDTIMER_NAME);
+
+            SoundTimer timer = @object.AddComponent<SoundTimer>();
+            timer.soundManager = SoundManager.GetInstance();
+
+            DontDestroyOnLoad(@object);
+            Destroy(this);
+        }
     }
 
     void Update()
@@ -32,7 +47,7 @@ public class SoundTimer : MonoBehaviour
 
     public void Play(string path, int offset)
     {
-        if(soundManager != null) { soundManager.PlayMusic(path); }
+        //if(soundManager != null) { soundManager.PlayMusic(path); }
 
         isPlaying = true;
         StartPos = AudioSettings.dspTime;

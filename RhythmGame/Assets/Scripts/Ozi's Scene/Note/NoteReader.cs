@@ -116,7 +116,7 @@ public class NoteReader : MonoBehaviour
 
             string text;
             float delay = (bpm * NoteDown.SPEED * NoteDown.MULTIPLE) + offset;
-
+            
             while (true) {
                 text = reader.ReadLine();
                 if(text == null) { break; }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class NoteDown : MonoBehaviour
 {
-    public const float SPEED = 5.0f;        // 노트가 떨어지는 속도
-    public const float MULTIPLE = 0.02f;    // SPEED 보정 용도
-    public const float DEL_LINE = -10.0f;   // 노트가 사라지는 y좌표값
+    public const float SPEED = 5.0f;        // Note Fall Speed
+    public const float MULTIPLE = 0.02f;    // SPEED Calibration
+    public const float DEL_LINE = -10.0f;   // Note Delete Position Y
 
     [ReadOnly] public float bpm = 0.0f;
     [ReadOnly, SerializeField] private Vector3 beforePos;
@@ -25,7 +25,7 @@ public class NoteDown : MonoBehaviour
         transform.position = Vector3.Lerp(beforePos, afterPos, now);
         if(now >= 1.0f) { Destroy(gameObject); }
 
-        // 1초간 떨어짐
+        // Fall For 1 Seconds
         now += Time.deltaTime;
     }
 }
