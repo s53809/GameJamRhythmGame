@@ -17,7 +17,6 @@ public class NoteSpawner : MonoBehaviour
     [Header("Note Reader")]
     [ReadOnly] public NoteReader reader;
     [ReadOnly] public SoundTimer timer;
-    [ReadOnly] public NoteHit hit;
     [ReadOnly] public int noteCount = 0;
     [ReadOnly] public int time = 0;
 
@@ -53,8 +52,6 @@ public class NoteSpawner : MonoBehaviour
             spanwer.reader.snowLongNote =   reader.snowLongNote;
             spanwer.reader.snowSideNote =   reader.snowSideNote;
             spanwer.reader.snowSideLongNote =   reader.snowSideLongNote;
-
-            spanwer.hit = NoteHit.GetInstance();
 
             Destroy(this);
             Destroy(GetComponent<NoteReader>());
@@ -96,8 +93,6 @@ public class NoteSpawner : MonoBehaviour
 
         try {
             reader.ReadLis(ref notes, path);
-            //hit.notes = this.notes;
-            //hit.crotchet = 60000 / reader.bpm;
         }
         catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message); } 
         finally { timer.Play(reader.songPath, reader.offset); }

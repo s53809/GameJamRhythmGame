@@ -17,8 +17,6 @@ public class GameManagerEx : MonoBehaviour
         return instance;
     }
 
-    [SerializeField]
-    GameObject panjeong = null;
     SnowSpawner snow = null;
 
     public int scoreP = 0;
