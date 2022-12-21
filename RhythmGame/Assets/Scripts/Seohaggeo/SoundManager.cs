@@ -36,6 +36,8 @@ public class SoundManager : MonoBehaviour
         BGMSource = gameObject.AddComponent<AudioSource>();
         BGMSource.playOnAwake = false;
         BGMSource.loop = true;
+
+        SFXVol = 20;
     }
 
     private void Update()
@@ -110,5 +112,5 @@ public class SoundManager : MonoBehaviour
     }
 
     public void SetBGMVol(float vol) { MSCVol = vol; }
-    public void SetSFXVol(float vol) { SFXVol = vol; }
+    public void SetSFXVol(float vol) { SFXVol = vol/5; }
 }

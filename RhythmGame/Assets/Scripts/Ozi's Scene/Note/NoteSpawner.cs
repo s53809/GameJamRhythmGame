@@ -55,7 +55,7 @@ public class NoteSpawner : MonoBehaviour
     void Update()
     {
         if(timer != null) { Time = timer.NowPos; }
-        if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Resources/Liss/PF.lis"); }
+        if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Resources/Liss/Snowy/snowy.lis"); }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
