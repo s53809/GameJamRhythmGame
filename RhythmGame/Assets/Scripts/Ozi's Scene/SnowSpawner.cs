@@ -69,6 +69,7 @@ public class SnowSpawner : MonoBehaviour
             SnowFade sf = snows.First().GetComponent<SnowFade>();
             if (sf != null) { sf.isFire = true; }
             snows.Dequeue();
+        }
 
         return result;
     }
