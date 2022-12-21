@@ -12,7 +12,7 @@ public class NoteDown : MonoBehaviour
     [ReadOnly, SerializeField] private Vector3 beforePos;
     [ReadOnly, SerializeField] private Vector3 afterPos;
 
-    private float now = 0.0f; 
+    private float now = 0.0f;
 
     private void Awake()
     {
@@ -32,5 +32,10 @@ public class NoteDown : MonoBehaviour
     Vector3 BezierCurve(float t, Vector3 start, Vector3 end)
     {
         return ((1 - t) * start) + (t * end);
+    }
+
+    public static float Get(Transform pos, float t)
+    {
+        return (pos.position.y - JDG_LINE) * (t * 0.01f);
     }
 }
