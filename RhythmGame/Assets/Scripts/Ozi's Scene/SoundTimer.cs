@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class SoundTimer : MonoBehaviour
 {
-    public const string SOUNDTIMER_NAME= "SoundTimer";
+    public const string SOUNDTIMER_NAME= "Sound Timer";
 
     SoundManager soundManager;
     private double StartPos = 0.0f;
@@ -25,17 +25,16 @@ public class SoundTimer : MonoBehaviour
 
     private void Awake()
     {
-
         GameObject @object = GameObject.Find(SOUNDTIMER_NAME);
         
         if(@object == null)
         {
             @object = new GameObject(SOUNDTIMER_NAME);
+            if (GameObject.Find("System") != null) { @object.transform.parent = GameObject.Find("System").transform; }
 
             SoundTimer timer = @object.AddComponent<SoundTimer>();
             timer.soundManager = SoundManager.GetInstance();
 
-            DontDestroyOnLoad(@object);
             Destroy(this);
         }
     }

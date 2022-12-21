@@ -44,7 +44,7 @@ public class NoteReader : MonoBehaviour
     {
         StreamReader reader = new(path);
 
-        // lis 파일 작성 형식 
+        // lis File
         /* example.lis
          * ArtistName : Plum
          * SongName   : R
@@ -65,7 +65,7 @@ public class NoteReader : MonoBehaviour
             // ArtistName (separator) (String)
             try {
                 artistName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
-                /* [ 앞 공백 제거 ] */
+                /* [ ' ' Remove ] */
                 while (artistName[0].Equals(' ')) { artistName = artistName.Substring(1); }
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ public class NoteReader : MonoBehaviour
             }
 
             string text;
-            float delay = ((bpm * NoteDown.SPEED) + offset) * NoteDown.MULTIPLE;
+            float delay = (bpm * NoteDown.SPEED) * NoteDown.MULTIPLE;
             
             while (true) {
                 text = reader.ReadLine();
@@ -167,8 +167,10 @@ public class NoteReader : MonoBehaviour
                     {
                         switch ((NoteLine)Convert.ToInt32(splitText[0]))
                         {
+                            case NoteLine.LeftSide:
                             case NoteLine.One:
                             case NoteLine.Two:  { pos = new Vector3(NOTE_DISTANCE * -1.0f, delay, 0); info.line = NoteLine.LeftSide; } break;
+                            case NoteLine.RightSide: 
                             case NoteLine.Three:
                             case NoteLine.Four: { pos = new Vector3(NOTE_DISTANCE * 1.0f, delay, 0); info.line = NoteLine.RightSide; } break;
                             default: { throw new Exception(); }
@@ -228,7 +230,7 @@ public class NoteReader : MonoBehaviour
             }
         }
         /* [ Linking Long Note ] */ {
-            if(LongStart.Count + LongEnd.Count % 2 == 1) { throw new Exception("롱노트의 시작과 끝이 맞지 않습니다."); }
+            if(LongStart.Count + LongEnd.Count % 2 == 1) { throw new Exception("Long Note Start and End is not Equal."); }
             bool isChange;
             while(true)
             {
@@ -252,7 +254,7 @@ public class NoteReader : MonoBehaviour
                 }
 
                 if (LongStart.Count + LongEnd.Count <= 0) { break; }
-                if (!isChange) { throw new Exception("해당 라인의 맞는 Long End를 찾지 못했습니다."); }
+                if (!isChange) { throw new Exception("Not Found Long Note End in Line. : " + LongStart[0].Item1.line.ToString()); }
             }
         }
     }

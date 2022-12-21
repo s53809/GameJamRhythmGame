@@ -4,13 +4,13 @@ using UnityEngine;
 
 public enum NoteLine
 {
-    None,
+    LeftSide,
     One,
     Two,
     Three,
     Four,
-    LeftSide,
-    RightSide
+    RightSide,
+    None
 }
 public enum NoteType
 {
@@ -37,7 +37,5 @@ public class NoteInfo : MonoBehaviour
     {
         NoteDown down = gameObject.AddComponent<NoteDown>();
         down.bpm = bpm;
-
-        Debug.Log("Note Down!");
     }
 }

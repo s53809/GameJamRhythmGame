@@ -23,9 +23,10 @@ public class GameManagerEx : MonoBehaviour
 
     public void AddScore(int score)
     {
+        Debug.Log(score);
         scoreP += score;
         noteC++;
 
-        Debug.Log(scoreP / noteC);
+        // Debug.Log(scoreP / noteC);
     }
 }

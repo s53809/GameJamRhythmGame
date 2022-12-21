@@ -20,13 +20,16 @@ public class SoundManager : MonoBehaviour
     }
 
     [SerializeField]
-    [Header("clips"), Tooltip("오디오 클립")]
+    [Header("Volume"), Tooltip("볼륨")]
+    [Range(0, 100)] public float MSCVol = 100;
+    [Range(0, 100)] public float SFXVol = 100;
+
+    [Header("Clips"), Tooltip("오디오 클립")]
     public AudioClip[] BGM; // 배경음들
     public AudioClip[] SFX; // 효과음들
 
     private AudioSource BGMSource; // 배경음 재생할 오디오소스
     private List<AudioSource> SFXSource = new List<AudioSource>(); // 효과음
-    private AudioSource tempSFXSource;
 
     private void OnEnable()
     {
@@ -48,6 +51,8 @@ public class SoundManager : MonoBehaviour
                 }
             }
         }
+
+        BGMSource.volume = (float)(MSCVol / 100);
     }
 
     public void PlayBGM(string name) // 이미 저장된 브금들을 이름으로 불러옵니다
@@ -86,7 +91,7 @@ public class SoundManager : MonoBehaviour
             {
                 SFXSource.Add(gameObject.AddComponent<AudioSource>());
                 SFXSource.Last().playOnAwake = false;
-                SFXSource.Last().volume = 0.5f;
+                SFXSource.Last().volume = (float)(SFXVol / 100);
                 SFXSource.Last().clip = s;
                 SFXSource.Last().Play();
 
@@ -96,4 +101,14 @@ public class SoundManager : MonoBehaviour
 
         return;
     }
+
+    public void StopMusic()
+    {
+        BGMSource.Stop();
+
+        return;
+    }
+
+    public void SetBGMVol(float vol) { MSCVol = vol; }
+    public void SetSFXVol(float vol) { SFXVol = vol; }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[AddComponentMenu("Spawner")]
 [RequireComponent(typeof(NoteReader))]
 public class NoteSpawner : MonoBehaviour
 {
@@ -30,12 +29,13 @@ public class NoteSpawner : MonoBehaviour
         if (@object == null)
         {
             @object = new GameObject(NOTESPAWNER_NAME);
+            if (GameObject.Find("System") != null) { @object.transform.parent = GameObject.Find("System").transform; }
 
             NoteSpawner spanwer = @object.AddComponent<NoteSpawner>();
 
             spanwer.reader = @object.GetComponent<NoteReader>();
             spanwer.timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
-            if (GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>() == null) { Debug.Log("Timer°¡ null"); }
+            if (GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>() == null) { Debug.Log("Timer is null"); }
 
             NoteReader reader = GetComponent<NoteReader>();
             spanwer.reader.normalNote =     reader.normalNote;
@@ -55,7 +55,7 @@ public class NoteSpawner : MonoBehaviour
     void Update()
     {
         if(timer != null) { Time = timer.NowPos; }
-        if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Resources/Liss/PeriTune/PeriTurn - Flap.lis"); }
+        if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Resources/Liss/PF.lis"); }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
