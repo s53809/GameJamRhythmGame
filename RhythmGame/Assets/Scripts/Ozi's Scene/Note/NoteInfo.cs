@@ -37,7 +37,5 @@ public class NoteInfo : MonoBehaviour
     {
         NoteDown down = gameObject.AddComponent<NoteDown>();
         down.bpm = bpm;
-
-        Debug.Log("Note Down!");
     }
 }
