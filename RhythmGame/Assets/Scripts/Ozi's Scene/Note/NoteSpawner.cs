@@ -63,10 +63,7 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        if (isDebug)
-        {
-            if (Input.GetKeyUp(KeyCode.A)) { LisRead("Assets/Resources/Liss/PF.lis"); }
-        }
+        if (isDebug) { if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Resources/Liss/PF.lis"); } }
         if (timer != null) { time = timer.NowPos; }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
@@ -99,8 +96,8 @@ public class NoteSpawner : MonoBehaviour
 
         try {
             reader.ReadLis(ref notes, path);
-            hit.notes = this.notes;
-            hit.crotchet = 60000 / reader.bpm;
+            //hit.notes = this.notes;
+            //hit.crotchet = 60000 / reader.bpm;
         }
         catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message + " " + (hit != null)); } 
         finally { timer.Play(reader.songPath, reader.offset); }
