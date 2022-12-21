@@ -69,7 +69,6 @@ public class SoundManager : MonoBehaviour
     public void PlayMusic(string path) // 리듬게임 음악을 경로로 불러옵니다
     {
         AudioClip music = Resources.Load<AudioClip>(path);
-        Debug.Log(path);
 
         if (music == null) throw new Exception("찾을 수 없음");
         
@@ -94,13 +93,6 @@ public class SoundManager : MonoBehaviour
                 return;
             }
         }
-
-        SFX[SFX.Length] = Resources.Load<AudioClip>("Resources/AudioClips/" + name);
-        tempSFXSource = gameObject.AddComponent<AudioSource>();
-        tempSFXSource.playOnAwake = false;
-        tempSFXSource.clip = SFX[SFX.Length];
-        tempSFXSource.Play();
-        SFXSource.Add(tempSFXSource);
 
         return;
     }
