@@ -6,20 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-<<<<<<< HEAD
     path: Assets/Scenes/StartScene.unity
     guid: ea700383f045cf546a5953badf9f3817
   - enabled: 1
-    path: Assets/Scenes/SongSelectScene.unity
-    guid: 4af65c6deb50b1842a47f9cb64b45b87
-  - enabled: 1
     path: Assets/Scenes/LoadScene.unity
     guid: 5ac0cc9c98900d14b9ac154f44c94705
-=======
-    path: Assets/Scenes/Rhythm Main.unity
-    guid: 7e88fe813b8b7c44a8c253a447cdbb6d
   - enabled: 1
-    path: Assets/Scenes/Lis Result.unity
-    guid: a98022a14b807294fa754f9d3c154b5a
->>>>>>> 865758a050f7470fb1ae84345d74f5f6b81b7c26
+    path: Assets/Scenes/SongSelectScene.unity
+    guid: 4af65c6deb50b1842a47f9cb64b45b87
   m_configObjects: {}

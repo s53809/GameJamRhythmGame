@@ -28,8 +28,10 @@ public class LoadSceneManager : MonoBehaviour
         {
             if (operation.progress >= 0.9f)
             {
+                
                 operation.allowSceneActivation = true;
-                yield break;
+                if (timer >= 2f) { yield break; }
+                else { timer += Time.deltaTime; }
             }
             yield return null;
         }
