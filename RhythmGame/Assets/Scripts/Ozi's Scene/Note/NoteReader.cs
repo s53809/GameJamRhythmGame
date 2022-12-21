@@ -11,6 +11,8 @@ using static TreeEditor.TreeEditorHelper;
 
 public class NoteReader : MonoBehaviour
 {
+    [ReadOnly] public bool isRead = false;
+
     [Header("Normal Note")]
     public GameObject normalNote;
     public GameObject normalLongNote;
@@ -128,7 +130,7 @@ public class NoteReader : MonoBehaviour
             }
 
             string text;
-            float delay = (bpm * NoteDown.SPEED) * NoteDown.MULTIPLE;
+            float delay = (bpm * NoteDown.SPEED) * NoteDown.MULTIPLE + 10;
             
             while (true) {
                 text = reader.ReadLine();
@@ -257,5 +259,15 @@ public class NoteReader : MonoBehaviour
                 if (!isChange) { throw new Exception("Not Found Long Note End in Line. : " + LongStart[0].Item1.line.ToString()); }
             }
         }
+
+        isRead = true;
+    }
+    public void Clear()
+    {
+        artistName = "ArtistName";
+        songName = "SongName";
+        songPath = "SongPath";
+        bpm = 0.0f;
+        offset = 0;
     }
 }

@@ -1,25 +1,31 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(NoteReader))]
 public class NoteSpawner : MonoBehaviour
 {
     public const string NOTESPAWNER_NAME = "Note Spawner";
+    public const string RESULT_SCENE_NAME = "lis result";
 
     [Header("Note Reader")]
     [ReadOnly] public NoteReader reader;
     [ReadOnly] public SoundTimer timer;
-    [ReadOnly] public int NoteCount = 0;
-    [ReadOnly] public int Time = 0;
+    [ReadOnly] public int noteCount = 0;
+    [ReadOnly] public int time = 0;
 
     [Header("Next Note Info")]
     [ReadOnly] public NoteLine nextLine;
     [ReadOnly] public int nextSpawnTiming;
     [ReadOnly] public NoteType nextNoteType;
     [ReadOnly] public NoteTrans nextNoteTrans;
+
+    [Header("System Info")]
+    [ReadOnly] public float endTime = 0.0f;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
 
@@ -54,12 +60,11 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        if(timer != null) { Time = timer.NowPos; }
-        if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Resources/Liss/Snowy/snowy.lis"); }
+        if(timer != null) { time = timer.NowPos; }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
-            NoteCount = notes.Count - 1;
+            noteCount = notes.Count - 1;
             NoteInfo info = notes.First();
 
             nextLine = info.line;
@@ -70,10 +75,25 @@ public class NoteSpawner : MonoBehaviour
             notes.First().Down(reader.bpm);
             notes.Dequeue();
         }
+
+        if(reader.isRead && notes.Count == 0)
+        {
+            endTime += Time.deltaTime;
+            if(endTime > 3.0f) {
+                // Reset //
+                reader.isRead = false;
+                timer.Stop();
+                ///////////
+
+                SceneManager.LoadScene(RESULT_SCENE_NAME);
+            }
+        }
     }
 
     public void LisRead(string path)
     {
+        if(timer != null) { timer.Stop(); }
+
         try { reader.ReadLis(ref notes, path); }
         catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message); } 
         finally { timer.Play(reader.songPath, reader.offset); }
