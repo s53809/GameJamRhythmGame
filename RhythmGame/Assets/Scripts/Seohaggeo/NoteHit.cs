@@ -6,13 +6,26 @@ using UnityEngine;
 
 public class NoteHit : MonoBehaviour
 {
+    //싱글톤
+    private static NoteHit instance = null;
+    public static NoteHit GetInstance()
+    {
+        if (!instance)
+        {
+            instance = (NoteHit)GameObject.FindObjectOfType(typeof(NoteHit));
+            if (!instance)
+                Debug.Log("오류");
+        }
+        return instance;
+    }
+
     SoundTimer timer = null;
     NoteReader reader = null;
     SoundManager sound = null;
     GameManagerEx game = null;
     SnowSpawner snow = null;
 
-    private float crotchet;
+    public float crotchet;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
     NoteInfo[] Downnotes = new NoteInfo[6] { new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo() };
@@ -32,13 +45,6 @@ public class NoteHit : MonoBehaviour
         game = GameManagerEx.GetInstance();
         snow = GameObject.Find(SnowSpawner.SNOWSPAWNER_NAME).GetComponent<SnowSpawner>();
     } // 객체를 가져와요
-
-    public void StartCheck(string path)
-    {
-        reader.ReadLis(ref notes, path);
-        crotchet = 60000 / reader.bpm;
-        return;
-    }
 
     private void GetHit()
     {
