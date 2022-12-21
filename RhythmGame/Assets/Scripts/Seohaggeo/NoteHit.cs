@@ -8,8 +8,9 @@ public class NoteHit : MonoBehaviour
 {
     SoundTimer timer = null;
     NoteReader reader = null;
-    SoundManager SM = null;
-    GameManagerEx GM = null;
+    SoundManager sound = null;
+    GameManagerEx game = null;
+    SnowSpawner snow = null;
 
     private float crotchet;
 
@@ -27,8 +28,9 @@ public class NoteHit : MonoBehaviour
     {
         reader = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteReader>();
         timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
-        SM = SoundManager.GetInstance();
-        GM = GameManagerEx.GetInstance();
+        sound = SoundManager.GetInstance();
+        game = GameManagerEx.GetInstance();
+        snow = GameObject.Find(SnowSpawner.SNOWSPAWNER_NAME).GetComponent<SnowSpawner>();
     }
 
     private void GetHit()
@@ -70,7 +72,7 @@ public class NoteHit : MonoBehaviour
         while (Input.GetKey(key))
         {
             yield return new WaitForSeconds(crotchet / 1000);
-            GM.AddScore(pj);
+            game.AddScore(pj);
         }
 
         yield return null;
@@ -89,8 +91,17 @@ public class NoteHit : MonoBehaviour
             else if (timer.NowPos <= Downnotes[input].hitTiming + 192)  panjeong = 20;
             else panjeong = 0;
 
-            if (panjeong != 0) { GM.AddScore(panjeong); };
+            game.AddScore(panjeong);
             if (Downnotes[input].noteTrans == NoteTrans.Long) GetLongHit(input, panjeong);
+
+            //switch (panjeong)
+            //{
+            //    case 0: case 20:
+            //        snow.SnowClear((NoteLine)(input - 1));
+            //        break;
+            //    default: if (Downnotes[input].noteType == NoteType.Normal_Snow) snow.SnowHit((NoteLine)(input - 1)); break;
+            //}
+            
             Downnotes[input].line = NoteLine.None;
         }
 
@@ -106,7 +117,14 @@ public class NoteHit : MonoBehaviour
                 {
                     StopCoroutine(CheckLong);
                     checkLongLine[i] = new Tuple<bool, KeyCode>(false, checkLongLine[i].Item2); //롱노트 종료 후 검사하지 않게 함
-                    CheckHit(i);
+                    if (timer.NowPos >= Downnotes[i].hitTiming - 192) CheckHit(i);
+                    else
+                    {
+                        panjeong = 0;
+                        game.AddScore(panjeong);
+                        //snow.SnowClear((NoteLine)(i - 1));
+                        Downnotes[i].line = NoteLine.None;
+                    }
                 }
         }
         
@@ -129,7 +147,8 @@ public class NoteHit : MonoBehaviour
             if (n.line != NoteLine.None && timer.NowPos >= n.hitTiming + 192)
             {
                 panjeong = 0;
-                GM.AddScore(panjeong);
+                game.AddScore(panjeong);
+                //snow.SnowClear(n.line - 1);
                 n.line = NoteLine.None;
             }
         }
