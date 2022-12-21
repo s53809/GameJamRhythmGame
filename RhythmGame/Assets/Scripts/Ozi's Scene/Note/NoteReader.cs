@@ -27,7 +27,7 @@ public class NoteReader : MonoBehaviour
     public GameObject snowSideNote;
     public GameObject snowSideLongNote;
 
-    public const float NOTE_DISTANCE = 2.5f;
+    public const float NOTE_DISTANCE = 1.25f;
     public const char INFO_SEPARATOR = ':';
     public const char NOTE_SEPARATOR = ',';
     public const int ERROR_NUM = -1;
@@ -175,7 +175,7 @@ public class NoteReader : MonoBehaviour
                             case NoteLine.RightSide: 
                             case NoteLine.Three:
                             case NoteLine.Four: { pos = new Vector3(NOTE_DISTANCE * 1.0f, delay, 0); info.line = NoteLine.RightSide; } break;
-                            default: { throw new Exception(); }
+                            default: { throw new Exception(splitText[0]); }
                         }
                     }
                     else
@@ -186,7 +186,9 @@ public class NoteReader : MonoBehaviour
                             case NoteLine.Two:      { pos = new Vector3(NOTE_DISTANCE * -0.5f, delay, 0); } break;
                             case NoteLine.Three:    { pos = new Vector3(NOTE_DISTANCE * 0.5f, delay, 0); } break;
                             case NoteLine.Four:     { pos = new Vector3(NOTE_DISTANCE * 1.5f, delay, 0); } break;
-                            default: { throw new Exception(); }
+                            case NoteLine.LeftSide:  { pos = new Vector3(NOTE_DISTANCE * -1.0f, delay, 0); } break;
+                            case NoteLine.RightSide: { pos = new Vector3(NOTE_DISTANCE * 1.0f, delay, 0); } break;
+                            default: { throw new Exception(splitText[0]); }
                         }
                         info.line = (NoteLine)Convert.ToInt32(splitText[0]);
                     }
@@ -222,6 +224,7 @@ public class NoteReader : MonoBehaviour
                             }
                             break;
                         case NoteTrans.LongEnd: { LongEnd.Add(new Tuple<NoteInfo, GameObject>(info, note)); } break;
+                        case NoteTrans.Normal: { } break;
                     }
 
                     info.noteTrans = (NoteTrans)Convert.ToInt32(splitText[3]);
@@ -245,7 +248,7 @@ public class NoteReader : MonoBehaviour
                     {
                         Transform trans = LongStart[0].Item2.transform;
 
-                        trans.localScale = new Vector3(trans.localScale.x, (item.Item1.hitTiming - LongStart[0].Item1.hitTiming) * NoteDown.Get(trans, 3),trans.localScale.z);
+                        trans.localScale = new Vector3(trans.localScale.x, (item.Item1.hitTiming - LongStart[0].Item1.hitTiming) * NoteDown.Get(trans, 5.9f),trans.localScale.z);
 
                         LongEnd.Remove(item);
                         LongStart.Remove(LongStart[0]);

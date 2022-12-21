@@ -1,14 +1,10 @@
 ArtistName : None
 SongName   : None
-SongPath   : None
+SongPath   : Liss/PeriTune/PeriTune - Flap
 Bpm    : 110
 Offset : 0
 
 [ NOTE ]
 0, 1001, 2, 1
-1, 1136, 0, 0
-2, 1272, 0, 0
-3, 1409, 0, 0
-4, 1545, 0, 0
 0, 1681, 2, 2
 5, 1681, 2, 0

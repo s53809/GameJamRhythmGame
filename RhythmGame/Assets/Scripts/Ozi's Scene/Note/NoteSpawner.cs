@@ -10,12 +10,13 @@ using Unity.VisualScripting;
 public class NoteSpawner : MonoBehaviour
 {
     public const string NOTESPAWNER_NAME = "Note Spawner";
-    public const string RESULT_SCENE_NAME = "lis result";
+    public const string RESULT_SCENE_NAME = "Lis Result";
+
+    [SerializeField] private bool isDebug = false;
 
     [Header("Note Reader")]
     [ReadOnly] public NoteReader reader;
     [ReadOnly] public SoundTimer timer;
-    [ReadOnly] public NoteHit hit;
     [ReadOnly] public int noteCount = 0;
     [ReadOnly] public int time = 0;
 
@@ -24,9 +25,6 @@ public class NoteSpawner : MonoBehaviour
     [ReadOnly] public int nextSpawnTiming;
     [ReadOnly] public NoteType nextNoteType;
     [ReadOnly] public NoteTrans nextNoteTrans;
-
-    [Header("System Info")]
-    [ReadOnly] public float endTime = 0.0f;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
 
@@ -39,6 +37,7 @@ public class NoteSpawner : MonoBehaviour
             if (GameObject.Find("System") != null) { @object.transform.parent = GameObject.Find("System").transform; }
 
             NoteSpawner spanwer = @object.AddComponent<NoteSpawner>();
+            spanwer.isDebug = isDebug;
 
             spanwer.reader = @object.GetComponent<NoteReader>();
             spanwer.timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
@@ -54,8 +53,6 @@ public class NoteSpawner : MonoBehaviour
             spanwer.reader.snowSideNote =   reader.snowSideNote;
             spanwer.reader.snowSideLongNote =   reader.snowSideLongNote;
 
-            hit = NoteHit.GetInstance();
-
             Destroy(this);
             Destroy(GetComponent<NoteReader>());
         }
@@ -63,7 +60,8 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        if(timer != null) { time = timer.NowPos; }
+        if (isDebug) { if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Resources/Liss/PeriTune/PeriTurn - Flap.lis"); } }
+        if (timer != null) { time = timer.NowPos; }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
@@ -81,12 +79,8 @@ public class NoteSpawner : MonoBehaviour
 
         if(reader.isRead && notes.Count == 0)
         {
-            endTime += Time.deltaTime;
-            if(endTime > 3.0f) {
-                // Reset //
-                reader.isRead = false;
-                timer.Stop();
-                ///////////
+            if(timer.NowPos > nextSpawnTiming + 3000) {
+                SpawnerReset();
 
                 SceneManager.LoadScene(RESULT_SCENE_NAME);
             }
@@ -97,14 +91,32 @@ public class NoteSpawner : MonoBehaviour
     {
         if(timer != null) { timer.Stop(); }
 
-        try { reader.ReadLis(ref notes, path); }
+        try {
+            reader.ReadLis(ref notes, path);
+        }
         catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message); } 
-        finally { hit.notes = this.notes; hit.crotchet = 60000 / reader.bpm; timer.Play(reader.songPath, reader.offset); }
+        finally { timer.Play(reader.songPath, reader.offset); }
+
+        NoteInfo info = notes.First();
+        if (info != null)
+        {
+            nextLine = info.line;
+            nextSpawnTiming = info.hitTiming;
+            nextNoteType = info.noteType;
+            nextNoteTrans = info.noteTrans;
+        }
     }
 
     [ContextMenu("Note Queue Clear")]
     private void NoteClear()
     {
+        SpawnerReset();
         notes.Clear();
+    }
+
+    private void SpawnerReset()
+    {
+        reader.isRead = false;
+        timer.Stop();
     }
 }

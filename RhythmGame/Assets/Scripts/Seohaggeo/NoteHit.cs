@@ -21,7 +21,6 @@ public class NoteHit : MonoBehaviour
 
     SoundTimer timer = null;
     NoteReader reader = null;
-    SoundManager sound = null;
     GameManagerEx game = null;
     SnowSpawner snow = null;
 
@@ -41,7 +40,6 @@ public class NoteHit : MonoBehaviour
     {
         reader = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteReader>();
         timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
-        sound = SoundManager.GetInstance();
         game = GameManagerEx.GetInstance();
         snow = GameObject.Find(SnowSpawner.SNOWSPAWNER_NAME).GetComponent<SnowSpawner>();
     } // 객체를 가져와요
@@ -77,7 +75,7 @@ public class NoteHit : MonoBehaviour
             switch (panjeong)
             {
                 case 0: case 20: snow.SnowPop(); break;
-                default: if (Downnotes[input].noteType == NoteType.Normal_Snow) snow.SnowHit(); break;
+                default: if (Downnotes[input].noteType == NoteType.Normal_Snow) snow.SnowSpawn(); break;
             }
             
             Downnotes[input].line = NoteLine.None;
@@ -118,6 +116,12 @@ public class NoteHit : MonoBehaviour
 
         yield return null;
     } // 롱노트 감지하는 코루틴
+
+    public void SetPath(string path)
+    {
+        reader.ReadLis(ref notes, path);
+        crotchet = 60000 / reader.bpm;
+    }
 
     private void Update()
     {
