@@ -186,6 +186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee5276709e29e54ba1ba8b1df4294dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MSCVol: 100
+  SFXVol: 100
   BGM: []
   SFX: []
 --- !u!4 &1173844941
