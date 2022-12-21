@@ -36,6 +36,6 @@ public class NoteDown : MonoBehaviour
 
     public static float Get(Transform pos, float t)
     {
-        return (pos.position.y - JDG_LINE) * (t * 0.01f);
+        return (pos.position.y - JDG_LINE) * (t * 0.001f);
     }
 }

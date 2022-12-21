@@ -241,7 +241,7 @@ public class NoteReader : MonoBehaviour
                     {
                         Transform trans = LongStart[0].Item2.transform;
 
-                        trans.localScale = new Vector3(trans.localScale.x, (item.Item1.hitTiming - LongStart[0].Item1.hitTiming) * NoteDown.Get(trans, 0.1f),trans.localScale.z);
+                        trans.localScale = new Vector3(trans.localScale.x, (item.Item1.hitTiming - LongStart[0].Item1.hitTiming) * NoteDown.Get(trans, 3),trans.localScale.z);
 
                         LongEnd.Remove(item);
                         LongStart.Remove(LongStart[0]);
