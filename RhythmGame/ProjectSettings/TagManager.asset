@@ -45,6 +45,9 @@ TagManager:
   - name: UI
     uniqueID: 226619815
     locked: 0
+  - name: Gear
+    uniqueID: 1010197985
+    locked: 0
   - name: Note
     uniqueID: 1647353697
     locked: 0
