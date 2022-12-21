@@ -20,6 +20,8 @@ public class SavingDataManagement : MonoBehaviour
 
     public SaveData lists;
 
+    public SaveData lastScore;
+    public int[] lastPanzong = new int[5] { 0, 0, 0, 0, 0 };
     private void Awake()
     {
         if (instance == null)
@@ -80,5 +82,23 @@ public class SavingDataManagement : MonoBehaviour
     {
         string json = JsonUtility.ToJson(lists, true);
         File.WriteAllText(path, json);
+    }
+
+    public void JsonSaveLastScore(int songNum, int score, float accurary, int combo, int rank, int[] panzong)
+    {
+        lastScore = new SaveData();
+        lastScore.songNum = new List<int>();
+        lastScore.highScore = new List<int>();
+        lastScore.accurary = new List<float>();
+        lastScore.combo = new List<int>();
+        lastScore.rank = new List<int>();
+
+        lastScore.songNum.Add(songNum);
+        lastScore.highScore.Add(score);
+        lastScore.accurary.Add(accurary);
+        lastScore.combo.Add(combo);
+        lastScore.rank.Add(rank);
+
+        lastPanzong = panzong;
     }
 }
