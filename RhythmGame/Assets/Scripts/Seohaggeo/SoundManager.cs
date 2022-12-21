@@ -94,13 +94,6 @@ public class SoundManager : MonoBehaviour
             }
         }
 
-        SFX[SFX.Length] = Resources.Load<AudioClip>("Resources/AudioClips/" + name);
-        tempSFXSource = gameObject.AddComponent<AudioSource>();
-        tempSFXSource.playOnAwake = false;
-        tempSFXSource.clip = SFX[SFX.Length];
-        tempSFXSource.Play();
-        SFXSource.Add(tempSFXSource);
-
         return;
     }
 }
