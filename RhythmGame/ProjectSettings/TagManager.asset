@@ -51,3 +51,6 @@ TagManager:
   - name: Long Note
     uniqueID: 242944933
     locked: 0
+  - name: Snow
+    uniqueID: 4294923977
+    locked: 0

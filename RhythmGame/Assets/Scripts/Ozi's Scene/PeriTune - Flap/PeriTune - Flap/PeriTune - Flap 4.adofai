@@ -24,7 +24,7 @@
 		"bpm": 101, 
 		"volume": 100, 
 		"offset": 620, 
-		"pitch": 400, 
+		"pitch": 100, 
 		"hitsound": "Kick", 
 		"hitsoundVolume": 50, 
 		"countdownTicks": 4,

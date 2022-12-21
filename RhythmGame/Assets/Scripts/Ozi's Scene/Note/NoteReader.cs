@@ -65,7 +65,7 @@ public class NoteReader : MonoBehaviour
             // ArtistName (separator) (String)
             try {
                 artistName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
-                /* [ 앞 공백 제거 ] */
+                /* [ ' ' Remove ] */
                 while (artistName[0].Equals(' ')) { artistName = artistName.Substring(1); }
             }
             catch (Exception e)
@@ -228,7 +228,7 @@ public class NoteReader : MonoBehaviour
             }
         }
         /* [ Linking Long Note ] */ {
-            if(LongStart.Count + LongEnd.Count % 2 == 1) { throw new Exception("롱노트의 시작과 끝이 맞지 않습니다."); }
+            if(LongStart.Count + LongEnd.Count % 2 == 1) { throw new Exception("Long Note Start and End is not Equal."); }
             bool isChange;
             while(true)
             {
@@ -252,7 +252,7 @@ public class NoteReader : MonoBehaviour
                 }
 
                 if (LongStart.Count + LongEnd.Count <= 0) { break; }
-                if (!isChange) { throw new Exception("해당 라인의 맞는 Long End를 찾지 못했습니다."); }
+                if (!isChange) { throw new Exception("Not Found Long Note End in Line. : " + LongStart[0].Item1.line.ToString()); }
             }
         }
     }
