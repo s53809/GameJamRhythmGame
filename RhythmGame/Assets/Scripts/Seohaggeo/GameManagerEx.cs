@@ -19,8 +19,6 @@ public class GameManagerEx : MonoBehaviour
 
     [SerializeField]
     GameObject panjeong = null;
-
-    SpriteRenderer showPJ = null;
     SnowSpawner snow = null;
 
     public int scoreP = 0;
@@ -30,7 +28,6 @@ public class GameManagerEx : MonoBehaviour
 
     private void Start()
     {
-        showPJ = panjeong.GetComponent<SpriteRenderer>();
         snow = GameObject.Find(SnowSpawner.SNOWSPAWNER_NAME).GetComponent<SnowSpawner>();
     }
 
@@ -40,15 +37,6 @@ public class GameManagerEx : MonoBehaviour
         noteC++;
         Accuracy = scoreP / noteC;
         Fever += score / 10;
-
-        switch(score)
-        {
-            case 0: showPJ.color = new Color(0, 0, 0); break;
-            case 20: showPJ.color = new Color(255, 0, 0); break;
-            case 50: showPJ.color = new Color(0, 255, 0); break;
-            case 80: showPJ.color = new Color(0, 0, 255); break;
-            case 100: showPJ.color = new Color(255, 255, 255); break;
-        }
     }
 
     private void Update()

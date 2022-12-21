@@ -27,18 +27,10 @@ public class NoteSpawner : MonoBehaviour
     [ReadOnly] public NoteType nextNoteType;
     [ReadOnly] public NoteTrans nextNoteTrans;
 
-    [Header("System Info")]
-    [ReadOnly] public float endTime = 0.0f;
-
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
 
     private void Awake()
     {
-        if(isDebug)
-        {
-            if(Input.GetKeyUp(KeyCode.A)) { LisRead("Assets/Resources/Liss/PF.lis"); }
-        }
-
         GameObject @object = GameObject.Find(NOTESPAWNER_NAME);
         if (@object == null)
         {
@@ -62,7 +54,7 @@ public class NoteSpawner : MonoBehaviour
             spanwer.reader.snowSideNote =   reader.snowSideNote;
             spanwer.reader.snowSideLongNote =   reader.snowSideLongNote;
 
-            hit = NoteHit.GetInstance();
+            spanwer.hit = NoteHit.GetInstance();
 
             Destroy(this);
             Destroy(GetComponent<NoteReader>());
@@ -71,7 +63,11 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        if(timer != null) { time = timer.NowPos; }
+        if (isDebug)
+        {
+            if (Input.GetKeyUp(KeyCode.A)) { LisRead("Assets/Resources/Liss/PF.lis"); }
+        }
+        if (timer != null) { time = timer.NowPos; }
 
         while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
@@ -89,8 +85,7 @@ public class NoteSpawner : MonoBehaviour
 
         if(reader.isRead && notes.Count == 0)
         {
-            endTime += Time.deltaTime;
-            if(endTime > 3.0f) {
+            if(timer.NowPos > nextSpawnTiming + 3000) {
                 SpawnerReset();
 
                 SceneManager.LoadScene(RESULT_SCENE_NAME);
@@ -102,9 +97,22 @@ public class NoteSpawner : MonoBehaviour
     {
         if(timer != null) { timer.Stop(); }
 
-        try { reader.ReadLis(ref notes, path); }
-        catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message); } 
-        finally { hit.notes = this.notes; hit.crotchet = 60000 / reader.bpm; timer.Play(reader.songPath, reader.offset); }
+        try {
+            reader.ReadLis(ref notes, path);
+            hit.notes = this.notes;
+            hit.crotchet = 60000 / reader.bpm;
+        }
+        catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message + " " + (hit != null)); } 
+        finally { timer.Play(reader.songPath, reader.offset); }
+
+        NoteInfo info = notes.First();
+        if (info != null)
+        {
+            nextLine = info.line;
+            nextSpawnTiming = info.hitTiming;
+            nextNoteType = info.noteType;
+            nextNoteTrans = info.noteTrans;
+        }
     }
 
     [ContextMenu("Note Queue Clear")]
