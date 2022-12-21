@@ -6,13 +6,26 @@ using UnityEngine;
 
 public class NoteHit : MonoBehaviour
 {
+    //싱글톤
+    private static NoteHit instance = null;
+    public static NoteHit GetInstance()
+    {
+        if (!instance)
+        {
+            instance = (NoteHit)GameObject.FindObjectOfType(typeof(NoteHit));
+            if (!instance)
+                Debug.Log("오류");
+        }
+        return instance;
+    }
+
     SoundTimer timer = null;
     NoteReader reader = null;
     SoundManager sound = null;
     GameManagerEx game = null;
     SnowSpawner snow = null;
 
-    private float crotchet;
+    public float crotchet;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
     NoteInfo[] Downnotes = new NoteInfo[6] { new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo() };
@@ -31,7 +44,7 @@ public class NoteHit : MonoBehaviour
         sound = SoundManager.GetInstance();
         game = GameManagerEx.GetInstance();
         snow = GameObject.Find(SnowSpawner.SNOWSPAWNER_NAME).GetComponent<SnowSpawner>();
-    }
+    } // 객체를 가져와요
 
     private void GetHit()
     {
@@ -43,8 +56,36 @@ public class NoteHit : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightShift)) { CheckHit(5); }
 
         return;
-    }
+    } // 키보드 눌럿나요
 
+    private void CheckHit(int input)
+    {
+        if (input != -1 && timer.NowPos >= Downnotes[input].hitTiming - 192)
+        {
+            if      (timer.NowPos <= Downnotes[input].hitTiming - 168)  panjeong = 20;
+            else if (timer.NowPos <= Downnotes[input].hitTiming - 100)  panjeong = 50;
+            else if (timer.NowPos <= Downnotes[input].hitTiming - 48)   panjeong = 80;
+            else if (timer.NowPos <= Downnotes[input].hitTiming + 48)   panjeong = 100;
+            else if (timer.NowPos <= Downnotes[input].hitTiming + 100)  panjeong = 80;
+            else if (timer.NowPos <= Downnotes[input].hitTiming + 168)  panjeong = 50;
+            else if (timer.NowPos <= Downnotes[input].hitTiming + 192)  panjeong = 20;
+            else panjeong = 0;
+
+            game.AddScore(panjeong);
+            if (Downnotes[input].noteTrans == NoteTrans.Long) GetLongHit(input, panjeong);
+
+            switch (panjeong)
+            {
+                case 0: case 20: snow.SnowPop(); break;
+                default: if (Downnotes[input].noteType == NoteType.Normal_Snow) snow.SnowHit(); break;
+            }
+            
+            Downnotes[input].line = NoteLine.None;
+        }
+
+        return;
+    } // 판정검사해요
+    
     private void GetLongHit(int line, int pj)
     {
         KeyCode key;
@@ -63,7 +104,7 @@ public class NoteHit : MonoBehaviour
 
         CheckLong = CheckLongC(key, line, pj);
         StartCoroutine(CheckLong);
-    }
+    } // 롱노트 치고잇나요
 
     IEnumerator CheckLongC(KeyCode key, int line, int pj)
     {
@@ -76,40 +117,15 @@ public class NoteHit : MonoBehaviour
         }
 
         yield return null;
-    }
+    } // 롱노트 감지하는 코루틴
 
-    private void CheckHit(int input)
-    {
-        if (input != -1 && timer.NowPos >= Downnotes[input].hitTiming - 192)
-        {
-            if      (timer.NowPos <= Downnotes[input].hitTiming - 168)  panjeong = 20;
-            else if (timer.NowPos <= Downnotes[input].hitTiming - 100)  panjeong = 50;
-            else if (timer.NowPos <= Downnotes[input].hitTiming - 48)   panjeong = 80;
-            else if (timer.NowPos <= Downnotes[input].hitTiming + 48)   panjeong = 100;
-            else if (timer.NowPos <= Downnotes[input].hitTiming + 100)  panjeong = 80;
-            else if (timer.NowPos <= Downnotes[input].hitTiming + 168)  panjeong = 50;
-            else if (timer.NowPos <= Downnotes[input].hitTiming + 192)  panjeong = 20;
-            else panjeong = 0;
-
-            game.AddScore(panjeong);
-            if (Downnotes[input].noteTrans == NoteTrans.Long) GetLongHit(input, panjeong);
-
-            //switch (panjeong)
-            //{
-            //    case 0: case 20:
-            //        snow.SnowClear((NoteLine)(input - 1));
-            //        break;
-            //    default: if (Downnotes[input].noteType == NoteType.Normal_Snow) snow.SnowHit((NoteLine)(input - 1)); break;
-            //}
-            
-            Downnotes[input].line = NoteLine.None;
-        }
-
-        return;
-    }
-    
     private void Update()
     {
+        while (notes.Count > 0 && Downnotes[(int)notes.First().line].line == NoteLine.None) // 지금 내려오고있는 노트는?
+            Downnotes[(int)notes.First().line] = notes.Dequeue();
+       
+        GetHit();
+
         for(int i = 0; i < checkLongLine.Length; i++)
         {
             if (checkLongLine[i].Item1) 
@@ -122,25 +138,11 @@ public class NoteHit : MonoBehaviour
                     {
                         panjeong = 0;
                         game.AddScore(panjeong);
-                        //snow.SnowClear((NoteLine)(i - 1));
+                        snow.SnowPop();
                         Downnotes[i].line = NoteLine.None;
                     }
                 }
-        }
-        
-        if (Input.GetKeyDown(KeyCode.A))
-        { 
-            reader.ReadLis(ref notes, "Assets/Resources/Liss/Snowy/Snowy.lis");
-            crotchet = 60000 / reader.bpm;
-            Debug.Log(crotchet);
-        }
-
-        while (notes.Count > 0 && Downnotes[(int)notes.First().line].line == NoteLine.None)
-        {
-            Downnotes[(int)notes.First().line] = notes.Dequeue();
-        }
-
-        GetHit();
+        } // 롱노트 누르다가 뗏나요
 
         foreach (NoteInfo n in Downnotes)
         {
@@ -148,10 +150,9 @@ public class NoteHit : MonoBehaviour
             {
                 panjeong = 0;
                 game.AddScore(panjeong);
-                //snow.SnowClear(n.line - 1);
+                snow.SnowPop();
                 n.line = NoteLine.None;
             }
-        }
-
+        } // 노트 안치고 그냥 내려갔는지 알아봐요
     }
 }

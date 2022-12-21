@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class NoteDown : MonoBehaviour
 {
-    public const float SPEED = 10.0f;        // Note Fall Speed
+    public const float SPEED = 10.0f;       // Note Fall Speed
     public const float MULTIPLE = 0.01f;    // SPEED Calibration
-    public const float JDG_LINE = -10.0f;   // Note JDG Position Y
+    public const float JDG_LINE = 0.0f;     // Note JDG Position Y
 
     [ReadOnly] public float bpm = 0.0f;
     [ReadOnly, SerializeField] private Vector3 beforePos;
@@ -31,7 +31,7 @@ public class NoteDown : MonoBehaviour
 
     Vector3 BezierCurve(float t, Vector3 start, Vector3 end)
     {
-        return ((1 - t) * start) + (t * end);
+        return ((1.0f - t) * start) + (t * end);
     }
 
     public static float Get(Transform pos, float t)

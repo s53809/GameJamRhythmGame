@@ -48,9 +48,12 @@ public class SnowSpawner : MonoBehaviour
     [ContextMenu("Pop")]
     public void SnowPop()
     {
-        SnowFade sf = snows.First().GetComponent<SnowFade>();
-        if (sf != null) { sf.isFire = true; }
-        snows.Dequeue();
+        if (snows.Count > 0)
+        {
+            SnowFade sf = snows.First().GetComponent<SnowFade>();
+            if (sf != null) { sf.isFire = true; }
+            snows.Dequeue();
+        }
     }
     public int SnowHit()
     {

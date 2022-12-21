@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 77114073}
   - component: {fileID: 77114072}
   m_Layer: 0
-  m_Name: JDG Line (1)
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77114070}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 4.75, y: -4.75, z: 0}
+  m_LocalPosition: {x: 4.75, y: 5.25, z: 0}
   m_LocalScale: {x: 10, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -324,12 +324,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1235659129}
+  - component: {fileID: 1235659134}
   - component: {fileID: 1235659130}
   - component: {fileID: 1235659132}
   - component: {fileID: 1235659133}
   - component: {fileID: 1235659131}
   m_Layer: 0
-  m_Name: System
+  m_Name: system
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -377,12 +378,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reader: {fileID: 0}
   timer: {fileID: 0}
-  NoteCount: 0
-  Time: 0
+  noteCount: 0
+  time: 0
   nextLine: 0
   nextSpawnTiming: 0
   nextNoteType: 0
   nextNoteTrans: 0
+  endTime: 0
 --- !u!114 &1235659132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,6 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a957a0e1e5ecd47bff6357f6066547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRead: 0
   normalNote: {fileID: 8205754851597140542, guid: 5b80573a0a74ae94887f7fefb98a2b28, type: 3}
   normalLongNote: {fileID: 6977479226495141336, guid: 01b1ee532bc2d0e4e85312befe58867a, type: 3}
   snowNote: {fileID: 8205754851597140542, guid: adcd4bdd24215524fa116a51dc9b468b, type: 3}
@@ -425,6 +428,18 @@ MonoBehaviour:
   - {fileID: 343299506233154698, guid: 0a8b1d4e412464740a4021fe6cde1bb9, type: 3}
   - {fileID: 1459514202800711621, guid: 2695027a11f19894e86de90f94378439, type: 3}
   count: 0
+--- !u!114 &1235659134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235659128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db01d4623c7bfb4db71d8c2b005dc68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1757557897
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1757557897}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -612,7 +627,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762538665}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: -15}
+  m_LocalPosition: {x: 0, y: 7, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -726,7 +741,7 @@ GameObject:
   - component: {fileID: 1871432243}
   - component: {fileID: 1871432242}
   m_Layer: 0
-  m_Name: JDG Line (2)
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -816,7 +831,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1871432240}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -4.75, y: -4.75, z: 0}
+  m_LocalPosition: {x: -4.75, y: 5.25, z: 0}
   m_LocalScale: {x: 10, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

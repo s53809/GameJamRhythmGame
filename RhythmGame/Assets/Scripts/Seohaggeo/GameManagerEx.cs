@@ -21,23 +21,25 @@ public class GameManagerEx : MonoBehaviour
     GameObject panjeong = null;
 
     SpriteRenderer showPJ = null;
+    SnowSpawner snow = null;
 
-    private const int standard = 100;
     public int scoreP = 0;
     public int noteC = 0;
     public float Accuracy = 0;
+    public int Fever = 0;
 
     private void Start()
     {
         showPJ = panjeong.GetComponent<SpriteRenderer>();
+        snow = GameObject.Find(SnowSpawner.SNOWSPAWNER_NAME).GetComponent<SnowSpawner>();
     }
 
     public void AddScore(int score)
     {
-        Debug.Log(score);
         scoreP += score;
         noteC++;
         Accuracy = scoreP / noteC;
+        Fever += score / 10;
 
         switch(score)
         {
@@ -47,7 +49,15 @@ public class GameManagerEx : MonoBehaviour
             case 80: showPJ.color = new Color(0, 0, 255); break;
             case 100: showPJ.color = new Color(255, 255, 255); break;
         }
+    }
 
-        // Debug.Log(scoreP / noteC);
+    private void Update()
+    {
+        if (Fever >= 400)
+        {
+            Debug.Log("Fever!");
+            Fever -= 400;
+            snow.SnowClear();
+        }
     }
 }
