@@ -4,13 +4,13 @@ using UnityEngine;
 
 public enum NoteLine
 {
-    None,
+    LeftSide,
     One,
     Two,
     Three,
     Four,
-    LeftSide,
-    RightSide
+    RightSide,
+    None
 }
 public enum NoteType
 {
