@@ -9,7 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11d37001fbfe8b94e960e47161f43ac0, type: 3}
+  m_Script: {fileID: 11500000, guid: acc8729e9d1b0664d94062c1effea31d, type: 3}
   m_Name: Orca
-  m_EditorClassIdentifier: Assembly-CSharp::SongInfo
-  lists: {fileID: 0}
+  m_EditorClassIdentifier: 
+  songBanner: {fileID: 21300000, guid: a5f00e017a9599942b3de77561d8baf9, type: 3}
+  songCD: {fileID: 21300000, guid: 030016921b3de934db6c76701df41dc6, type: 3}
+  songPath: 
+  artistName: Plum
+  songName: Orca
+  difficulty: Easy

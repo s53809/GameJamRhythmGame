@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Song Data", menuName = "Scriptable Object/Song Data")]
-public class SongInfo : ScriptableObject
-{
-    [SerializeField] private Sprite songBanner;
-    [SerializeField] private Sprite songCD;
-    [SerializeField] private string songPath;
-    [SerializeField] private string artistName;
-    [SerializeField] private string songName;
-    [SerializeField] private string difficulty;
-}
-
 public class SongManagement : MonoBehaviour
 {
+    public static SongManagement instance;
+
     [SerializeField]
-    private SongInfo lists;
+    public List<SongInfo> lists;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         
