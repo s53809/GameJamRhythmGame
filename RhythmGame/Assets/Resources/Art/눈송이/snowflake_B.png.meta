@@ -33,12 +33,18 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
+<<<<<<< HEAD
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+=======
     wrapU: 0
     wrapV: 0
     wrapW: 0
+>>>>>>> 1f54939133d5a202a9b606826d4f3fe2f5b47a68
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50

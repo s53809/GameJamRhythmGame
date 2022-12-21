@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: DreamInRain
+  m_EditorClassIdentifier: Assembly-CSharp::SongInfo
+  songBanner: {fileID: 21300000, guid: ee968a58b89a7df4b9d89f9fad72c3d9, type: 3}
+  songCD: {fileID: 21300000, guid: 0437e2c158838474f8644526d92d22fc, type: 3}
+  songPath: NULL
+  artistName: Plum
+  songName: Dreain In Rain
+  difficulty: Easy
