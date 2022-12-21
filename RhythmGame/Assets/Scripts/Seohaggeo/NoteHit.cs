@@ -33,11 +33,11 @@ public class NoteHit : MonoBehaviour
 
     private void GetHit()
     {
-        if (Input.GetKeyDown(KeyCode.Z))          { CheckHit(0); }
-        if (Input.GetKeyDown(KeyCode.X))          { CheckHit(1); }
-        if (Input.GetKeyDown(KeyCode.Period))     { CheckHit(2); }
-        if (Input.GetKeyDown(KeyCode.Slash))      { CheckHit(3); }
-        if (Input.GetKeyDown(KeyCode.LeftShift))  { CheckHit(4); }
+        if (Input.GetKeyDown(KeyCode.LeftShift))  { CheckHit(0); }
+        if (Input.GetKeyDown(KeyCode.Z))          { CheckHit(1); }
+        if (Input.GetKeyDown(KeyCode.X))          { CheckHit(2); }
+        if (Input.GetKeyDown(KeyCode.Period))     { CheckHit(3); }
+        if (Input.GetKeyDown(KeyCode.Slash))      { CheckHit(4); }
         if (Input.GetKeyDown(KeyCode.RightShift)) { CheckHit(5); }
 
         return;
@@ -49,11 +49,11 @@ public class NoteHit : MonoBehaviour
 
         switch(line)
         {
-            case 0: key = KeyCode.Z;            break;
-            case 1: key = KeyCode.X;            break;
-            case 2: key = KeyCode.Period;       break;
-            case 3: key = KeyCode.Slash;        break;
-            case 4: key = KeyCode.LeftShift;    break;
+            case 0: key = KeyCode.LeftShift;    break;
+            case 1: key = KeyCode.Z;            break;
+            case 2: key = KeyCode.X;            break;
+            case 3: key = KeyCode.Period;       break;
+            case 4: key = KeyCode.Slash;        break;
             case 5: key = KeyCode.RightShift;   break;
 
             default: key = KeyCode.None; break;
@@ -65,7 +65,7 @@ public class NoteHit : MonoBehaviour
 
     IEnumerator CheckLongC(KeyCode key, int line, int pj)
     {
-        checkLongLine[line] = new Tuple<bool, KeyCode>(true, key); //Update 문에 해당 key값이 한번이라도 때어져있는지 검사할 수 있게 해주는 코드
+        checkLongLine[line] = new Tuple<bool, KeyCode>(true, key);
 
         while (Input.GetKey(key))
         {
@@ -73,8 +73,6 @@ public class NoteHit : MonoBehaviour
             GM.AddScore(pj);
         }
 
-        checkLongLine[line] = new Tuple<bool, KeyCode>(false, key); //롱노트 종료 후 검사하지 않게 함
-        CheckHit(line);
         yield return null;
     }
 
@@ -91,7 +89,7 @@ public class NoteHit : MonoBehaviour
             else if (timer.NowPos <= Downnotes[input].hitTiming + 192)  panjeong = 20;
             else panjeong = 0;
 
-            if (panjeong != 0) { SM.PlaySFX("hitogg"); GM.AddScore(panjeong); };
+            if (panjeong != 0) { GM.AddScore(panjeong); };
             if (Downnotes[input].noteTrans == NoteTrans.Long) GetLongHit(input, panjeong);
             Downnotes[input].line = NoteLine.None;
         }
@@ -101,21 +99,27 @@ public class NoteHit : MonoBehaviour
     
     private void Update()
     {
-        foreach (Tuple<bool, KeyCode> t in checkLongLine)
+        for(int i = 0; i < checkLongLine.Length; i++)
         {
-            if (t.Item1) if (Input.GetKeyUp(t.Item2)) StopCoroutine(CheckLong);
+            if (checkLongLine[i].Item1) 
+                if (Input.GetKeyUp(checkLongLine[i].Item2))
+                {
+                    StopCoroutine(CheckLong);
+                    checkLongLine[i] = new Tuple<bool, KeyCode>(false, checkLongLine[i].Item2); //롱노트 종료 후 검사하지 않게 함
+                    CheckHit(i);
+                }
         }
-
+        
         if (Input.GetKeyDown(KeyCode.A))
         { 
-            reader.ReadLis(ref notes, "Assets/Resources/Liss/test/test9.lis");
+            reader.ReadLis(ref notes, "Assets/Resources/Liss/Snowy/Snowy.lis");
             crotchet = 60000 / reader.bpm;
             Debug.Log(crotchet);
         }
 
-        while (notes.Count > 0 && Downnotes[(int)notes.First().line - 1].line == NoteLine.None)
+        while (notes.Count > 0 && Downnotes[(int)notes.First().line].line == NoteLine.None)
         {
-            Downnotes[(int)notes.First().line - 1] = notes.Dequeue();
+            Downnotes[(int)notes.First().line] = notes.Dequeue();
         }
 
         GetHit();
@@ -125,6 +129,7 @@ public class NoteHit : MonoBehaviour
             if (n.line != NoteLine.None && timer.NowPos >= n.hitTiming + 192)
             {
                 panjeong = 0;
+                GM.AddScore(panjeong);
                 n.line = NoteLine.None;
             }
         }
