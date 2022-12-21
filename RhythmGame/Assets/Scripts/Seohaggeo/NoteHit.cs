@@ -20,7 +20,6 @@ public class NoteHit : MonoBehaviour
     }
 
     SoundTimer timer = null;
-    NoteSpawner spawner = null;
     NoteReader reader = null;
     GameManagerEx game = null;
     SnowSpawner snow = null;
@@ -39,7 +38,6 @@ public class NoteHit : MonoBehaviour
 
     private void Start()
     {
-        spawner = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteSpawner>();
         reader = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteReader>();
         timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
         game = GameManagerEx.GetInstance();
@@ -77,7 +75,7 @@ public class NoteHit : MonoBehaviour
             switch (panjeong)
             {
                 case 0: case 20: snow.SnowPop(); break;
-                default: if (Downnotes[input].noteType == NoteType.Normal_Snow) snow.SnowHit(); break;
+                default: if (Downnotes[input].noteType == NoteType.Normal_Snow) snow.SnowSpawn(); break;
             }
             
             Downnotes[input].line = NoteLine.None;
@@ -119,13 +117,14 @@ public class NoteHit : MonoBehaviour
         yield return null;
     } // 롱노트 감지하는 코루틴
 
+    public void SetPath(string path)
+    {
+        reader.ReadLis(ref notes, path);
+        crotchet = 60000 / reader.bpm;
+    }
+
     private void Update()
     {
-        if (notes.Count == 0 && spawner.notes.Count != 0)
-        {
-            notes = spawner.notes;
-            crotchet = 60000 / reader.bpm;
-        }
         while (notes.Count > 0 && Downnotes[(int)notes.First().line].line == NoteLine.None) // 지금 내려오고있는 노트는?
             Downnotes[(int)notes.First().line] = notes.Dequeue();
        

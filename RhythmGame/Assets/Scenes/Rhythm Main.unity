@@ -1093,7 +1093,6 @@ MonoBehaviour:
   isDebug: 1
   reader: {fileID: 0}
   timer: {fileID: 0}
-  hit: {fileID: 0}
   noteCount: 0
   time: 0
   nextLine: 0
@@ -1167,7 +1166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9465850560ee82c4db7f595b2b3ead76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panjeong: {fileID: 0}
   scoreP: 0
   noteC: 0
   Accuracy: 0
