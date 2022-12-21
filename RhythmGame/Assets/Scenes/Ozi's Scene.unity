@@ -288,7 +288,7 @@ MonoBehaviour:
   snowNote: {fileID: 8205754851597140542, guid: adcd4bdd24215524fa116a51dc9b468b, type: 3}
   snowLongNote: {fileID: 9012542119731717678, guid: b08ce8890606a834e95be6237750be3d, type: 3}
   normalSideNote: {fileID: 8205754851597140542, guid: fb655b993f025534b875b937e2bc4269, type: 3}
-  normalSideLongNote: {fileID: 4279995203058364555, guid: dd9a1244972292144b033236e9722e44, type: 3}
+  normalSideLongNote: {fileID: 6056180404621632404, guid: b1111c0916a381d46afe9a43c4037851, type: 3}
   snowSideNote: {fileID: 8205754851597140542, guid: cff3164356f24e74da67a5556ab5b5d6, type: 3}
   snowSideLongNote: {fileID: 6056180404621632404, guid: b1111c0916a381d46afe9a43c4037851, type: 3}
   artistName: ArtistName
@@ -309,6 +309,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snow: {fileID: 3439637628827872620, guid: 853a5c4ab9101854a8580257f036e97f, type: 3}
+  objects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  snowStack: 00000000000000000000000000000000
 --- !u!1 &1757557897
 GameObject:
   m_ObjectHideFlags: 0

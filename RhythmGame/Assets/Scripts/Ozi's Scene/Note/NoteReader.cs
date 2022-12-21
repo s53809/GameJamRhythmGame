@@ -44,7 +44,7 @@ public class NoteReader : MonoBehaviour
     {
         StreamReader reader = new(path);
 
-        // lis 파일 작성 형식 
+        // lis File
         /* example.lis
          * ArtistName : Plum
          * SongName   : R
@@ -128,7 +128,7 @@ public class NoteReader : MonoBehaviour
             }
 
             string text;
-            float delay = ((bpm * NoteDown.SPEED) + offset) * NoteDown.MULTIPLE;
+            float delay = (bpm * NoteDown.SPEED) * NoteDown.MULTIPLE;
             
             while (true) {
                 text = reader.ReadLine();
@@ -167,8 +167,10 @@ public class NoteReader : MonoBehaviour
                     {
                         switch ((NoteLine)Convert.ToInt32(splitText[0]))
                         {
+                            case NoteLine.LeftSide:
                             case NoteLine.One:
                             case NoteLine.Two:  { pos = new Vector3(NOTE_DISTANCE * -1.0f, delay, 0); info.line = NoteLine.LeftSide; } break;
+                            case NoteLine.RightSide: 
                             case NoteLine.Three:
                             case NoteLine.Four: { pos = new Vector3(NOTE_DISTANCE * 1.0f, delay, 0); info.line = NoteLine.RightSide; } break;
                             default: { throw new Exception(); }
