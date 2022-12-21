@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acc8729e9d1b0664d94062c1effea31d, type: 3}
-  m_Name: Orca
+  m_Name: LongAgoPromis
   m_EditorClassIdentifier: 
-  songBanner: {fileID: 21300000, guid: a5f00e017a9599942b3de77561d8baf9, type: 3}
-  songCD: {fileID: 21300000, guid: 030016921b3de934db6c76701df41dc6, type: 3}
+  songBanner: {fileID: 21300000, guid: cd648bb9e08bade49bf075ff08c17142, type: 3}
+  songCD: {fileID: 21300000, guid: 3988b4b742fee1a49806a47a786e87c6, type: 3}
   songPath: Null
   artistName: Plum
-  songName: Orca
+  songName: "\uC624\uB798 \uC804\uC758 \uC57D\uC18D"
   difficulty: Easy
