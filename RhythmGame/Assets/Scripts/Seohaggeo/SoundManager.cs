@@ -69,6 +69,7 @@ public class SoundManager : MonoBehaviour
     public void PlayMusic(string path) // 리듬게임 음악을 경로로 불러옵니다
     {
         AudioClip music = Resources.Load<AudioClip>(path);
+        Debug.Log(path);
 
         if (music == null) throw new Exception("찾을 수 없음");
         
