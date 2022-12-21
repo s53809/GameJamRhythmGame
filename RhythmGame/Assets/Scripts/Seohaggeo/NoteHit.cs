@@ -9,29 +9,31 @@ public class NoteHit : MonoBehaviour
     NoteSpawner noteSpawner = null;
     SoundTimer timer = null;
     NoteReader reader = null;
-    SoundManager soundManager = null;
+    SoundManager SM = null;
+    GameManagerEx GM = null;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
     NoteInfo[] Downnotes = new NoteInfo[6] { new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo(), new NoteInfo() };
 
-    string panjeong;
+    private int panjeong;
 
     private void Start()
     {
         noteSpawner = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteSpawner>();
         reader = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteReader>();
         timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
-        soundManager = SoundManager.GetInstance();
+        SM = SoundManager.GetInstance();
+        GM = GameManagerEx.GetInstance();
     }
 
     private void GetHit()
     {
-        if (Input.GetKeyDown(KeyCode.Z))          { soundManager.PlaySFX("hitogg"); CheckHit(1); }
-        if (Input.GetKeyDown(KeyCode.X))          { soundManager.PlaySFX("hitogg"); CheckHit(2); }
-        if (Input.GetKeyDown(KeyCode.Period))     { soundManager.PlaySFX("hitogg"); CheckHit(3); }
-        if (Input.GetKeyDown(KeyCode.Slash))      { soundManager.PlaySFX("hitogg"); CheckHit(4); }
-        if (Input.GetKeyDown(KeyCode.LeftShift))  { soundManager.PlaySFX("hitogg"); CheckHit(5); }
-        if (Input.GetKeyDown(KeyCode.RightShift)) { soundManager.PlaySFX("hitogg"); CheckHit(6); }
+        if (Input.GetKeyDown(KeyCode.Z))          { SM.PlaySFX("hitogg"); CheckHit(1); }
+        if (Input.GetKeyDown(KeyCode.X))          { SM.PlaySFX("hitogg"); CheckHit(2); }
+        if (Input.GetKeyDown(KeyCode.Period))     { SM.PlaySFX("hitogg"); CheckHit(3); }
+        if (Input.GetKeyDown(KeyCode.Slash))      { SM.PlaySFX("hitogg"); CheckHit(4); }
+        if (Input.GetKeyDown(KeyCode.LeftShift))  { SM.PlaySFX("hitogg"); CheckHit(5); }
+        if (Input.GetKeyDown(KeyCode.RightShift)) { SM.PlaySFX("hitogg"); CheckHit(6); }
 
         return;
     }
@@ -40,17 +42,17 @@ public class NoteHit : MonoBehaviour
     {
         if (input != 0 && timer.NowPos >= Downnotes[input - 1].hitTiming - 192)
         {
-            if (timer.NowPos <= Downnotes[input - 1].hitTiming - 168) panjeong = "BAD";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming - 100) panjeong = "GOOD";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming - 48) panjeong = "GREAT";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 48) panjeong = "PERFECT";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 100) panjeong = "GREAT";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 168) panjeong = "GOOD";
-            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 192) panjeong = "BAD";
-            else panjeong = "MISS";
+            if      (timer.NowPos <= Downnotes[input - 1].hitTiming - 168)  panjeong = 20;
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming - 100)  panjeong = 50;
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming - 48)   panjeong = 80;
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 48)   panjeong = 100;
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 100)  panjeong = 80;
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 168)  panjeong = 50;
+            else if (timer.NowPos <= Downnotes[input - 1].hitTiming + 192)  panjeong = 20;
+            else panjeong = 0;
 
-            Debug.Log(input);
             Debug.Log(panjeong);
+            if (panjeong != 0) GM.AddScore(panjeong);
             Downnotes[input - 1].line = NoteLine.None;
         }
 
@@ -59,7 +61,7 @@ public class NoteHit : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A)) reader.ReadLis(ref notes, "Assets/Scripts/Ozi's Scene/example");
+        if (Input.GetKeyDown(KeyCode.T)) reader.ReadLis(ref notes, "Assets/Scripts/Ozi's Scene/example");
         
         while (notes.Count > 0 && Downnotes[(int)notes.First().line - 1].line == NoteLine.None)
         {
@@ -72,7 +74,7 @@ public class NoteHit : MonoBehaviour
         {
             if (n.line != NoteLine.None && timer.NowPos >= n.hitTiming + 192)
             {
-                panjeong = "MISS";
+                panjeong = 0;
                 Debug.Log(panjeong);
                 n.line = NoteLine.None;
             }
