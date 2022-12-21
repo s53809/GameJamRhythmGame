@@ -242,7 +242,7 @@ public class NoteReader : MonoBehaviour
                         Transform trans = LongStart[0].Item2.transform;
 
                         float hit = (item.Item1.hitTiming - LongStart[0].Item1.hitTiming) * 0.01f;
-                        trans.localScale = new Vector3(trans.localScale.x, hit * 6.4f ,trans.localScale.z);
+                        trans.localScale = new Vector3(trans.localScale.x, hit * 8f ,trans.localScale.z);
 
                         LongEnd.Remove(item);
                         LongStart.Remove(LongStart[0]);
