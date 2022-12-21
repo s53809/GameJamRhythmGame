@@ -20,8 +20,8 @@ public class NoteHit : MonoBehaviour
     }
 
     SoundTimer timer = null;
+    NoteSpawner spawner = null;
     NoteReader reader = null;
-    SoundManager sound = null;
     GameManagerEx game = null;
     SnowSpawner snow = null;
 
@@ -39,9 +39,9 @@ public class NoteHit : MonoBehaviour
 
     private void Start()
     {
+        spawner = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteSpawner>();
         reader = GameObject.Find(NoteSpawner.NOTESPAWNER_NAME).GetComponent<NoteReader>();
         timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
-        sound = SoundManager.GetInstance();
         game = GameManagerEx.GetInstance();
         snow = GameObject.Find(SnowSpawner.SNOWSPAWNER_NAME).GetComponent<SnowSpawner>();
     } // 객체를 가져와요
@@ -121,6 +121,11 @@ public class NoteHit : MonoBehaviour
 
     private void Update()
     {
+        if (notes.Count == 0 && spawner.notes.Count != 0)
+        {
+            notes = spawner.notes;
+            crotchet = 60000 / reader.bpm;
+        }
         while (notes.Count > 0 && Downnotes[(int)notes.First().line].line == NoteLine.None) // 지금 내려오고있는 노트는?
             Downnotes[(int)notes.First().line] = notes.Dequeue();
        
