@@ -7,7 +7,6 @@ using UnityEngine;
 public class SnowFade : MonoBehaviour
 {
     SpriteRenderer sprite;
-    public bool isFire = false;
 
     void Awake()
     {
@@ -17,9 +16,11 @@ public class SnowFade : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (sprite.color.a <= 0.001f) { Destroy(gameObject); }
-        if (isFire) { sprite.DOFade(0.0f, 1.0f); }
+        if (sprite.color.a <= 0) { Destroy(gameObject); }
     }
 
-
+    public void Fire()
+    {
+        sprite.DOFade(0.0f, 1.0f);
+    }
 }
