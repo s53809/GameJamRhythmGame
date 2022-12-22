@@ -38,6 +38,7 @@ public class ClearSceneManage : MonoBehaviour
     {
         finalScore = SavingDataManagement.instance.lastScore;
         finalPanzong = SavingDataManagement.instance.lastPanzong;
+        ViewSongInfo(GameObject.Find("HELLO").GetComponent<Santa>().songNum);
     }
 
     // Update is called once per frame
