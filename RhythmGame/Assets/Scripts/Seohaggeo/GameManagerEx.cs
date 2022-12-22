@@ -39,6 +39,7 @@ public class GameManagerEx : MonoBehaviour
         Fever += score / 10;
         ComboSystem.instance.RefreshFeverGauge(Fever);
         ComboSystem.instance.RefreshRate((int)Accuracy);
+        ComboSystem.instance.ShowPanzong(score);
         if (score > 20)
         {
             Combo++;

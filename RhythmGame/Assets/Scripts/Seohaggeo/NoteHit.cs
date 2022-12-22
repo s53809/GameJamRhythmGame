@@ -46,12 +46,19 @@ public class NoteHit : MonoBehaviour
 
     private void GetHit()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))  { CheckHit(0); }
-        if (Input.GetKeyDown(KeyCode.Z))          { CheckHit(1); }
-        if (Input.GetKeyDown(KeyCode.X))          { CheckHit(2); }
-        if (Input.GetKeyDown(KeyCode.Period))     { CheckHit(3); }
-        if (Input.GetKeyDown(KeyCode.Slash))      { CheckHit(4); }
-        if (Input.GetKeyDown(KeyCode.RightShift)) { CheckHit(5); }
+        if (Input.GetKeyDown(KeyCode.LeftShift))  { ComboSystem.instance.ShowNoteEffect(0); CheckHit(0); }
+        if (Input.GetKeyDown(KeyCode.Z))          { ComboSystem.instance.ShowNoteEffect(1); CheckHit(1); }
+        if (Input.GetKeyDown(KeyCode.X))          { ComboSystem.instance.ShowNoteEffect(2); CheckHit(2); }
+        if (Input.GetKeyDown(KeyCode.Period))     { ComboSystem.instance.ShowNoteEffect(3); CheckHit(3); }
+        if (Input.GetKeyDown(KeyCode.Slash))      { ComboSystem.instance.ShowNoteEffect(4); CheckHit(4); }
+        if (Input.GetKeyDown(KeyCode.RightShift)) { ComboSystem.instance.ShowNoteEffect(5); CheckHit(5); }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift)) { ComboSystem.instance.HideNoteEffect(0); }
+        if (Input.GetKeyUp(KeyCode.Z)) { ComboSystem.instance.HideNoteEffect(1); }
+        if (Input.GetKeyUp(KeyCode.X)) { ComboSystem.instance.HideNoteEffect(2); }
+        if (Input.GetKeyUp(KeyCode.Period)) { ComboSystem.instance.HideNoteEffect(3); }
+        if (Input.GetKeyUp(KeyCode.Slash)) { ComboSystem.instance.HideNoteEffect(4); }
+        if (Input.GetKeyUp(KeyCode.RightShift)) { ComboSystem.instance.HideNoteEffect(5); }
 
         return;
     } // 키보드 눌럿나요
