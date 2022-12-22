@@ -25,6 +25,7 @@ public class GameManagerEx : MonoBehaviour
     public int Fever = 0;
     public int Combo = 0;
     public int HighestCombo = 0;
+    public int[] panzongs = new int[] { 0, 0, 0, 0, 0 };
 
     private int plusScore = 0;
 
@@ -34,7 +35,27 @@ public class GameManagerEx : MonoBehaviour
     }
 
     public void AddScore(int score)
-    {
+    { // 100,80,50,20,0
+        if(score == 100)
+        {
+            panzongs[0]++;
+        }
+        if(score == 80)
+        {
+            panzongs[1]++;
+        }
+        if (score == 50)
+        {
+            panzongs[2]++;
+        }
+        if (score == 20)
+        {
+            panzongs[3]++;
+        }
+        if (score == 0)
+        {
+            panzongs[4]++;
+        }
         scoreP += score;
         noteC++;
         Accuracy = scoreP / noteC;
