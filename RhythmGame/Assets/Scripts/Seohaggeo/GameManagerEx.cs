@@ -37,9 +37,12 @@ public class GameManagerEx : MonoBehaviour
         noteC++;
         Accuracy = scoreP / noteC;
         Fever += score / 10;
+        ComboSystem.instance.RefreshFeverGauge(Fever);
+        ComboSystem.instance.RefreshRate((int)Accuracy);
         if (score > 20)
         {
             Combo++;
+            ComboSystem.instance.RefreshCombo(Combo);
             if (Combo > HighestCombo) HighestCombo = Combo;
         }
         else Combo = 0;
@@ -51,6 +54,7 @@ public class GameManagerEx : MonoBehaviour
     {
         if (Fever >= 400)
         {
+            ComboSystem.instance.ShowFeverEffect();
             Debug.Log("Fever!");
             Fever -= 400;
             snow.SnowClear();
