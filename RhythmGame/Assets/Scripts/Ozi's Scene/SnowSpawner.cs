@@ -74,6 +74,7 @@ public class SnowSpawner : MonoBehaviour
             snows.Dequeue();
         }
 
+        
         return result;
     }
 }
