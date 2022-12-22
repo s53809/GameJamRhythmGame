@@ -38,4 +38,9 @@ public class NoteInfo : MonoBehaviour
         NoteDown down = gameObject.AddComponent<NoteDown>();
         down.bpm = bpm;
     }
+
+    public void Delete()
+    {
+        Destroy(gameObject);
+    }
 }
