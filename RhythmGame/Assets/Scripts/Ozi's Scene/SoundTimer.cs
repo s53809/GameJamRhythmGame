@@ -42,12 +42,12 @@ public class SoundTimer : MonoBehaviour
 
     void Update()
     {
-        if(isPlaying) { nowPos = (AudioSettings.dspTime - StartPos) - (offset + 1); }
+        if(isPlaying) { nowPos = (AudioSettings.dspTime - StartPos); }
     }
 
     public void Play(string path, int offset)
     {
-        try { if (soundManager != null) { soundManager.PlayMusic(path, 1000); } }
+        try { if (soundManager != null) { soundManager.PlayMusic(path, offset); } }
         catch (Exception e) { Debug.Log("SoundTimer.Play(string, int) : " + e.Message + " " + path); }
         finally
         {
