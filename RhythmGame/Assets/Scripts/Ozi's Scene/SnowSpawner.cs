@@ -1,79 +1,64 @@
 using Shapes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class SnowSpawner : MonoBehaviour
+public class NoteSpawner : MonoBehaviour
 {
-    public const string SNOWSPAWNER_NAME = "Snow Spawner Yee~";
-    public const float SNOW_SPAWN_Y = 10.0f;
-    public const int SNOW_SCORE = 15;
-    public const float STACK_MUL = 0.1f;
-    public GameObject[] snow;
+    public const string NOTESPAWNER_NAME = "Note Spawner";
+    public const string RESULT_SCENE_NAME = "lis result";
+    public const string RESULT_SCENE_NAME = "Lis Result";
 
-    private Queue<GameObject> snows = new Queue<GameObject>();
-    [ReadOnly] public int count = 0;
-    
-    void Awake()
+    [SerializeField] private bool isDebug = false;
+
+    [Header("Note Reader")]
+    [ReadOnly] public NoteReader reader;
+@ -32,6 +34,11 @@ public class NoteSpawner : MonoBehaviour
+
+    private void Awake()
     {
-        GameObject @object = GameObject.Find(SNOWSPAWNER_NAME);
+        if (isDebug)
+        {
+            if (Input.GetKeyUp(KeyCode.A)) { LisRead("Assets/Resources/Liss/PF.lis"); }
+        }
+
+        GameObject @object = GameObject.Find(NOTESPAWNER_NAME);
         if (@object == null)
         {
-            @object = new GameObject(SNOWSPAWNER_NAME);
-            if(GameObject.Find("System") != null) { @object.transform.parent = GameObject.Find("System").transform; }
+@ -39,6 + 46,7 @@ public class NoteSpawner : MonoBehaviour
+            if (GameObject.Find("System") != null) { @object.transform.parent = GameObject.Find("System").transform; }
 
-            SnowSpawner spanwer = @object.AddComponent<SnowSpawner>();
-            spanwer.snow = snow;
-            
-            Destroy(this);
-        }
-    }
+NoteSpawner spanwer = @object.AddComponent<NoteSpawner>();
+spanwer.isDebug = isDebug;
 
-    void Update()
-    {
-        count = snows.Count;
-    }
+spanwer.reader = @object.GetComponent<NoteReader>();
+spanwer.timer = GameObject.Find(SoundTimer.SOUNDTIMER_NAME).GetComponent<SoundTimer>();
+@ -83,10 + 91,7 @@ public class NoteSpawner : MonoBehaviour
+{
+    endTime += Time.deltaTime;
+            if(endTime > 3.0f) {
+                // Reset //
+                reader.isRead = false;
+                timer.Stop();
+                ///////////
+                SpawnerReset();
 
-    [ContextMenu("Spawn")]
-    public void SnowSpawn()
-    {
-        GameObject newSnow = Instantiate(snow[Random.Range(0, 3)]);
-        newSnow.transform.position = new Vector3(Random.Range(NoteReader.NOTE_DISTANCE * -1.5f, NoteReader.NOTE_DISTANCE * 1.5f), SNOW_SPAWN_Y, 0);
-        newSnow.transform.parent = gameObject.transform;
+    SceneManager.LoadScene(RESULT_SCENE_NAME);
+            }
+@ -105,6 + 110,13 @@ public class NoteSpawner : MonoBehaviour
+    [ContextMenu("Note Queue Clear")]
+    private void NoteClear()
+{
+    SpawnerReset();
+    notes.Clear();
+}
 
-        snows.Enqueue(newSnow);
-    }
-
-    [ContextMenu("Pop")]
-    public void SnowPop()
-    {
-        if (snows.Count > 0)
-        {
-            SnowFade sf = snows.First().GetComponent<SnowFade>();
-            if (sf != null) { sf.isFire = true; }
-            snows.Dequeue();
-        }
-    }
-    public int SnowHit()
-    {
-        SnowFade sf = snows.First().GetComponent<SnowFade>();
-        if(sf != null) { sf.isFire = true; }
-        snows.Dequeue();
-
-        return SNOW_SCORE;
-    }
-    public int SnowClear()
-    {
-        int result = snows.Count * SNOW_SCORE;
-
-        for(int i = 0, max = snows.Count; i < max; i++)
-        {
-            SnowFade sf = snows.First().GetComponent<SnowFade>();
-            if (sf != null) { sf.isFire = true; }
-            snows.Dequeue();
-        }
-
-        return result;
-    }
+private void SpawnerReset()
+{
+    reader.isRead = false;
+    timer.Stop();
+}
 }
