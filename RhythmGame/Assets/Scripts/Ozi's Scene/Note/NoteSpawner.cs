@@ -62,6 +62,7 @@ public class NoteSpawner : MonoBehaviour
     private void Start()
     {
         noteHit = NoteHit.GetInstance();
+        LisRead(GameObject.Find("HELLO").GetComponent<Santa>().path);
     }
 
     void Update()

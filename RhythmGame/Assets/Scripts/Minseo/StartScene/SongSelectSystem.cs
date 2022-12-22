@@ -81,6 +81,11 @@ public class SongSelectSystem : MonoBehaviour
             }
             OnChangeSong(songIndex - 1);
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GameObject.Find("HELLO").GetComponent<Santa>().path = songList[songIndex].songPath;
+            LoadSceneManager.LoadScene("Rhythm Main");
+        }
     }
 
     private void OnChangeSong(int index)

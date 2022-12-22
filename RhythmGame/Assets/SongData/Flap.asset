@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   songBanner: {fileID: 21300000, guid: 8b62ad6d86f2339448e05815852106f1, type: 3}
   songCD: {fileID: 21300000, guid: 31512bb5300f4bf49a9c330b3a51153d, type: 3}
-  songPath: Assets/Resources/Liss/PeriTurn - Flap
+  songPath: Assets/Resources/Liss/PeriTune/PeriTurn - Flap.lis
   artistName: PeriTurn
   songName: Flap
   difficulty: Easy
