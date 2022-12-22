@@ -21,10 +21,12 @@ public class ClearSceneManage : MonoBehaviour
     private List<SongInfo> songList;
 
     private GameObject songInformation;
+    private GameObject pangzongView;
 
     private void Awake()
     {
         songList = SongManagement.instance.lists;
+        pangzongView = transform.GetChild(1).gameObject;
         songInformation = transform.GetChild(2).gameObject;
         Title = songInformation.transform.GetChild(0).GetComponent<Text>();
         Artist = songInformation.transform.GetChild(0).GetChild(0).GetComponent<Text>();
@@ -49,6 +51,10 @@ public class ClearSceneManage : MonoBehaviour
 
     private void ViewSongInfo(int index)
     {
+        for(int i = 0; i < 5; i++)
+        {
+            pangzongView.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = finalPanzong[i].ToString();
+        }
         Title.DOText(songList[index].songName, 0.5f);
         Artist.DOText(songList[index].artistName, 0.5f);
         Difficulty.DOText(songList[index].difficulty, 0.5f);
