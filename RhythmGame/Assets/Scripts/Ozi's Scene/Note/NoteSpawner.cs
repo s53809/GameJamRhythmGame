@@ -93,7 +93,7 @@ public class NoteSpawner : MonoBehaviour
                 SavingDataManagement.instance.JsonSaveLastScore(GameObject.Find("HELLO").GetComponent<Santa>().songNum,
                     GameManagerEx.GetInstance().GetScore(), GameManagerEx.GetInstance().Accuracy, GameManagerEx.GetInstance().HighestCombo,
                     GameManagerEx.GetInstance().GetRank(), GameManagerEx.GetInstance().panzongs);
-
+                GameObject.Find("HELLO").GetComponent<Santa>().rankNum = GameManagerEx.GetInstance().GetRank() - 1;
                 SpawnerReset();
 
                 SceneManager.LoadScene(RESULT_SCENE_NAME);

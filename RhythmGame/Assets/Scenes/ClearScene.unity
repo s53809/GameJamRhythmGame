@@ -397,6 +397,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e8660b44fb5cc489741734dd47fffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RankImage:
+  - {fileID: 21300000, guid: b6a6f8fa2094970499ab9e215698cf82, type: 3}
+  - {fileID: 21300000, guid: be3af6d952247654994a37c22e6cc78d, type: 3}
+  - {fileID: 21300000, guid: f3ae3a4cffd60a2419cbd012685948cd, type: 3}
+  - {fileID: 21300000, guid: 4bf090adccf42ec47b89e164a1bdf4f3, type: 3}
+  - {fileID: 21300000, guid: 4d879eed2d042f149afd5d2735ec1ca7, type: 3}
 --- !u!1 &203423975
 GameObject:
   m_ObjectHideFlags: 0

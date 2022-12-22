@@ -23,6 +23,8 @@ public class ClearSceneManage : MonoBehaviour
     private GameObject songInformation;
     private GameObject pangzongView;
 
+    public List<Sprite> RankImage;
+
     private void Awake()
     {
         songList = SongManagement.instance.lists;
@@ -46,7 +48,10 @@ public class ClearSceneManage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            LoadSceneManager.LoadScene("SongSelectScene");
+        }
     }
 
     private void ViewSongInfo(int index)
@@ -61,6 +66,7 @@ public class ClearSceneManage : MonoBehaviour
         HighScore.DOText("Highscore : " + finalScore.highScore[0].ToString(), 0.5f);
         Accurary.DOText("Accurary : " + finalScore.accurary[0].ToString(), 0.5f);
         Combo.DOText("Best Combo : " + finalScore.combo[0].ToString(), 0.5f);
+        Rank.sprite = RankImage[GameObject.Find("HELLO").GetComponent<Santa>().rankNum];
         //#todo : 랭크 결정하기
     }
 }
