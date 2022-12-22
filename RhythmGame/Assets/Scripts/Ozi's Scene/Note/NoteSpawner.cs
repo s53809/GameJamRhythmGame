@@ -90,6 +90,10 @@ public class NoteSpawner : MonoBehaviour
         if(reader.isRead && notes.Count == 0)
         {
             if(timer.NowPos > nextSpawnTiming + 3000) {
+                SavingDataManagement.instance.JsonSaveLastScore(GameObject.Find("HELLO").GetComponent<Santa>().songNum,
+                    GameManagerEx.GetInstance().GetScore(), GameManagerEx.GetInstance().Accuracy, GameManagerEx.GetInstance().HighestCombo,
+                    GameManagerEx.GetInstance().GetRank(), GameManagerEx.GetInstance().panzongs);
+
                 SpawnerReset();
 
                 SceneManager.LoadScene(RESULT_SCENE_NAME);

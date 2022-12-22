@@ -84,6 +84,7 @@ public class SongSelectSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             GameObject.Find("HELLO").GetComponent<Santa>().path = songList[songIndex].songPath;
+            GameObject.Find("HELLO").GetComponent<Santa>().songNum = songIndex;
             LoadSceneManager.LoadScene("Rhythm Main");
         }
     }
