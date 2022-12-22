@@ -26,6 +26,8 @@ public class GameManagerEx : MonoBehaviour
     public int Combo = 0;
     public int HighestCombo = 0;
 
+    private int plusScore = 0;
+
     private void Start()
     {
         snow = GameObject.Find(SnowSpawner.SNOWSPAWNER_NAME).GetComponent<SnowSpawner>();
@@ -47,7 +49,7 @@ public class GameManagerEx : MonoBehaviour
         }
         else Combo = 0;
 
-        Debug.Log(score);
+
     }
 
     private void Update()
@@ -55,10 +57,14 @@ public class GameManagerEx : MonoBehaviour
         if (Fever >= 400)
         {
             ComboSystem.instance.ShowFeverEffect();
-            Debug.Log("Fever!");
             Fever -= 400;
-            snow.SnowClear();
+            plusScore += snow.SnowClear();
         }
+    }
+
+    public int GetScore()
+    {
+        return (int)(Accuracy * 10000) + plusScore;
     }
 
     public int GetRank()
