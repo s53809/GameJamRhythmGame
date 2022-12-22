@@ -455,8 +455,6 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 7920692035911634092, guid: 81be5ac69a1f9044ab19129bc5fdeac7, type: 2}
     value: {fileID: 1566407743}
-  - key: {fileID: -1014945038173825054, guid: 81be5ac69a1f9044ab19129bc5fdeac7, type: 2}
-    value: {fileID: 1873854360}
   - key: {fileID: 359553752361115490, guid: 81be5ac69a1f9044ab19129bc5fdeac7, type: 2}
     value: {fileID: 2041694871}
   - key: {fileID: 4689200501430350176, guid: 81be5ac69a1f9044ab19129bc5fdeac7, type: 2}
@@ -714,7 +712,6 @@ GameObject:
   - component: {fileID: 1566407742}
   - component: {fileID: 1566407741}
   - component: {fileID: 1566407743}
-  - component: {fileID: 1566407744}
   m_Layer: 0
   m_Name: Logo
   m_TagString: Untagged
@@ -809,21 +806,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1566407744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566407740}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be4b063df66093a44bd9254f46a51b3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSur: {fileID: 1873854360}
-  leastSize: 0.8
-  maximumSize: 1.2
 --- !u!1 &1673748822
 GameObject:
   m_ObjectHideFlags: 0
@@ -6095,7 +6077,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 739475e544430c241b37014a74a43510, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
