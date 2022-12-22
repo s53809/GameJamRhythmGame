@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   songBanner: {fileID: 21300000, guid: a5f00e017a9599942b3de77561d8baf9, type: 3}
   songCD: {fileID: 21300000, guid: 030016921b3de934db6c76701df41dc6, type: 3}
-  songPath: Null
+  songPath: Assets/Resources/Liss/Orca/Orca.lis
   artistName: Plum
   songName: Orca
-  difficulty: Easy
+  difficulty: Hard
