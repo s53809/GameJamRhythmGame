@@ -10,7 +10,7 @@ public class TempScript : MonoBehaviour
     private void Start()
     {
         sm = SoundManager.GetInstance();
-        sm.PlayMusic("Liss/PeriTune/PeriTune - Flap");
+        //sm.PlayMusic("Liss/PeriTune/PeriTune - Flap");
     }
 
     // Update is called once per frame

@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SongSelectScene.unity
     guid: 4af65c6deb50b1842a47f9cb64b45b87
+  - enabled: 1
+    path: Assets/Scenes/Rhythm Main.unity
+    guid: 7e88fe813b8b7c44a8c253a447cdbb6d
+  - enabled: 1
+    path: Assets/Scenes/ClearScene.unity
+    guid: cb3b61c5098f23b48a798f7c3b55f1e8
   m_configObjects: {}

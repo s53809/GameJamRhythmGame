@@ -38,6 +38,7 @@ public class NoteReader : MonoBehaviour
     [ReadOnly] public string songPath = "SongPath";
     [ReadOnly] public float bpm = 0.0f;
     [ReadOnly] public int offset = 0;
+    
 
     private List<Tuple<NoteInfo, GameObject>> LongStart = new();
     private List<Tuple<NoteInfo, GameObject>> LongEnd = new();
@@ -197,7 +198,9 @@ public class NoteReader : MonoBehaviour
                 catch(Exception e) { Debug.Log("Line Error : " + e.Message); }
 
                 // [ Timing ]
-                try { info.hitTiming = Convert.ToInt32(splitText[1]); }
+                try {
+                    info.hitTiming = Convert.ToInt32(splitText[1]) + offset;
+                }
                 catch (Exception e) { Debug.Log("Timing Error : " + e.Message); }
 
                 // [ Note Trans ]
@@ -264,6 +267,16 @@ public class NoteReader : MonoBehaviour
         }
 
         isRead = true;
+
+        int Offset = 0;
+        if (notes.Count > 0 && notes.First().hitTiming <= 1000)
+        {
+            Offset = 1001 - notes.First().hitTiming;
+            foreach (var item in notes)
+            { item.hitTiming += Offset; }
+        }
+
+        offset += Offset;
     }
     public void Clear()
     {
