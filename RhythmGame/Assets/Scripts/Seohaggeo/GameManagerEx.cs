@@ -46,4 +46,15 @@ public class GameManagerEx : MonoBehaviour
             snow.SnowClear();
         }
     }
+
+    public int GetRank()
+    {
+        if      (Accuracy >= 90) return 5;
+        else if (Accuracy >= 80) return 4;
+        else if (Accuracy >= 60) return 3;
+        else if (Accuracy >= 50) return 2;
+        else if (Accuracy >= 30) return 1;
+
+        return 0;
+    }
 }
