@@ -23,6 +23,8 @@ public class GameManagerEx : MonoBehaviour
     public int noteC = 0;
     public float Accuracy = 0;
     public int Fever = 0;
+    public int Combo = 0;
+    public int HighestCombo = 0;
 
     private void Start()
     {
@@ -35,6 +37,14 @@ public class GameManagerEx : MonoBehaviour
         noteC++;
         Accuracy = scoreP / noteC;
         Fever += score / 10;
+        if (score > 20)
+        {
+            Combo++;
+            if (Combo > HighestCombo) HighestCombo = Combo;
+        }
+        else Combo = 0;
+
+        Debug.Log(score);
     }
 
     private void Update()
