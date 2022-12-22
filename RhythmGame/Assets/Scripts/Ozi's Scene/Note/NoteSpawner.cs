@@ -10,7 +10,7 @@ using Unity.VisualScripting;
 public class NoteSpawner : MonoBehaviour
 {
     public const string NOTESPAWNER_NAME = "Note Spawner";
-    public const string RESULT_SCENE_NAME = "Lis Result";
+    public const string RESULT_SCENE_NAME = "ClearScene";
 
     [SerializeField] private bool isDebug = false;
 
@@ -25,6 +25,8 @@ public class NoteSpawner : MonoBehaviour
     [ReadOnly] public int nextSpawnTiming;
     [ReadOnly] public NoteType nextNoteType;
     [ReadOnly] public NoteTrans nextNoteTrans;
+
+    private NoteHit noteHit;
 
     public Queue<NoteInfo> notes = new Queue<NoteInfo>();
 
@@ -56,6 +58,10 @@ public class NoteSpawner : MonoBehaviour
             Destroy(this);
             Destroy(GetComponent<NoteReader>());
         }
+    }
+    private void Start()
+    {
+        noteHit = NoteHit.GetInstance();
     }
 
     void Update()
@@ -93,6 +99,7 @@ public class NoteSpawner : MonoBehaviour
 
         try {
             reader.ReadLis(ref notes, path);
+            noteHit.SetPath(path);
         }
         catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message); } 
         finally { timer.Play(reader.songPath, reader.offset); }
