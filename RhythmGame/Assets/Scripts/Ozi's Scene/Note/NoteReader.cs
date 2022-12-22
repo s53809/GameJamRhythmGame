@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static TreeEditor.TreeEditorHelper;
+//using static TreeEditor.TreeEditorHelper;
 
 public class NoteReader : MonoBehaviour
 {
