@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   songBanner: {fileID: 21300000, guid: 19dee42caff42a74e8567e86372ff72d, type: 3}
   songCD: {fileID: 21300000, guid: 6642267abc195a645aae979f423cc404, type: 3}
-  songPath: Assets/Resources/Liss/test/test11.lis
+  songPath: Assets/Resources/Liss/Santa Claus's Night/Santa_Claus's_Night.lis
   artistName: TBW
-  songName: Santa Claus Night
-  difficulty: Easy
+  songName: Santa Claus's Night
+  difficulty: Hard
