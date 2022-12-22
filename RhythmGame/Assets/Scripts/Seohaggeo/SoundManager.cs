@@ -73,20 +73,19 @@ public class SoundManager : MonoBehaviour
         return;
     }
 
-    public void PlayMusic(string path, int delay) // 리듬게임 음악을 경로로 불러옵니다
+    public void PlayMusic(string path, float delay) // 리듬게임 음악을 경로로 불러옵니다
     {
         AudioClip music = Resources.Load<AudioClip>(path);
 
         if (music == null) throw new Exception("찾을 수 없음");
         
         BGMSource.clip = music;
-        if (delay <= 0) BGMSource.Play();
-        else StartCoroutine(PlayWithDelay(delay / 1000));
+        StartCoroutine(PlayWithDelay(delay / 1000));
 
         return;
     }
 
-    IEnumerator PlayWithDelay(int delay)
+    IEnumerator PlayWithDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         BGMSource.Play();
