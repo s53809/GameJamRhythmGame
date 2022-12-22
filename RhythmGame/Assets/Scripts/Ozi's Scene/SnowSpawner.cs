@@ -62,7 +62,7 @@ public class SnowSpawner : MonoBehaviour
         snows.Dequeue();
 
         return SNOW_SCORE;
-    }
+    }                   
     public int SnowClear()
     {
         int result = snows.Count * SNOW_SCORE;
