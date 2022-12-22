@@ -49,23 +49,18 @@ public class NoteReader : MonoBehaviour
 
         // lis File
         /* example.lis
-         * ArtistName : Plum
-         * SongName   : R
-         * SongPath   : None
-         * Bpm    : 120.0
-         * Offset : 0
+         * ArtistName : (Artist)
+         * SongName   : (Song)
+         * SongPath   : (Path)
+         * Bpm    : (BPM)
+         * Offset : (offset)
          * 
          * [ NOTE ]
-         * 1, 1000, 0, 0
-         * 2, 2000, 1, 0
-         * 3, 3000, 0, 0
-         * 4, 4000, 0, 0
-         * 
-         * 
+         * (Line), (Timing), (Type), (Trans)
          */
-
+        
         /* [ Info Setting ] */ {
-            // ArtistName (separator) (String)
+            // ArtistName (separator) (string)
             try {
                 artistName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
                 /* [ ' ' Remove ] */
@@ -77,7 +72,7 @@ public class NoteReader : MonoBehaviour
                 Debug.Log("ArtistName : " + e.Message);
             }
 
-            // SongName (separator) (String)
+            // SongName (separator) (string)
             try {
                 songName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
                 while (songName[0].Equals(' ')) { songName = songName.Substring(1); }
@@ -88,7 +83,7 @@ public class NoteReader : MonoBehaviour
                 Debug.Log("SongName : " + e.Message);
             }
 
-            // SongPath (separator) (String)
+            // SongPath (separator) (string)
             try {
                 songPath = reader.ReadLine().Split(INFO_SEPARATOR)[1];
                 while (songPath[0].Equals(' ')) { songPath = songPath.Substring(1); }
@@ -99,7 +94,7 @@ public class NoteReader : MonoBehaviour
                 Debug.Log("SongPath : " + e.Message);
             }
 
-            // Bpm (separator) (Single)
+            // Bpm (separator) (float)
             try { bpm = Convert.ToSingle(reader.ReadLine().Split(INFO_SEPARATOR)[1]); }
             catch (Exception e)
             {
@@ -107,7 +102,7 @@ public class NoteReader : MonoBehaviour
                 Debug.Log("Bpm : " + e.Message);
             }
 
-            // Offset (separator) (Int32)
+            // Offset (separator) (int)
             try { offset = Convert.ToInt32(reader.ReadLine().Split(INFO_SEPARATOR)[1]); }
             catch (Exception e)
             {
@@ -122,10 +117,7 @@ public class NoteReader : MonoBehaviour
             while(!isStart) {
                 texts = reader.ReadLine().Split(' ');
 
-                for(int i = 0; i < texts.Length; i++)
-                {
-                    if (texts[i].ToUpper().Equals("NOTE")) { isStart = true; break; }
-                }
+                for(int i = 0; i < texts.Length; i++)  { if (texts[i].ToUpper().Equals("NOTE")) { isStart = true; break; } }
 
                 if (reader.EndOfStream) { throw new Exception("\"NOTE\" Not Found In .lis File"); }
             }
@@ -265,18 +257,20 @@ public class NoteReader : MonoBehaviour
                 if (!isChange) { throw new Exception("Not Found Long Note End in Line. : " + LongStart[0].Item1.line.ToString()); }
             }
         }
+        /* [ Delay ] */ {
 
-        isRead = true;
+            int Offset = 0;
+            if (notes.Count > 0 && notes.First().hitTiming <= 1000)
+            {
+                Offset = 1001 - notes.First().hitTiming;
+                foreach (var item in notes)
+                { item.hitTiming += Offset; }
+            }
 
-        int Offset = 0;
-        if (notes.Count > 0 && notes.First().hitTiming <= 1000)
-        {
-            Offset = 1001 - notes.First().hitTiming;
-            foreach (var item in notes)
-            { item.hitTiming += Offset; }
+            offset += Offset;
         }
 
-        offset += Offset;
+        isRead = true;
     }
     public void Clear()
     {

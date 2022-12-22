@@ -69,15 +69,18 @@ public class NoteSpawner : MonoBehaviour
         if (isDebug) { if (Input.GetKeyDown(KeyCode.A)) { LisRead("Assets/Resources/Liss/Snowy/snowy.lis"); } }
         if (timer != null) { time = timer.NowPos; }
 
-        while (notes.Count > 0 && timer.NowPos >= (notes.First().hitTiming - 1000/*(ms)*/))
+        while (notes.Count > 0 && timer.NowPos
+        >= (notes.First().hitTiming - 1000/*(ms)*/))
         {
-            noteCount = notes.Count - 1;
-            NoteInfo info = notes.First();
+            /* [ Debug ] */ {
+                noteCount = notes.Count - 1;
+                NoteInfo info = notes.First();
 
-            nextLine = info.line;
-            nextSpawnTiming = info.hitTiming;
-            nextNoteType = info.noteType;
-            nextNoteTrans = info.noteTrans;
+                nextLine = info.line;
+                nextSpawnTiming = info.hitTiming;
+                nextNoteType = info.noteType;
+                nextNoteTrans = info.noteTrans;
+            }
 
             notes.First().Down(reader.bpm);
             notes.Dequeue();

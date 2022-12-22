@@ -45,9 +45,6 @@ TagManager:
   - name: Background
     uniqueID: 2809298943
     locked: 0
-  - name: UI
-    uniqueID: 226619815
-    locked: 0
   - name: Gear
     uniqueID: 1010197985
     locked: 0
@@ -59,4 +56,7 @@ TagManager:
     locked: 0
   - name: Snow
     uniqueID: 4294923977
+    locked: 0
+  - name: UI
+    uniqueID: 226619815
     locked: 0
