@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   songBanner: {fileID: 21300000, guid: 57080ff6f00a7094c90a6e8d7747264c, type: 3}
   songCD: {fileID: 21300000, guid: 444277f096866b440b599878d0e57faf, type: 3}
-  songPath: Null
+  songPath: Assets/Resources/Liss/Kaleidoscope/test20.lis
   artistName: Plum
   songName: Kaleidoscope
-  difficulty: Easy
+  difficulty: Hard
