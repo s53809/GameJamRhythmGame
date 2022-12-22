@@ -118,6 +118,7 @@ public class NoteHit : MonoBehaviour
         while (Input.GetKey(key))
         {
             yield return new WaitForSeconds(crotchet / 1000);
+            snow.SnowSpawn();
             game.AddScore(pj);
         }
 
