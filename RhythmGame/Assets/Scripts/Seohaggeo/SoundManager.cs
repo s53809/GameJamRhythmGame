@@ -31,13 +31,13 @@ public class SoundManager : MonoBehaviour
     private AudioSource BGMSource; // 배경음 재생할 오디오소스
     private List<AudioSource> SFXSource = new List<AudioSource>(); // 효과음
 
-    private void OnEnable()
+    private void Awake()
     {
         BGMSource = gameObject.AddComponent<AudioSource>();
         BGMSource.playOnAwake = false;
         BGMSource.loop = true;
 
-        SFXVol = 20;
+        if (GameObject.Find("System") != null) { this.transform.parent = GameObject.Find("System").transform; }
     }
 
     private void Update()
