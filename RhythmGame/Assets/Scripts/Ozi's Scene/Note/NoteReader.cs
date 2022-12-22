@@ -45,6 +45,7 @@ public class NoteReader : MonoBehaviour
 
     public void ReadLis(ref Queue<NoteInfo> notes, string path)
     {
+        //StreamReader reader = Resources.Load(path) as StreamReader;
         StreamReader reader = new(path);
 
         // lis File
