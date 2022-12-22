@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,14 +42,15 @@ public class SoundTimer : MonoBehaviour
 
     void Update()
     {
-        if(isPlaying) { nowPos = (AudioSettings.dspTime - StartPos) - offset; }
+        if(isPlaying) { nowPos = (AudioSettings.dspTime - StartPos) - (offset + 1); }
     }
 
     public void Play(string path, int offset)
     {
-        try { if(soundManager != null) { soundManager.PlayMusic(path); } }
-        catch(Exception e) { Debug.Log("SoundTimer.Play(string, int) : " + e.Message + " " + path); }
-        finally {
+        try { if (soundManager != null) { soundManager.PlayMusic(path, 1000); } }
+        catch (Exception e) { Debug.Log("SoundTimer.Play(string, int) : " + e.Message + " " + path); }
+        finally
+        {
             isPlaying = true;
             StartPos = AudioSettings.dspTime;
             this.offset = (offset * 0.001f);

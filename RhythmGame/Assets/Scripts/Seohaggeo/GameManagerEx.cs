@@ -35,7 +35,6 @@ public class GameManagerEx : MonoBehaviour
         noteC++;
         Accuracy = scoreP / noteC;
         Fever += score / 10;
-        Debug.Log("Score" + score);
     }
 
     private void Update()
