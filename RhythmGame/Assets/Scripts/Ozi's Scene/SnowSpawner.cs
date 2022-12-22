@@ -51,14 +51,14 @@ public class SnowSpawner : MonoBehaviour
         if (snows.Count > 0)
         {
             SnowFade sf = snows.First().GetComponent<SnowFade>();
-            if (sf != null) { sf.isFire = true; }
+            if (sf != null) { sf.Fire(); }
             snows.Dequeue();
         }
     }
     public int SnowHit()
     {
         SnowFade sf = snows.First().GetComponent<SnowFade>();
-        if(sf != null) { sf.isFire = true; }
+        if(sf != null) { sf.Fire(); }
         snows.Dequeue();
 
         return SNOW_SCORE;
@@ -70,7 +70,7 @@ public class SnowSpawner : MonoBehaviour
         for(int i = 0, max = snows.Count; i < max; i++)
         {
             SnowFade sf = snows.First().GetComponent<SnowFade>();
-            if (sf != null) { sf.isFire = true; }
+            if (sf != null) { sf.Fire(); }
             snows.Dequeue();
         }
 
