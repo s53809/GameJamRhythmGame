@@ -45,8 +45,9 @@ public class NoteReader : MonoBehaviour
 
     public void ReadLis(ref Queue<NoteInfo> notes, string path)
     {
-        //StreamReader reader = Resources.Load(path) as StreamReader;
-        StreamReader reader = new(path);
+        TextAsset reader = Resources.Load<TextAsset>(path);
+        string[] reads = reader.text.Split('\n');
+        int index = 0;
 
         // lis File
         /* example.lis
@@ -59,11 +60,12 @@ public class NoteReader : MonoBehaviour
          * [ NOTE ]
          * (Line), (Timing), (Type), (Trans)
          */
-        
+
         /* [ Info Setting ] */ {
             // ArtistName (separator) (string)
-            try {
-                artistName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
+            try
+            {
+                artistName = reads[index].Split(INFO_SEPARATOR)[1];
                 /* [ ' ' Remove ] */
                 while (artistName[0].Equals(' ')) { artistName = artistName.Substring(1); }
             }
@@ -72,10 +74,12 @@ public class NoteReader : MonoBehaviour
                 artistName = ERROR_NUM.ToString();
                 Debug.Log("ArtistName : " + e.Message);
             }
+            index++;
 
             // SongName (separator) (string)
-            try {
-                songName = reader.ReadLine().Split(INFO_SEPARATOR)[1];
+            try
+            {
+                songName = reads[index].Split(INFO_SEPARATOR)[1];
                 while (songName[0].Equals(' ')) { songName = songName.Substring(1); }
             }
             catch (Exception e)
@@ -83,10 +87,12 @@ public class NoteReader : MonoBehaviour
                 songName = ERROR_NUM.ToString();
                 Debug.Log("SongName : " + e.Message);
             }
+            index++;
 
             // SongPath (separator) (string)
-            try {
-                songPath = reader.ReadLine().Split(INFO_SEPARATOR)[1];
+            try
+            {
+                songPath = reads[index].Split(INFO_SEPARATOR)[1];
                 while (songPath[0].Equals(' ')) { songPath = songPath.Substring(1); }
             }
             catch (Exception e)
@@ -94,45 +100,48 @@ public class NoteReader : MonoBehaviour
                 songPath = ERROR_NUM.ToString();
                 Debug.Log("SongPath : " + e.Message);
             }
+            index++;
 
             // Bpm (separator) (float)
-            try { bpm = Convert.ToSingle(reader.ReadLine().Split(INFO_SEPARATOR)[1]); }
+            try { bpm = Convert.ToSingle(reads[index].Split(INFO_SEPARATOR)[1]); }
             catch (Exception e)
             {
                 bpm = ERROR_NUM;
                 Debug.Log("Bpm : " + e.Message);
             }
+            index++;
 
             // Offset (separator) (int)
-            try { offset = Convert.ToInt32(reader.ReadLine().Split(INFO_SEPARATOR)[1]); }
+            try { offset = Convert.ToInt32(reads[index].Split(INFO_SEPARATOR)[1]); }
             catch (Exception e)
             {
                 offset = ERROR_NUM;
                 Debug.Log("Offset : " + e.Message);
             }
+            index++;
         }
-        /* [ Loading Note ] */ {
+        /* [ Loading Note ] */
+        {
             bool isStart = false;
-            string[] texts;
 
-            while(!isStart) {
-                texts = reader.ReadLine().Split(' ');
+            while (!isStart)
+            {
+                string[] texts = reads[index].Split(' ');
 
-                for(int i = 0; i < texts.Length; i++)  { if (texts[i].ToUpper().Equals("NOTE")) { isStart = true; break; } }
+                for (int i = 0; i < texts.Length; i++) { if (texts[i].ToUpper().Equals("NOTE")) { isStart = true; break; } }
 
-                if (reader.EndOfStream) { throw new Exception("\"NOTE\" Not Found In .lis File"); }
+                if (index >= reads.Length) { throw new Exception("\"NOTE\" Not Found In .lis File"); }
+                index++;
             }
 
-            string text;
             float delay = (bpm * NoteDown.SPEED) * NoteDown.MULTIPLE + 10;
-            
-            while (true) {
-                text = reader.ReadLine();
-                if(text == null) { break; }
 
+            while (true)
+            {
                 GameObject note = null;
-                
-                string[] splitText = text.Split(',');
+
+                if (reads[index] == "") { break; }
+                string[] splitText = reads[index].Split(',');
 
                 // [ Note Visual ]
                 try
@@ -145,7 +154,7 @@ public class NoteReader : MonoBehaviour
                         case NoteType.Side_Snow: { note = Instantiate(snowSideNote); } break;
                     }
                 }
-                catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
+                catch (Exception e) { new Exception("Type Visual : " + e.Message + " " + splitText[2] != null ? splitText[2] : "null"); }
 
                 note.transform.parent = transform;
 
@@ -153,106 +162,130 @@ public class NoteReader : MonoBehaviour
 
                 // [ Note Type ]
                 try { info.noteType = (NoteType)Convert.ToInt32(splitText[2]); }
-                catch (Exception e) { Debug.Log("Type Error : " + e.Message); }
+                catch (Exception e) { new Exception("Type Error : " + e.Message + " " + splitText[2] != null ? splitText[2] : "null"); }
 
                 // [ Line ]
                 try
                 {
                     Vector3 pos = Vector3.zero;
-                    if(info.noteType == NoteType.Side)
+                    if (info.noteType == NoteType.Side)
                     {
                         switch ((NoteLine)Convert.ToInt32(splitText[0]))
                         {
                             case NoteLine.LeftSide:
                             case NoteLine.One:
-                            case NoteLine.Two:  { pos = new Vector3(NOTE_DISTANCE * -1.0f, delay, 0); info.line = NoteLine.LeftSide; } break;
-                            case NoteLine.RightSide: 
+                            case NoteLine.Two: { pos = new Vector3(NOTE_DISTANCE * -1.0f, delay, 0); info.line = NoteLine.LeftSide; } break;
+                            case NoteLine.RightSide:
                             case NoteLine.Three:
                             case NoteLine.Four: { pos = new Vector3(NOTE_DISTANCE * 1.0f, delay, 0); info.line = NoteLine.RightSide; } break;
-                            default: { throw new Exception(splitText[0]); }
+                            default: { throw new Exception(splitText[0] != null ? splitText[0] : "null"); }
                         }
                     }
                     else
                     {
                         switch ((NoteLine)Convert.ToInt32(splitText[0]))
                         {
-                            case NoteLine.One:      { pos = new Vector3(NOTE_DISTANCE * -1.5f, delay, 0); } break;
-                            case NoteLine.Two:      { pos = new Vector3(NOTE_DISTANCE * -0.5f, delay, 0); } break;
-                            case NoteLine.Three:    { pos = new Vector3(NOTE_DISTANCE * 0.5f, delay, 0); } break;
-                            case NoteLine.Four:     { pos = new Vector3(NOTE_DISTANCE * 1.5f, delay, 0); } break;
-                            case NoteLine.LeftSide:  { pos = new Vector3(NOTE_DISTANCE * -1.0f, delay, 0); } break;
+                            case NoteLine.One: { pos = new Vector3(NOTE_DISTANCE * -1.5f, delay, 0); } break;
+                            case NoteLine.Two: { pos = new Vector3(NOTE_DISTANCE * -0.5f, delay, 0); } break;
+                            case NoteLine.Three: { pos = new Vector3(NOTE_DISTANCE * 0.5f, delay, 0); } break;
+                            case NoteLine.Four: { pos = new Vector3(NOTE_DISTANCE * 1.5f, delay, 0); } break;
+                            case NoteLine.LeftSide: { pos = new Vector3(NOTE_DISTANCE * -1.0f, delay, 0); } break;
                             case NoteLine.RightSide: { pos = new Vector3(NOTE_DISTANCE * 1.0f, delay, 0); } break;
-                            default: { throw new Exception(splitText[0]); }
+                            default: { throw new Exception(splitText[0] != null ? splitText[0] : "null"); }
                         }
                         info.line = (NoteLine)Convert.ToInt32(splitText[0]);
                     }
                     note.transform.position = pos;
                 }
-                catch(Exception e) { Debug.Log("Line Error : " + e.Message); }
+                catch (Exception e) { new Exception("Line Error : " + e.Message + " " + splitText[0] != null ? splitText[0] : "null"); }
 
                 // [ Timing ]
-                try {
+                try
+                {
                     info.hitTiming = Convert.ToInt32(splitText[1]) + offset;
                 }
-                catch (Exception e) { Debug.Log("Timing Error : " + e.Message); }
+                catch (Exception e) { new Exception("Timing Error : " + e.Message + " " + splitText[1] != null ? splitText[1] : "null"); }
 
                 // [ Note Trans ]
                 try
                 {
                     switch ((NoteTrans)Convert.ToInt32(splitText[3]))
                     {
-                        case NoteTrans.Long: {
+                        case NoteTrans.Long:
+                            {
                                 GameObject @object = null;
 
                                 switch (info.noteType)
                                 {
-                                    case NoteType.Normal:       { @object = Instantiate(normalLongNote); } break;
-                                    case NoteType.Normal_Snow:  { @object = Instantiate(snowLongNote);  } break;
-                                    case NoteType.Side:         { @object = Instantiate(normalSideLongNote);  } break;
-                                    case NoteType.Side_Snow:    { @object = Instantiate(snowSideLongNote);  } break;
+                                    case NoteType.Normal: { @object = Instantiate(normalLongNote); } break;
+                                    case NoteType.Normal_Snow: { @object = Instantiate(snowLongNote); } break;
+                                    case NoteType.Side: { @object = Instantiate(normalSideLongNote); } break;
+                                    case NoteType.Side_Snow: { @object = Instantiate(snowSideLongNote); } break;
                                 }
 
-                                if (@object != null) {
+                                if (@object != null)
+                                {
                                     @object.transform.parent = note.transform;
                                     @object.transform.position = note.transform.position;
                                     LongStart.Add(new Tuple<NoteInfo, GameObject>(info, @object));
                                 }
                             }
                             break;
-                        case NoteTrans.LongEnd: { LongEnd.Add(new Tuple<NoteInfo, GameObject>(info, note)); } break;
+                        case NoteTrans.LongEnd: {
+                                GameObject @object = null;
+
+                                switch (info.noteType)
+                                {
+                                    case NoteType.Normal: { @object = Instantiate(normalNote); } break;
+                                    case NoteType.Normal_Snow: { @object = Instantiate(snowNote); } break;
+                                    case NoteType.Side: { @object = Instantiate(normalSideNote); } break;
+                                    case NoteType.Side_Snow: { @object = Instantiate(snowSideNote); } break;
+                                }
+
+                                if (@object != null)
+                                {
+                                    @object.transform.parent = note.transform;
+                                    @object.transform.position = note.transform.position;
+                                    LongEnd.Add(new Tuple<NoteInfo, GameObject>(info, note));
+                                }
+                                
+                            } break;
                         case NoteTrans.Normal: { } break;
                     }
 
                     info.noteTrans = (NoteTrans)Convert.ToInt32(splitText[3]);
                 }
-                catch (Exception e) { Debug.Log("Trans Error : " + e.Message); }
+                catch (Exception e) { new Exception("Trans Error : " + e.Message + " " + splitText[3] != null ? splitText[3] : "null"); }
 
                 notes.Enqueue(info);
+
+                index++;
+                if (index >= reads.Length) { break; }
             }
         }
         /* [ Linking Long Note ] */ {
-            if(LongStart.Count + LongEnd.Count % 2 == 1) { throw new Exception("Long Note Start and End is not Equal."); }
+            if (LongStart.Count + LongEnd.Count % 2 == 1) { throw new Exception("Long Note Start and End is not Equal."); }
             bool isChange;
-            while(true)
+            while (true)
             {
                 isChange = false;
 
-                if(LongEnd.Count > 0)
-                foreach(var item in LongEnd)
-                {
-                    if(item.Item1.line == LongStart[0].Item1.line)
+                if (LongEnd.Count > 0)
+                    foreach (var item in LongEnd)
                     {
-                        Transform trans = LongStart[0].Item2.transform;
+                        if (item.Item1.line == LongStart[0].Item1.line)
+                        {
+                            Transform trans = LongStart[0].Item2.transform;
 
-                        trans.localScale = new Vector3(trans.localScale.x, (item.Item1.hitTiming - LongStart[0].Item1.hitTiming) * NoteDown.Get(trans, 5.9f),trans.localScale.z);
+                            trans.localScale = new Vector3(trans.localScale.x, (item.Item1.hitTiming - LongStart[0].Item1.hitTiming) * NoteDown.Get(trans, 5.9f), trans.localScale.z);
 
-                        LongEnd.Remove(item);
-                        LongStart.Remove(LongStart[0]);
-                        
-                        isChange = true;
-                        break;
+                            LongEnd.Remove(item);
+                            LongStart.Remove(LongStart[0]);
+
+                            isChange = true;
+                            break;
+                        }
                     }
-                }
 
                 if (LongStart.Count + LongEnd.Count <= 0) { break; }
                 if (!isChange) { throw new Exception("Not Found Long Note End in Line. : " + LongStart[0].Item1.line.ToString()); }

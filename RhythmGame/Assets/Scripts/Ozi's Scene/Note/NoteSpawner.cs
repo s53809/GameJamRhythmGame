@@ -67,7 +67,6 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A)) LisRead("Assets/Resources/Liss/Snowy/snowy.lis");
         if (timer != null) { time = timer.NowPos; }
 
         while (notes.Count > 0 && timer.NowPos
@@ -110,15 +109,23 @@ public class NoteSpawner : MonoBehaviour
             noteHit.SetPath(path);
         }
         catch (Exception e) { Debug.Log("NoteSpawner.LisRead(string) : " + e.Message); } 
-        finally { timer.Play(reader.songPath, reader.offset); }
+        finally {
+            if (timer != null)
+            {
+                timer.Play(reader.songPath, reader.offset);
+            }
+        }
 
-        NoteInfo info = notes.First();
-        if (info != null)
+        if(notes.Count > 0)
         {
-            nextLine = info.line;
-            nextSpawnTiming = info.hitTiming;
-            nextNoteType = info.noteType;
-            nextNoteTrans = info.noteTrans;
+            NoteInfo info = notes.First();
+            if (info != null)
+            {
+                nextLine = info.line;
+                nextSpawnTiming = info.hitTiming;
+                nextNoteType = info.noteType;
+                nextNoteTrans = info.noteTrans;
+            }
         }
     }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   songBanner: {fileID: 21300000, guid: 0a1b0e97c52ad2443852c076381254c6, type: 3}
   songCD: {fileID: 21300000, guid: 6cf3a38e5a8cc2b488a1a5bb0c7e6081, type: 3}
-  songPath: Assets/Resources/Liss/Snowy/snowy.lis
+  songPath: Liss/Snowy/snowy
   artistName: bltaatld
   songName: snowy
   difficulty: Easy
